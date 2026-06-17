@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LogisticsPro | Matching & Bidding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#c6c6cd",
+                    "on-tertiary-fixed-variant": "#574425",
+                    "on-secondary-fixed": "#2a1700",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "surface-container-highest": "#d3e4fe",
+                    "surface-tint": "#565e74",
+                    "inverse-surface": "#213145",
+                    "on-error": "#ffffff",
+                    "tertiary-container": "#271901",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#0b1c30",
+                    "surface-container": "#e5eeff",
+                    "on-surface-variant": "#45464d",
+                    "surface": "#f8f9ff",
+                    "surface-container-high": "#dce9ff",
+                    "on-tertiary-container": "#98805d",
+                    "inverse-on-surface": "#eaf1ff",
+                    "secondary-container": "#fea619",
+                    "on-error-container": "#93000a",
+                    "on-primary-container": "#7c839b",
+                    "surface-variant": "#d3e4fe",
+                    "on-background": "#0b1c30",
+                    "surface-container-low": "#eff4ff",
+                    "error-container": "#ffdad6",
+                    "on-tertiary": "#ffffff",
+                    "background": "#f8f9ff",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#cbdbf5",
+                    "primary": "#000000",
+                    "outline": "#76777d",
+                    "secondary": "#855300",
+                    "tertiary-fixed": "#fcdeb5",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "secondary-fixed": "#ffddb8",
+                    "surface-bright": "#f8f9ff",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed": "#131b2e",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "on-secondary-container": "#684000",
+                    "primary-container": "#131b2e",
+                    "primary-fixed-dim": "#bec6e0",
+                    "on-tertiary-fixed": "#271901",
+                    "inverse-primary": "#bec6e0",
+                    "tertiary-fixed-dim": "#dec29a",
+                    "tertiary": "#000000",
+                    "primary-fixed": "#dae2fd"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "sm": "8px",
+                    "margin": "32px",
+                    "lg": "24px",
+                    "xs": "4px",
+                    "xl": "32px",
+                    "md": "16px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Geist"],
+                    "headline-xl": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "body-sm": ["Geist"],
+                    "body-lg": ["Geist"],
+                    "label-md": ["Geist"],
+                    "label-sm": ["Geist"],
+                    "body-md": ["Geist"],
+                    "mono-sm": ["Geist Mono"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .pulse-ring {
+            animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.33); }
+            80%, 100% { opacity: 0; }
+        }
+        .scanning-line {
+            animation: scan 3s linear infinite;
+        }
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+        .cascade-timer {
+            font-variant-numeric: tabular-nums;
+        }
+        body {
+            background-color: #f8f9ff;
+            font-family: 'Geist', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-xl">
+<span class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed">LogisticsPro</span>
+<nav class="hidden md:flex gap-lg">
+<a class="text-label-md font-label-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors" href="#">Marketplace</a>
+<a class="text-label-md font-label-md text-primary dark:text-primary-fixed border-b-2 border-primary dark:border-primary-fixed pb-1" href="#">Active Shipments</a>
+<a class="text-label-md font-label-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors" href="#">Support</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined p-2 text-on-surface-variant">notifications</button>
+<button class="material-symbols-outlined p-2 text-on-surface-variant">account_circle</button>
+<button class="bg-primary text-on-primary px-4 py-2 text-label-md font-label-md rounded shadow-sm hover:opacity-80 transition-opacity">Create Order</button>
+</div>
+</header>
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-full w-64 z-40 flex flex-col pt-20 pb-8 px-4 bg-surface-container-low dark:bg-inverse-surface border-r border-outline-variant dark:border-outline hidden md:flex">
+<div class="mb-lg px-4">
+<p class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Admin Console</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Fleet Oversight</p>
+</div>
+<nav class="flex-1 flex flex-col gap-xs">
+<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 bg-secondary-container text-on-secondary-container border-r-4 border-secondary transition-transform" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="text-label-md font-label-md">Fleet Management</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="text-label-md font-label-md">Route Optimization</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-label-md font-label-md">Financials</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-label-md font-label-md">Analytics</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-xs">
+<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-label-md font-label-md">Documentation</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-label-md font-label-md">Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="md:ml-64 pt-16 min-h-screen">
+<div class="p-margin max-w-7xl mx-auto">
+<!-- Hero Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-lg mb-xl border-b border-outline-variant pb-xl">
+<div>
+<div class="flex items-center gap-sm mb-xs">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-secondary"></span>
+</span>
+<span class="text-label-sm font-label-sm text-secondary uppercase font-bold tracking-widest">Live Matching</span>
+</div>
+<h1 class="text-headline-lg font-headline-lg text-primary">Searching for Drivers</h1>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-xl">Order #LP-88429: Bulk Electronics (4.2 Tons) from Port of Savannah to Atlanta Distribution Hub.</p>
+</div>
+<!-- Cascade Timer -->
+<div class="bg-surface-container-highest border border-outline-variant p-lg min-w-[200px]">
+<p class="text-label-sm font-label-sm text-outline mb-1 uppercase">Selection Window Ends</p>
+<div class="flex items-baseline gap-xs">
+<span class="text-headline-lg font-headline-lg cascade-timer text-primary" id="timer-minutes">04</span>
+<span class="text-headline-md font-headline-md text-outline">:</span>
+<span class="text-headline-lg font-headline-lg cascade-timer text-primary" id="timer-seconds">59</span>
+<span class="text-label-sm font-label-sm text-outline ml-1">SEC</span>
+</div>
+<div class="mt-md w-full bg-surface-variant h-1 overflow-hidden relative">
+<div class="absolute inset-0 bg-secondary w-2/3"></div>
+</div>
+</div>
+</div>
+<!-- Dashboard Grid Layout -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Active Offers Feed (Left Side) -->
+<div class="col-span-12 lg:col-span-8">
+<div class="flex items-center justify-between mb-md">
+<h2 class="text-label-md font-label-md text-on-surface uppercase tracking-wide">Incoming Driver Offers (4)</h2>
+<div class="flex gap-sm">
+<span class="text-label-sm font-label-sm px-2 py-1 bg-surface-container-high border border-outline-variant text-on-surface-variant">Sort: Price</span>
+<span class="text-label-sm font-label-sm px-2 py-1 bg-surface-container-high border border-outline-variant text-on-surface-variant">Filter: Rating 4.5+</span>
+</div>
+</div>
+<div class="space-y-md">
+<!-- Offer Card 1 -->
+<div class="bg-white border border-outline-variant p-lg flex flex-col md:flex-row gap-lg items-center relative overflow-hidden group hover:border-secondary transition-all">
+<!-- Live Glow -->
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary"></div>
+<div class="w-16 h-16 bg-surface-container-low shrink-0 border border-outline-variant flex items-center justify-center overflow-hidden">
+<img alt="Driver Profile" class="w-full h-full object-cover" data-alt="A close-up professional headshot of a mature truck driver with a friendly expression. He is wearing a high-visibility vest over a clean navy blue polo shirt. The lighting is soft and natural, emphasizing his experienced facial features. The background is a blurred logistics yard with white transport containers under a bright midday sun, fitting a clean, high-contrast professional aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjiFOKAzEi1huNvzleMswQqIAC_k0UTrM1qcG4dF5NQJ8YqyTrL606iLIt2PU8PRxmIfA-xysPL1s5sphbCr5DvYSBlLgDpwwYjhcdHeX8JRzaRw3p8iaZlbymhVbSisb8hOPBB2ya9i8KFt4KbrofVafo_XGOefu__Wf_fhlHYs-292yIbh2bEymrB6q4lhPAts5T-tVYPd4AltOwc3Vn8u2-L2ps250vR6x43VCCy7O9DJMzeUrovkQa6GkP6SuOLhMSBVjvRms"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-sm mb-xs">
+<h3 class="text-label-md font-label-md text-on-surface">Marcus Sterling</h3>
+<div class="flex items-center gap-xs px-2 py-0.5 bg-green-50 border border-green-200 text-green-700 text-label-sm rounded-sm">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+<span>ELITE</span>
+</div>
+</div>
+<div class="flex items-center gap-md text-body-sm text-on-surface-variant">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px] text-secondary">star</span>
+<span class="font-bold text-on-surface">4.9</span>
+<span class="text-outline">(1,240 trips)</span>
+</div>
+<div class="w-px h-3 bg-outline-variant"></div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">local_shipping</span>
+<span>32ft Box Truck</span>
+</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<p class="text-label-sm font-label-sm text-outline uppercase">Offer Price</p>
+<p class="text-headline-md font-headline-md text-primary">$1,240.00</p>
+<p class="text-label-sm font-label-sm text-green-600 font-bold">-5% vs Market</p>
+</div>
+<div class="flex gap-sm border-l border-outline-variant pl-lg">
+<button class="p-3 bg-surface-container border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+<button class="p-3 bg-error-container/10 border border-error/20 hover:bg-error-container/20 transition-colors text-error flex items-center justify-center">
+<span class="material-symbols-outlined">close</span>
+</button>
+<button class="px-6 py-3 bg-secondary text-on-secondary font-label-md text-label-md hover:opacity-90 transition-opacity uppercase tracking-widest">
+                                    Accept
+                                </button>
+</div>
+</div>
+<!-- Offer Card 2 -->
+<div class="bg-white border border-outline-variant p-lg flex flex-col md:flex-row gap-lg items-center relative overflow-hidden group hover:border-secondary transition-all opacity-95">
+<div class="w-16 h-16 bg-surface-container-low shrink-0 border border-outline-variant flex items-center justify-center overflow-hidden">
+<img alt="Driver Profile" class="w-full h-full object-cover" data-alt="A professional portrait of a female logistics manager in a modern office environment. She is wearing a grey blazer and glasses, looking confidently at the camera. In the background, large digital screens show world maps and fleet tracking data in a high-tech control center. The lighting is crisp and cool-toned, echoing a premium, enterprise-focused dashboard atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmkC6F_kXCJeVTClp7jPTLcVTpnAYObdICGIC96SxMpFFDWLDUu0GxBnNWaJt9m5DCYrGiIP9yFaha65dl9TLeqney3_eKAt2BVtFG4EAV4Pg9ZS6KEbT1cY6aUktWdxNWi8OtMRo4b9adUbyz-oYIDiiKRZKpftMEFARk5Empq01u-UqAPNvSl0TjiFWxzJnT-ms8j8b0uSzXTiH7iHYV1aueow5W4O1tcs3_fso-1klwG401MMPuuPRpMaqDgX3cQTD7y9ouZzk"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-sm mb-xs">
+<h3 class="text-label-md font-label-md text-on-surface">Elena Rodriguez</h3>
+<div class="flex items-center gap-xs px-2 py-0.5 bg-surface-container-high border border-outline-variant text-on-surface-variant text-label-sm rounded-sm">
+<span class="material-symbols-outlined text-[14px]">history</span>
+<span>REPEAT DRIVER</span>
+</div>
+</div>
+<div class="flex items-center gap-md text-body-sm text-on-surface-variant">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px] text-secondary">star</span>
+<span class="font-bold text-on-surface">4.7</span>
+<span class="text-outline">(850 trips)</span>
+</div>
+<div class="w-px h-3 bg-outline-variant"></div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">local_shipping</span>
+<span>48ft Reefer</span>
+</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<p class="text-label-sm font-label-sm text-outline uppercase">Offer Price</p>
+<p class="text-headline-md font-headline-md text-primary">$1,310.00</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant font-medium">Market Rate</p>
+</div>
+<div class="flex gap-sm border-l border-outline-variant pl-lg">
+<button class="p-3 bg-surface-container border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+<button class="p-3 bg-error-container/10 border border-error/20 hover:bg-error-container/20 transition-colors text-error flex items-center justify-center">
+<span class="material-symbols-outlined">close</span>
+</button>
+<button class="px-6 py-3 bg-secondary text-on-secondary font-label-md text-label-md hover:opacity-90 transition-opacity uppercase tracking-widest">
+                                    Accept
+                                </button>
+</div>
+</div>
+<!-- Offer Card 3 (New Arrival Pulse) -->
+<div class="bg-surface-container-low border-2 border-secondary/40 p-lg flex flex-col md:flex-row gap-lg items-center relative overflow-hidden animate-pulse">
+<div class="absolute -top-1 -right-1">
+<div class="bg-secondary text-on-secondary text-[10px] font-bold px-2 py-0.5 uppercase tracking-tighter">New Offer</div>
+</div>
+<div class="w-16 h-16 bg-white shrink-0 border border-outline-variant flex items-center justify-center overflow-hidden">
+<img alt="Driver Profile" class="w-full h-full object-cover" data-alt="A highly detailed close-up of a professional delivery driver standing beside a large, white transport truck. He is checking a rugged tablet device. The scene is set in a bustling shipping port at dawn, with golden sunlight catching the industrial cranes in the background. The aesthetic is sharp, industrial, and hyper-realistic, conveying reliability and high-tech efficiency." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDu0Y-khqNWeeZCTQWP_p6qIOU8wUpgturh2IvXz3xmgeHEHwTR5RH6nhLl6bMOS7kdfCNtcSbyjRSoHnMwM4WrX00XQyVdf6fa2POmvqFLPupzLAjONB5KGYrKpezL3UdhbEwnFuW4LkvyFd5oLWIwLJWqi2yCxRheThlpg7CFxvFjViwo9zKyJidjYT80UC3cD8QvSUl6I_m2mqwV5FeTwUnsowPZfgS7a0iZCwn5LD5mRPc7OACIzmRydivT57MtP-YjDoPvavw"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-sm mb-xs">
+<h3 class="text-label-md font-label-md text-on-surface text-primary font-bold">Swift Logistics Hub</h3>
+<span class="text-label-sm bg-primary text-on-primary px-2 py-0.5">CARRIER</span>
+</div>
+<div class="flex items-center gap-md text-body-sm text-on-surface-variant">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px] text-secondary">star</span>
+<span class="font-bold text-on-surface">4.8</span>
+<span class="text-outline">(3,400 trips)</span>
+</div>
+<div class="w-px h-3 bg-outline-variant"></div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">share_location</span>
+<span>4.2 mi away</span>
+</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<p class="text-label-sm font-label-sm text-outline uppercase">Offer Price</p>
+<p class="text-headline-md font-headline-md text-secondary font-bold">$1,190.00</p>
+<p class="text-label-sm font-label-sm text-secondary font-bold">LIMITED TIME</p>
+</div>
+<div class="flex gap-sm border-l border-outline-variant pl-lg">
+<button class="p-3 bg-surface-container border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+<button class="p-3 bg-error-container/10 border border-error/20 hover:bg-error-container/20 transition-colors text-error flex items-center justify-center">
+<span class="material-symbols-outlined">close</span>
+</button>
+<button class="px-6 py-3 bg-secondary text-on-secondary font-label-md text-label-md hover:opacity-90 transition-opacity uppercase tracking-widest">
+                                    Accept
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar / Map & Details -->
+<div class="col-span-12 lg:col-span-4 space-y-gutter">
+<!-- Scanning Map View -->
+<div class="bg-white border border-outline-variant overflow-hidden">
+<div class="h-64 relative bg-surface-container">
+<img alt="Logistics Map" class="w-full h-full object-cover grayscale opacity-50" data-alt="A detailed, high-contrast overhead map of a coastal shipping port and its surrounding highway infrastructure. The map is presented in a sophisticated slate-grey and navy color scheme with glowing amber data overlays showing traffic density and vehicle positions. Surgical 1px lines represent route optimizations, while circular pulse indicators show active logistics hubs. The aesthetic is purely technical and high-precision." data-location="Savannah, Georgia" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb1p7QxutJ8gpx8B32NUAWYi9tbLE_ewS5YnfaPpvEqI-4WLdGZhkGeFDfIzHYBNkeyjzi5GLiBB7XLmj5FL_3lG52WG4StEcTIlBz6RJT7KYwx2c8_L1nqxja4d_zdo3Zscu7Us9ZZalIccRgLN1Z7fk4Eev9s123bY8yY49vmwJw_COIu93z8nX2IOPMUWBZb27PCfkjmRP7ZnXN1Iipd37rVvBwBoc_UnpXdOEQhIg8vt7cjPdPEYCfqsSELLs1kP2xzv86VfY"/>
+<!-- Scanning Overlay -->
+<div class="absolute inset-0 scanning-line h-0.5 bg-secondary/50 shadow-[0_0_15px_rgba(254,166,25,0.8)] z-10"></div>
+<!-- Pulse Markers -->
+<div class="absolute top-1/2 left-1/3 w-4 h-4 bg-secondary rounded-full z-20">
+<div class="absolute inset-0 pulse-ring bg-secondary rounded-full opacity-75"></div>
+</div>
+<div class="absolute top-1/4 right-1/4 w-4 h-4 bg-primary rounded-full z-20 border-2 border-white">
+<div class="absolute inset-0 pulse-ring bg-primary rounded-full opacity-75"></div>
+</div>
+<!-- Map Floating Controls -->
+<div class="absolute bottom-md right-md flex flex-col gap-xs">
+<button class="w-8 h-8 bg-white border border-outline-variant flex items-center justify-center text-on-surface shadow-sm hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+<button class="w-8 h-8 bg-white border border-outline-variant flex items-center justify-center text-on-surface shadow-sm hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+</div>
+</div>
+<div class="p-lg border-t border-outline-variant flex items-center justify-between">
+<div>
+<p class="text-label-sm font-label-sm text-outline uppercase">Drivers in Vicinity</p>
+<p class="text-body-md font-body-md text-on-surface font-bold">12 Active Vehicles</p>
+</div>
+<span class="material-symbols-outlined text-secondary">explore</span>
+</div>
+</div>
+<!-- Shipment Parameters -->
+<div class="bg-white border border-outline-variant p-lg">
+<h3 class="text-label-md font-label-md text-on-surface uppercase tracking-wide mb-lg">Order Parameters</h3>
+<div class="space-y-md">
+<div class="flex items-start gap-md">
+<div class="w-8 h-8 shrink-0 bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">trip_origin</span>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-outline uppercase">Origin</p>
+<p class="text-body-sm font-body-sm text-on-surface">Port of Savannah, Terminal 3</p>
+</div>
+</div>
+<div class="ml-4 border-l-2 border-dashed border-outline-variant h-8"></div>
+<div class="flex items-start gap-md">
+<div class="w-8 h-8 shrink-0 bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-outline uppercase">Destination</p>
+<p class="text-body-sm font-body-sm text-on-surface">Atlanta Logistics Hub East</p>
+</div>
+</div>
+</div>
+<div class="mt-lg pt-lg border-t border-outline-variant grid grid-cols-2 gap-lg">
+<div>
+<p class="text-label-sm font-label-sm text-outline uppercase">Load Weight</p>
+<p class="text-body-md font-body-md text-on-surface font-bold">8,400 lbs</p>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-outline uppercase">Target Price</p>
+<p class="text-body-md font-body-md text-on-surface font-bold">$1,250.00</p>
+</div>
+</div>
+</div>
+<!-- Market Insights -->
+<div class="bg-inverse-surface text-inverse-on-surface p-lg">
+<div class="flex items-center gap-md mb-md">
+<span class="material-symbols-outlined text-secondary">insights</span>
+<h3 class="text-label-md font-label-md uppercase tracking-wide">Market Pulse</h3>
+</div>
+<p class="text-body-sm font-body-sm text-outline-variant mb-lg">High demand in the Savannah corridor. Current average bid is 4.2% above your target price.</p>
+<button class="w-full py-3 bg-surface-container-highest/10 border border-outline-variant/30 text-white text-label-md font-label-md uppercase tracking-widest hover:bg-surface-container-highest/20 transition-all">
+                            Boost Visibility (+$50)
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Cascade Timer Logic
+        let timeLeft = 299; // 4:59
+        const minEl = document.getElementById('timer-minutes');
+        const secEl = document.getElementById('timer-seconds');
+
+        const timer = setInterval(() => {
+            timeLeft--;
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                timeLeft = 0;
+            }
+            
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            
+            minEl.innerText = minutes.toString().padStart(2, '0');
+            secEl.innerText = seconds.toString().padStart(2, '0');
+            
+            if (timeLeft < 60) {
+                minEl.parentElement.classList.add('text-error');
+                minEl.classList.add('text-error');
+                secEl.classList.add('text-error');
+            }
+        }, 1000);
+
+        // Random live activity simulation
+        setInterval(() => {
+            const markers = document.querySelectorAll('.pulse-ring');
+            markers.forEach(m => {
+                m.parentElement.style.top = (Math.random() * 80 + 10) + '%';
+                m.parentElement.style.left = (Math.random() * 80 + 10) + '%';
+            });
+        }, 8000);
+    </script>
+</body></html>

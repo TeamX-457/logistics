@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LogisticsPro | Live Tracking Experience</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style id="tailwind-config">
+        /* Tailwind configuration as provided in the design system */
+    </style>
+<script id="tailwind-config-script">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#c6c6cd",
+                        "on-tertiary-fixed-variant": "#574425",
+                        "on-secondary-fixed": "#2a1700",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#653e00",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-tint": "#565e74",
+                        "inverse-surface": "#213145",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#271901",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#0b1c30",
+                        "surface-container": "#e5eeff",
+                        "on-surface-variant": "#45464d",
+                        "surface": "#f8f9ff",
+                        "surface-container-high": "#dce9ff",
+                        "on-tertiary-container": "#98805d",
+                        "inverse-on-surface": "#eaf1ff",
+                        "secondary-container": "#fea619",
+                        "on-secondary-container": "#684000",
+                        "primary-container": "#131b2e",
+                        "primary": "#000000",
+                        "outline": "#76777d",
+                        "secondary": "#855300",
+                        "error": "#ba1a1a",
+                        "background": "#f8f9ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "sm": "8px",
+                        "margin": "32px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Geist"],
+                        "headline-xl": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "body-sm": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "label-md": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "body-md": ["Geist"],
+                        "mono-sm": ["Geist Mono"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "mono-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Geist', sans-serif; background-color: #f8f9ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .map-gradient-overlay {
+            background: linear-gradient(to right, rgba(248, 249, 255, 1) 0%, rgba(248, 249, 255, 0) 20%);
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.33); opacity: 1; }
+            80%, 100% { opacity: 0; }
+        }
+        .pulse-animation {
+            animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+    </style>
+</head>
+<body class="overflow-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-8">
+<span class="text-headline-md font-headline-md font-bold text-primary">LogisticsPro</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Marketplace</a>
+<a class="text-label-md font-label-md text-primary border-b-2 border-primary pb-1" href="#">Active Shipments</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Support</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant p-2">notifications</button>
+<div class="flex items-center gap-2 px-3 py-1.5 border border-outline-variant rounded">
+<span class="material-symbols-outlined text-primary">account_circle</span>
+<span class="text-label-sm font-label-sm">Operations Manager</span>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Suppressed for focused tracking view, but implied by layout spacing) -->
+<main class="relative h-screen w-full pt-16 flex overflow-hidden">
+<!-- Full Page Map Background -->
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-surface-container-low" data-location="Chicago, IL" style="">
+<!-- Fallback background image for map with high-end detailed prompt -->
+<img class="w-full h-full object-cover opacity-60" data-alt="A highly detailed 3D topographic map of a modern urban landscape with clean, minimalist aesthetics. The map features surgical gray streets against a pale off-white terrain. Glowing neon-blue path lines trace a route through the grid-like city structure. The lighting is soft and even, mimicking a professional high-contrast GIS interface. Soft ambient occlusion shadows define the building blocks, creating a sense of sophisticated technical precision and clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8vGZu0CyOX7F7NpCqudTlPcJulvboqdtdeFBdvgs8YM6mLJJ6-7W02ShIg4IofPPEqSaBjpUeNJrvvTU8o_aA8Dj_1Rxq6GIFNiG8YEL8eaVS22F3QHCGg_t3OTO8EFWasNZtnYlUTfblomaokjjLqO7O_6D9piugppKvIPNJa1pU3c39So1BlwUE1gYs2RfiWCmH83BFaKw5sPIkcTTwIqnNRQEp80KfRjSe5jn5aQ4VvVHQOgw9LlWxMiXmupgCnOKs6p9trX0"/>
+</div>
+<!-- Map UI Elements (Simulated) -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+<!-- Moving Driver Marker -->
+<div class="relative flex items-center justify-center">
+<div class="absolute w-12 h-12 bg-secondary-container opacity-20 rounded-full pulse-animation"></div>
+<div class="z-10 bg-primary text-white p-2 rounded shadow-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">local_shipping</span>
+</div>
+<div class="absolute top-full mt-2 bg-white px-2 py-1 border border-outline shadow-sm whitespace-nowrap">
+<span class="text-label-sm font-mono-sm">TRUCK_8829 | 42 MPH</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Left Column: Status & Timeline -->
+<aside class="relative z-10 w-[380px] h-full bg-white border-r border-outline-variant flex flex-col shadow-2xl">
+<!-- Header -->
+<div class="p-6 border-b border-outline-variant">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h1 class="text-label-sm font-label-sm text-outline uppercase tracking-widest mb-1">Shipment ID</h1>
+<p class="text-headline-md font-headline-md text-primary">#LP-99821-004</p>
+</div>
+<div class="bg-secondary-container px-3 py-1 rounded-sm">
+<span class="text-label-sm font-label-sm text-on-secondary-container">IN TRANSIT</span>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-low p-4 border border-outline-variant">
+<div class="flex-1">
+<p class="text-label-sm text-outline">Estimated Arrival</p>
+<p class="text-headline-md font-headline-md">14:45 <span class="text-body-sm font-normal text-outline">PM</span></p>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant"></div>
+<div class="flex-1">
+<p class="text-label-sm text-outline">Distance</p>
+<p class="text-headline-md font-headline-md">12.4 <span class="text-body-sm font-normal text-outline">mi</span></p>
+</div>
+</div>
+</div>
+<!-- Vertical Timeline -->
+<div class="flex-1 overflow-y-auto p-6">
+<h2 class="text-label-md font-label-md text-primary mb-6">Milestones</h2>
+<div class="relative space-y-8 pl-4">
+<!-- Line -->
+<div class="absolute left-[23px] top-2 bottom-2 w-[2px] bg-surface-container-highest"></div>
+<!-- Completed Line -->
+<div class="absolute left-[23px] top-2 h-[260px] w-[2px] bg-secondary"></div>
+<!-- Step 1: Pending -->
+<div class="relative flex items-start gap-4">
+<div class="z-10 w-5 h-5 rounded-full bg-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-white" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div>
+<p class="text-label-md font-label-md text-primary">Pending</p>
+<p class="text-label-sm text-outline">Oct 12, 08:30 AM</p>
+</div>
+</div>
+<!-- Step 2: Negotiating -->
+<div class="relative flex items-start gap-4">
+<div class="z-10 w-5 h-5 rounded-full bg-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-white" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div>
+<p class="text-label-md font-label-md text-primary">Negotiating</p>
+<p class="text-label-sm text-outline">Oct 12, 09:15 AM</p>
+</div>
+</div>
+<!-- Step 3: Accepted -->
+<div class="relative flex items-start gap-4">
+<div class="z-10 w-5 h-5 rounded-full bg-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-white" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div>
+<p class="text-label-md font-label-md text-primary">Accepted</p>
+<p class="text-label-sm text-outline">Oct 12, 10:00 AM</p>
+</div>
+</div>
+<!-- Step 4: Driver Arriving -->
+<div class="relative flex items-start gap-4">
+<div class="z-10 w-5 h-5 rounded-full bg-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-white" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div>
+<p class="text-label-md font-label-md text-primary">Driver Arrived at Pickup</p>
+<p class="text-label-sm text-outline">Oct 12, 11:45 AM</p>
+</div>
+</div>
+<!-- Step 5: In Transit (Active) -->
+<div class="relative flex items-start gap-4">
+<div class="z-10 w-5 h-5 rounded-full border-4 border-secondary bg-white flex items-center justify-center">
+</div>
+<div>
+<p class="text-label-md font-label-md text-primary">In Transit</p>
+<p class="text-label-sm text-secondary font-bold">Live Tracking Enabled</p>
+</div>
+</div>
+<!-- Step 6: Completed -->
+<div class="relative flex items-start gap-4 opacity-40">
+<div class="z-10 w-5 h-5 rounded-full border-2 border-outline-variant bg-white flex items-center justify-center">
+</div>
+<div>
+<p class="text-label-md font-label-md text-primary">Completed</p>
+<p class="text-label-sm text-outline">Pending Drop-off</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Driver Footer -->
+<div class="p-6 bg-surface border-t border-outline-variant">
+<div class="flex items-center gap-4 mb-6">
+<img class="w-12 h-12 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of a middle-aged male driver wearing a clean navy blue logistics uniform. The lighting is studio-quality with a soft side light that highlights his facial features, conveying reliability and expertise. The background is a neutral, out-of-focus warehouse environment in cool tones. The image style is sharp, clean, and corporate, emphasizing trust and professional service." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDthhJn4JDv6pggNqNjMLEzg8A-PI5T7HegFqjCUUK4G1lAz46lGfK8ItoElWGj2GuU6OKss1ouNtMYCrvyIglL0cTSrSsQ6-WjvGVQm9NxnLSJCy5xacldo8iFvQFYNnYlkXWgLAvEgkKvUCweWCnefFZ8aQE5IBxptNPihHeJf9WeFDkwWJbG5DUp_xTis9pb4w8eOSMxCz4yCIpNpw6CFACs7-TU4Ag3nuK6-fwjMqXqIrBKNf1Wk4MMNFDyEQNy1e5sm_-Ue8A"/>
+<div class="flex-1">
+<p class="text-label-md font-label-md text-primary">Marcus Henderson</p>
+<p class="text-label-sm text-outline">Freight Carrier ID: #8829</p>
+</div>
+<button class="bg-primary text-white w-10 h-10 flex items-center justify-center rounded hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+</div>
+<!-- OTP Section -->
+<div class="bg-primary-container p-4 border border-outline">
+<div class="flex justify-between items-center mb-2">
+<span class="text-label-sm font-label-sm text-outline-variant uppercase">Delivery OTP</span>
+<span class="material-symbols-outlined text-outline-variant text-[18px]">verified_user</span>
+</div>
+<div class="flex gap-2">
+<div class="flex-1 bg-white h-10 flex items-center justify-center text-headline-md font-mono-sm text-primary tracking-widest border border-outline">
+                            4
+                        </div>
+<div class="flex-1 bg-white h-10 flex items-center justify-center text-headline-md font-mono-sm text-primary tracking-widest border border-outline">
+                            8
+                        </div>
+<div class="flex-1 bg-white h-10 flex items-center justify-center text-headline-md font-mono-sm text-primary tracking-widest border border-outline">
+                            2
+                        </div>
+<div class="flex-1 bg-white h-10 flex items-center justify-center text-headline-md font-mono-sm text-primary tracking-widest border border-outline">
+                            9
+                        </div>
+</div>
+<p class="mt-2 text-[10px] text-outline-variant text-center">Share this code with the driver to confirm delivery</p>
+</div>
+</div>
+</aside>
+<!-- Right Side: Floating Info Cards -->
+<div class="relative flex-1 p-8 pointer-events-none">
+<!-- Floating Route Info -->
+<div class="absolute top-8 right-8 w-80 bg-white border border-outline-variant p-6 shadow-xl pointer-events-auto">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-secondary">route</span>
+<h3 class="text-label-md font-label-md text-primary">Route Details</h3>
+</div>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-[1px] h-full border-l border-dashed border-outline"></div>
+</div>
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter">Origin</p>
+<p class="text-label-sm font-label-sm text-primary">Warehouse Distribution Center A</p>
+<p class="text-label-sm text-outline">Chicago, IL 60601</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-secondary text-[16px]">location_on</span>
+</div>
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter">Destination</p>
+<p class="text-label-sm font-label-sm text-primary">Retail Fulfillment Hub 09</p>
+<p class="text-label-sm text-outline">Evanston, IL 60201</p>
+</div>
+</div>
+</div>
+<button class="mt-8 w-full border border-primary py-2 text-label-sm font-label-sm text-primary hover:bg-surface transition-colors uppercase tracking-widest">
+                    View Manifest
+                </button>
+</div>
+<!-- Weather/Road Alerts -->
+<div class="absolute bottom-8 right-8 flex gap-4 pointer-events-auto">
+<div class="bg-white border border-outline-variant px-4 py-3 shadow-lg flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">wb_sunny</span>
+<div>
+<p class="text-label-sm font-label-sm">Clear Skies</p>
+<p class="text-[10px] text-outline">Ideal conditions</p>
+</div>
+</div>
+<div class="bg-white border border-outline-variant px-4 py-3 shadow-lg flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">traffic</span>
+<div>
+<p class="text-label-sm font-label-sm">Moderate Traffic</p>
+<p class="text-[10px] text-outline">+4 min delay expected</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Micro-interactions Script -->
+<script>
+        // Simple map marker "movement" simulation
+        const marker = document.querySelector('.pulse-animation').parentElement;
+        let x = 0;
+        let y = 0;
+        
+        function animate() {
+            x += Math.sin(Date.now() / 2000) * 0.1;
+            y += Math.cos(Date.now() / 3000) * 0.1;
+            marker.style.transform = `translate(${x}px, ${y}px)`;
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Interaction Feedback
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'scale(0.98)';
+                btn.style.opacity = '0.9';
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = 'scale(1)';
+                btn.style.opacity = '1';
+            });
+        });
+    </script>
+</body></html>

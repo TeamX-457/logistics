@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Driver Registration | LogisticsPro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#000000",
+                    "primary-fixed": "#dae2fd",
+                    "tertiary-fixed-dim": "#dec29a",
+                    "primary-fixed-dim": "#bec6e0",
+                    "primary-container": "#131b2e",
+                    "on-tertiary-fixed": "#271901",
+                    "inverse-primary": "#bec6e0",
+                    "on-secondary-container": "#684000",
+                    "surface-bright": "#f8f9ff",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "on-primary-fixed": "#131b2e",
+                    "error": "#ba1a1a",
+                    "secondary-fixed": "#ffddb8",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "secondary": "#855300",
+                    "tertiary-fixed": "#fcdeb5",
+                    "primary": "#000000",
+                    "outline": "#76777d",
+                    "background": "#f8f9ff",
+                    "surface-dim": "#cbdbf5",
+                    "on-primary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#eff4ff",
+                    "on-primary-container": "#7c839b",
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#d3e4fe",
+                    "on-background": "#0b1c30",
+                    "secondary-container": "#fea619",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-tertiary-container": "#98805d",
+                    "surface": "#f8f9ff",
+                    "on-surface-variant": "#45464d",
+                    "surface-container-high": "#dce9ff",
+                    "surface-container": "#e5eeff",
+                    "on-surface": "#0b1c30",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-container": "#271901",
+                    "surface-tint": "#565e74",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#213145",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "on-secondary": "#ffffff",
+                    "outline-variant": "#c6c6cd",
+                    "on-tertiary-fixed-variant": "#574425",
+                    "on-secondary-fixed": "#2a1700"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "gutter": "24px",
+                    "sm": "8px",
+                    "base": "8px",
+                    "xs": "4px",
+                    "xl": "32px",
+                    "margin": "32px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Geist"],
+                    "headline-xl": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "label-md": ["Geist"],
+                    "body-lg": ["Geist"],
+                    "body-sm": ["Geist"],
+                    "headline-lg-mobile": ["Geist"],
+                    "mono-sm": ["Geist Mono"],
+                    "body-md": ["Geist"],
+                    "label-sm": ["Geist"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "mono-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Geist', sans-serif;
+            background-color: #f8f9ff;
+        }
+        .form-input-focus:focus {
+            outline: none;
+            border-color: #000000;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.04);
+        }
+        .custom-checkbox:checked {
+            background-color: #000000;
+            border-color: #000000;
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+<!-- Top Navigation Bar (JSON Anchor Reference) -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-8">
+<span class="text-headline-md font-headline-md font-bold text-primary">LogisticsPro</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Marketplace</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Active Shipments</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Support</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant">account_circle</button>
+<button class="hidden md:block bg-primary text-on-primary px-lg py-2 text-label-md font-label-md rounded">Create Order</button>
+</div>
+</header>
+<main class="min-h-screen pt-16 flex flex-col md:flex-row">
+<!-- Split-Screen: Left (Imagery) -->
+<section class="relative w-full md:w-1/2 h-80 md:h-auto overflow-hidden bg-primary">
+<div class="absolute inset-0 opacity-60">
+<img alt="Professional Logistics" class="w-full h-full object-cover" data-alt="A professional heavy-duty semi-truck driver standing confidently beside a sleek, modern black transport truck during the golden hour. The lighting is cinematic, casting long shadows and highlighting the metallic textures of the vehicle. The overall atmosphere is premium and institutional, reflecting high-end enterprise logistics. The color palette is dominated by deep blacks and cool grays with warm sunlight accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIVXC9L-zou7P6LrC7-K1q3GZXpF4_qJb5uNT4m_fbwRFpISGilY5ZFMwYJ3YzqLZVrnVRVvfk7HucWWmgXadO2ybeNscSDv4csj3yX4ybTKwBECTFgxoSGcLYF-OMqCjhoWSpZkZ3SeSFtWDDR4ATp_OqrVcOk2DKmRvTHC_SYWbgXAn1A7iVF9o06h7NQpz25ZxQPJ0mUwmKK6ryPDQKEPUA8oH9pXJ4aa82qLnlbPvYC_Fue26eZi3epz1rg27KxAzXouZS188"/>
+</div>
+<!-- Gradient Overlay for Contrast -->
+<div class="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent opacity-80"></div>
+<div class="absolute bottom-margin left-margin z-10 max-w-lg">
+<div class="inline-block bg-secondary-container text-on-secondary-container px-3 py-1 text-label-sm font-label-sm rounded-sm mb-4">
+                    FLEET PARTNERSHIP
+                </div>
+<h1 class="text-headline-xl font-headline-xl text-on-primary mb-4 leading-tight">Join the Elite Fleet</h1>
+<p class="text-body-lg font-body-lg text-primary-fixed opacity-90">
+                    Access premium long-haul contracts and state-of-the-art route optimization. Drive for the most reliable logistics network in the industry.
+                </p>
+</div>
+</section>
+<!-- Split-Screen: Right (Form) -->
+<section class="w-full md:w-1/2 bg-surface-container-lowest flex items-center justify-center p-8 md:p-margin">
+<div class="w-full max-w-md">
+<div class="mb-10">
+<h2 class="text-headline-lg font-headline-lg text-primary mb-2">Driver Application</h2>
+<p class="text-body-md font-body-md text-on-surface-variant">Complete your profile to start your journey with LogisticsPro.</p>
+</div>
+<form class="space-y-6" onsubmit="event.preventDefault(); alert('Application submitted for review.');">
+<!-- Full Name -->
+<div class="space-y-1">
+<label class="block text-label-sm font-label-sm text-on-surface-variant" for="full_name">FULL NAME</label>
+<input class="w-full px-4 py-3 bg-white border border-outline-variant rounded-sm text-body-md form-input-focus transition-all" id="full_name" placeholder="Johnathan Doe" required="" type="text"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Phone Number -->
+<div class="space-y-1">
+<label class="block text-label-sm font-label-sm text-on-surface-variant" for="phone">PHONE NUMBER</label>
+<input class="w-full px-4 py-3 bg-white border border-outline-variant rounded-sm text-body-md form-input-focus transition-all" id="phone" placeholder="+1 (555) 000-0000" required="" type="tel"/>
+</div>
+<!-- Vehicle Type Dropdown -->
+<div class="space-y-1">
+<label class="block text-label-sm font-label-sm text-on-surface-variant" for="vehicle_type">VEHICLE TYPE</label>
+<div class="relative">
+<select class="w-full px-4 py-3 bg-white border border-outline-variant rounded-sm text-body-md form-input-focus transition-all appearance-none" id="vehicle_type" required="">
+<option disabled="" selected="" value="">Select type</option>
+<option value="bike">Bike</option>
+<option value="van">Van</option>
+<option value="truck">Truck</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
+</div>
+</div>
+</div>
+<!-- License Number -->
+<div class="space-y-1">
+<label class="block text-label-sm font-label-sm text-on-surface-variant" for="license">LICENSE NUMBER</label>
+<input class="w-full px-4 py-3 bg-white border border-outline-variant rounded-sm text-body-md font-mono-sm form-input-focus transition-all" id="license" placeholder="DL-XXXX-XXXX-XXXX" required="" type="text"/>
+</div>
+<!-- NIN (National Identification Number) -->
+<div class="space-y-1">
+<label class="block text-label-sm font-label-sm text-on-surface-variant" for="nin">NATIONAL ID (NIN)</label>
+<input class="w-full px-4 py-3 bg-white border border-outline-variant rounded-sm text-body-md form-input-focus transition-all" id="nin" placeholder="Enter 11-digit NIN" required="" type="text"/>
+</div>
+<!-- Terms Checkbox -->
+<div class="flex items-start gap-3 py-2">
+<div class="pt-1">
+<input class="w-4 h-4 rounded-xs border-outline-variant custom-checkbox focus:ring-0 transition-colors" id="terms" required="" type="checkbox"/>
+</div>
+<label class="text-body-sm font-body-sm text-on-surface-variant" for="terms">
+                            I agree to the <a class="text-primary font-bold hover:underline" href="#">Driver Terms &amp; Conditions</a> and consent to a mandatory background verification.
+                        </label>
+</div>
+<!-- CTA -->
+<button class="w-full py-4 bg-primary text-on-primary text-label-md font-label-md rounded-sm hover:opacity-90 active:scale-[0.98] transition-all shadow-sm" type="submit">
+                        Complete Application
+                    </button>
+</form>
+<div class="mt-8 pt-8 border-t border-outline-variant flex justify-between items-center">
+<span class="text-body-sm font-body-sm text-on-surface-variant">Already a partner?</span>
+<a class="text-label-md font-label-md text-primary font-bold" href="#">Sign In</a>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Stats / Trust Bar -->
+<footer class="bg-surface border-t border-outline-variant px-margin py-8 hidden md:block">
+<div class="max-w-screen-xl mx-auto flex justify-between items-center">
+<div class="flex items-center gap-12">
+<div>
+<span class="block text-headline-md font-headline-md text-primary">12k+</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">ACTIVE DRIVERS</span>
+</div>
+<div class="h-8 w-px bg-outline-variant"></div>
+<div>
+<span class="block text-headline-md font-headline-md text-primary">99.8%</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">ON-TIME DELIVERY</span>
+</div>
+<div class="h-8 w-px bg-outline-variant"></div>
+<div>
+<span class="block text-headline-md font-headline-md text-primary">24/7</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">DISPATCH SUPPORT</span>
+</div>
+</div>
+<div class="text-right">
+<p class="text-label-sm font-label-sm text-on-surface-variant">© 2024 LogisticsPro International. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<!-- Mobile Bottom Nav Placeholder (Suppressed per Transactional Rule, but keeping structure for shell context) -->
+<div class="md:hidden">
+<!-- Suppressed for transactional focus as per guidelines -->
+</div>
+<script>
+        // Micro-interaction: Input focus ring effect
+        const inputs = document.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.classList.add('focused-parent');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.classList.remove('focused-parent');
+            });
+        });
+
+        // Simple form validation styling feedback
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (e) => {
+            const btn = e.target.querySelector('button');
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> Processing...';
+            btn.disabled = true;
+            setTimeout(() => {
+                btn.innerHTML = 'Complete Application';
+                btn.disabled = false;
+            }, 1500);
+        });
+    </script>
+</body></html>
