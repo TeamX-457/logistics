@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LogisticsPro | Secure Access</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        button, input, select, textarea {
+            border-radius: 0.5rem;
+        }
+        [class*="border"]:not([class*="rounded"]) {
+            border-radius: 0.5rem;
+        }
+        body {
+            font-family: 'Geist', sans-serif;
+            background-color: #f8f9ff;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .login-card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
+        }
+        .ring-glow:focus-within {
+            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px rgba(0, 0, 0, 0.04);
+        }
+        .role-card-active {
+            border-color: #000000;
+            background-color: #f8f9ff;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#c6c6cd",
+                        "on-tertiary-fixed-variant": "#574425",
+                        "on-secondary-fixed": "#2a1700",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#653e00",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-tint": "#565e74",
+                        "inverse-surface": "#213145",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#271901",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#0b1c30",
+                        "surface-container": "#e5eeff",
+                        "on-surface-variant": "#45464d",
+                        "surface": "#f8f9ff",
+                        "surface-container-high": "#dce9ff",
+                        "on-tertiary-container": "#98805d",
+                        "inverse-on-surface": "#eaf1ff",
+                        "secondary-container": "#fea619",
+                        "on-error-container": "#93000a",
+                        "on-primary-container": "#7c839b",
+                        "surface-variant": "#d3e4fe",
+                        "on-background": "#0b1c30",
+                        "surface-container-low": "#eff4ff",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f8f9ff",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#cbdbf5",
+                        "primary": "#000000",
+                        "outline": "#76777d",
+                        "secondary": "#855300",
+                        "tertiary-fixed": "#fcdeb5",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "secondary-fixed": "#ffddb8",
+                        "surface-bright": "#f8f9ff",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#131b2e",
+                        "secondary-fixed-dim": "#ffb95f",
+                        "on-secondary-container": "#684000",
+                        "primary-container": "#131b2e",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-tertiary-fixed": "#271901",
+                        "inverse-primary": "#bec6e0",
+                        "tertiary-fixed-dim": "#dec29a",
+                        "tertiary": "#000000",
+                        "primary-fixed": "#dae2fd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "sm": "8px",
+                        "margin": "32px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Geist"],
+                        "headline-xl": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "body-sm": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "label-md": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "body-md": ["Geist"],
+                        "mono-sm": ["Geist Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen flex items-center justify-center p-0 overflow-hidden">
+<!-- Split View Container -->
+<main class="flex w-full min-h-screen">
+<!-- Left Section: Aesthetic/Branding (Hidden on Mobile) -->
+<section class="hidden lg:flex lg:w-1/2 relative bg-primary items-center justify-center overflow-hidden">
+<div class="absolute inset-0 opacity-40">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-slate-800 via-black to-black"></div>
+<div class="w-full h-full opacity-30" style="background-image: linear-gradient(#1e293b 1px, transparent 1px), linear-gradient(90deg, #1e293b 1px, transparent 1px); background-size: 40px 40px;"></div>
+</div>
+<div class="relative z-10 p-xl max-w-lg text-white">
+<div class="flex items-center gap-sm mb-xl">
+<span class="material-symbols-outlined text-[48px] text-secondary-container">local_shipping</span>
+<h1 class="font-headline-xl text-headline-xl tracking-tighter">LogisticsPro</h1>
+</div>
+<h2 class="font-headline-lg text-headline-lg mb-md">Global supply chain intelligence at your fingertips.</h2>
+<p class="font-body-lg text-body-lg text-outline-variant mb-xl">Manage fleet movements, track international shipments, and optimize routes with surgical precision using our unified enterprise dashboard.</p>
+<div class="grid grid-cols-2 gap-md border-t border-white/10 pt-xl">
+<div>
+<p class="font-label-sm text-label-sm text-secondary-container uppercase mb-xs">Active Fleet</p>
+<p class="font-headline-md text-headline-md">12,482 Units</p>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-secondary-container uppercase mb-xs">Efficiency Rating</p>
+<p class="font-headline-md text-headline-md">99.8%</p>
+</div>
+</div>
+</div>
+<!-- Subtle background image for texture -->
+<div class="absolute bottom-0 right-0 w-full h-full z-0 opacity-20 pointer-events-none">
+<img alt="Global Logistics Hub" class="w-full h-full object-cover grayscale" data-alt="A wide-angle, high-contrast black and white photograph of a massive industrial logistics terminal at dusk. Giant yellow gantry cranes tower over thousands of neatly stacked shipping containers. The scene is illuminated by harsh, professional floodlights creating long shadows and a sharp, technological atmosphere. The aesthetic is minimalist and institutional, conveying global scale and precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIXtRKzD_iDVJLaw9hZozJ_BDuljsGl_Kbcjxh1x7-MjqwUPNVhZu3P0mcQERmJi6bfg54JeJcd2cp4LtHGGpKucae4pDGHJXQF5-SfFSHDMnnNimr2Ol5nKyijz5ITf_ZAcDB_fxoa2GYSYTVSGTUpCpOb144u3vS3_7E9s2GNwV4lvdlC2G22fvufPaXhwI9-TQ_0Qtoh-PetYEh2dIvphWcRruyWi69j2g3W3PA5Mqn5y9YvoH6ud0pIlPbHfIvDm1b2F5lapU"/>
+</div>
+</section>
+<!-- Right Section: Login/Registration Form -->
+<section class="w-full lg:w-1/2 flex flex-col justify-center items-center p-md sm:p-margin bg-surface">
+<!-- Mobile Header Only -->
+<div class="lg:hidden flex items-center gap-xs mb-xl self-start">
+<span class="material-symbols-outlined text-primary text-[32px]">local_shipping</span>
+<span class="font-headline-md text-headline-md text-primary tracking-tight">LogisticsPro</span>
+</div>
+<div class="w-full max-w-[440px]">
+<!-- Auth Toggle -->
+<div class="flex items-center justify-between mb-xl">
+<div id="auth-state-header">
+<h2 class="font-headline-lg text-headline-lg text-primary" id="main-title">Access Console</h2>
+<p class="font-body-md text-body-md text-on-surface-variant" id="sub-title">Enter your credentials to manage your shipments.</p>
+</div>
+</div>
+<div class="hidden bg-error-container text-on-error-container text-sm p-3 mb-md" id="auth-error"></div>
+<!-- Form Container -->
+<form class="space-y-lg" id="auth-form">
+<!-- Role Selection -->
+<div class="space-y-sm">
+<label class="font-label-md text-label-md text-primary block">Select Your Role</label>
+<div class="grid grid-cols-2 gap-sm">
+<button class="flex flex-col items-start p-md border border-outline-variant bg-white text-left transition-all hover:border-primary role-card-active" id="role-customer" onclick="selectRole('customer')" type="button">
+<span class="material-symbols-outlined text-primary mb-xs">inventory_2</span>
+<span class="font-label-md text-label-md text-primary">Enterprise</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Merchant/Client</span>
+</button>
+<button class="flex flex-col items-start p-md border border-outline-variant bg-white text-left transition-all hover:border-primary" id="role-driver" onclick="selectRole('driver')" type="button">
+<span class="material-symbols-outlined text-on-surface-variant mb-xs">local_shipping</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Carrier</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Driver/Fleet</span>
+</button>
+</div>
+</div>
+<!-- Input Fields -->
+<div class="space-y-md">
+<div class="space-y-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant block" for="email">Work Email Address</label>
+<div class="relative group ring-glow">
+<input class="w-full h-12 px-md border border-outline-variant bg-white font-body-md text-primary focus:outline-none focus:border-primary transition-all placeholder:text-outline-variant" id="email" placeholder="name@company.com" required="" type="email"/>
+</div>
+</div>
+<div class="space-y-xs" id="password-group">
+<div class="flex justify-between items-center">
+<label class="font-label-sm text-label-sm text-on-surface-variant" for="password">Security Password</label>
+<a class="font-label-sm text-label-sm text-primary hover:underline" href="#" onclick="toggleForgotPassword(event)">Forgot Password?</a>
+</div>
+<div class="relative group ring-glow">
+<input class="w-full h-12 px-md border border-outline-variant bg-white font-body-md text-primary focus:outline-none focus:border-primary transition-all placeholder:text-outline-variant" id="password" placeholder="••••••••" required="" type="password"/>
+<button class="absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="space-y-md pt-base">
+<button class="w-full h-12 bg-primary text-white font-label-md text-label-md uppercase tracking-wider hover:bg-slate-900 active:scale-[0.98] transition-all" type="submit">
+                            Authenticate Account
+                        </button>
+<div class="relative flex items-center justify-center py-sm">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-outline-variant"></div>
+</div>
+<span class="relative bg-surface px-md font-label-sm text-label-sm text-on-surface-variant">OR CONTINUE WITH</span>
+</div>
+<div class="grid grid-cols-2 gap-sm" id="social-logins">
+<button class="flex items-center justify-center h-12 border border-outline-variant bg-white font-label-md text-label-md hover:border-primary transition-all" type="button">
+<img alt="Google" class="w-4 h-4 mr-sm grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi36Ul4ULi461Sx5qHdPDybhmR1Gg2y1CbNgzrJL8e-AqyzyHv6aMJ3SGBsk719wkXiN9JhzVx2FHHo6AdfVaknBb_VpgDa1nBDkc-gIxlSC8sHgMELaswTptRJLrvDvvHp6tMeBpu27pUV_0S-ICMey5_cIg6vzbA-lCWAoaFz9_yRX4nlF5wy_zt68ZqVAWocWd-zp7SRu1kp2U3qoMQgAZMCTqilYcJjV7do2yBCzNp2zsa_A3FtAQoSiwFoxi1Ky3xK9SEKD4"/> Google
+                            </button>
+<button class="flex items-center justify-center h-12 border border-outline-variant bg-white font-label-md text-label-md hover:border-primary transition-all" type="button">
+<span class="material-symbols-outlined text-[20px] mr-sm">apps</span> Apple
+                            </button>
+</div>
+</div>
+</form>
+<!-- Toggle Register/Login -->
+<div class="mt-xl text-center">
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="toggle-auth-container">
+                        Don't have an account yet? 
+                        <a class="font-label-sm text-label-sm text-primary font-bold hover:underline" href="#" id="toggle-auth-btn" onclick="toggleAuth(event, 'register')">Request Access</a>
+</p>
+</div>
+</div>
+<!-- Footer Legal -->
+<footer class="mt-auto pt-xl w-full flex justify-between items-center font-label-sm text-label-sm text-outline-variant">
+<span>© 2024 LogisticsPro International</span>
+<div class="flex gap-md">
+<a class="hover:text-primary" href="#">System Status</a>
+<a class="hover:text-primary" href="#">Legal Documentation</a>
+</div>
+</footer>
+</section>
+</main>
+<!-- Forgot Password Modal (Simplified as Overlay) -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center p-md" id="forgot-password-modal">
+<div class="absolute inset-0 bg-primary/20 backdrop-blur-sm" onclick="toggleForgotPassword(event)"></div>
+<div class="relative bg-white p-xl border border-primary w-full max-w-[400px] space-y-md login-card-shadow">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-md text-headline-md text-primary">Credential Recovery</h3>
+<button class="text-on-surface-variant hover:text-primary" onclick="toggleForgotPassword(event)">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Enter your registered email and we'll send a secure reset token.</p>
+<input class="w-full h-12 px-md border border-outline-variant bg-white font-body-md text-primary focus:outline-none focus:border-primary transition-all" placeholder="Work Email" type="email"/>
+<button class="w-full h-12 bg-primary text-white font-label-md text-label-md uppercase tracking-wider hover:bg-slate-900 transition-all">
+                Send Reset Link
+            </button>
+</div>
+</div>
+<script>
+        let currentMode = 'login';
+        let currentRole = 'customer';
+
+        function selectRole(role) {
+            currentRole = role;
+            const customerBtn = document.getElementById('role-customer');
+            const driverBtn = document.getElementById('role-driver');
+            const socialLogins = document.getElementById('social-logins');
+            
+            // UI Reset
+            [customerBtn, driverBtn].forEach(btn => {
+                btn.classList.remove('role-card-active');
+                btn.querySelector('.material-symbols-outlined').classList.replace('text-primary', 'text-on-surface-variant');
+                btn.querySelector('.font-label-md').classList.replace('text-primary', 'text-on-surface-variant');
+            });
+
+            // Active State
+            const activeBtn = role === 'customer' ? customerBtn : driverBtn;
+            activeBtn.classList.add('role-card-active');
+            activeBtn.querySelector('.material-symbols-outlined').classList.replace('text-on-surface-variant', 'text-primary');
+            activeBtn.querySelector('.font-label-md').classList.replace('text-on-surface-variant', 'text-primary');
+
+            // Logic for carriers (usually don't use social auth for enterprise logistics)
+            if (role === 'driver') {
+                socialLogins.style.opacity = '0.5';
+                socialLogins.style.pointerEvents = 'none';
+            } else {
+                socialLogins.style.opacity = '1';
+                socialLogins.style.pointerEvents = 'auto';
+            }
+        }
+
+        function toggleAuth(event, mode) {
+            event.preventDefault();
+            if (mode === 'register') {
+                window.location.href = currentRole === 'driver' ? 'register-driver.html' : 'register-customer.html';
+            }
+        }
+
+        function toggleForgotPassword(event) {
+            event.preventDefault();
+            const modal = document.getElementById('forgot-password-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        document.getElementById('forgot-password-modal').querySelector('button.w-full').addEventListener('click', async function () {
+            const email = document.querySelector('#forgot-password-modal input[type="email"]').value;
+            if (!email) return;
+            try {
+                await API.auth.requestPasswordReset(email);
+                alert('If that email exists, a reset link has been sent.');
+                document.getElementById('forgot-password-modal').classList.add('hidden');
+            } catch (err) {
+                alert('Could not request a reset: ' + err.message);
+            }
+        });
+
+        // Handle form submission
+        document.getElementById('auth-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const errorBox = document.getElementById('auth-error');
+            errorBox.classList.add('hidden');
+            const originalText = btn.textContent;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Validating...';
+            btn.disabled = true;
+
+            try {
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const data = await API.auth.login(email, password);
+                setSession(data);
+                btn.textContent = 'Identity Confirmed';
+                btn.style.backgroundColor = '#855300';
+                setTimeout(() => {
+                    window.location.href = ROLE_HOME[data.user.role] || 'index.html';
+                }, 600);
+            } catch (err) {
+                errorBox.textContent = (err.data && err.data.detail) || 'Invalid email or password.';
+                errorBox.classList.remove('hidden');
+                btn.textContent = originalText;
+                btn.style.backgroundColor = '';
+                btn.disabled = false;
+            }
+        });
+    </script>
+    <script src="/static/js/config.js"></script>
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/auth.js"></script>
+</body></html>

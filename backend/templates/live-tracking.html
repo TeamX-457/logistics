@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LogisticsPro | Live Tracking Experience</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style id="tailwind-config">
+        /* Tailwind configuration as provided in the design system */
+    </style>
+<script id="tailwind-config-script">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#c6c6cd",
+                        "on-tertiary-fixed-variant": "#574425",
+                        "on-secondary-fixed": "#2a1700",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#653e00",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-tint": "#565e74",
+                        "inverse-surface": "#213145",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#271901",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#0b1c30",
+                        "surface-container": "#e5eeff",
+                        "on-surface-variant": "#45464d",
+                        "surface": "#f8f9ff",
+                        "surface-container-high": "#dce9ff",
+                        "on-tertiary-container": "#98805d",
+                        "inverse-on-surface": "#eaf1ff",
+                        "secondary-container": "#fea619",
+                        "on-secondary-container": "#684000",
+                        "primary-container": "#131b2e",
+                        "primary": "#000000",
+                        "outline": "#76777d",
+                        "secondary": "#855300",
+                        "error": "#ba1a1a",
+                        "background": "#f8f9ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "sm": "8px",
+                        "margin": "32px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Geist"],
+                        "headline-xl": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "body-sm": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "label-md": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "body-md": ["Geist"],
+                        "mono-sm": ["Geist Mono"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "mono-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        button, input, select, textarea {
+            border-radius: 0.5rem;
+        }
+        [class*="border"]:not([class*="rounded"]) {
+            border-radius: 0.5rem;
+        }
+        body { font-family: 'Geist', sans-serif; background-color: #f8f9ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .map-gradient-overlay {
+            background: linear-gradient(to right, rgba(248, 249, 255, 1) 0%, rgba(248, 249, 255, 0) 20%);
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.33); opacity: 1; }
+            80%, 100% { opacity: 0; }
+        }
+        .pulse-animation {
+            animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+    </style>
+</head>
+<body class="overflow-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-8">
+<span class="text-headline-md font-headline-md font-bold text-primary">LogisticsPro</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#" id="home-link">Dashboard</a>
+<a class="text-label-md font-label-md text-primary border-b-2 border-primary pb-1" href="#">Tracking</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes.html">Support</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1.5 border border-outline-variant rounded">
+<span class="material-symbols-outlined text-primary">account_circle</span>
+<span class="text-label-sm font-label-sm" id="viewer-label">Loading…</span>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Suppressed for focused tracking view, but implied by layout spacing) -->
+<main class="relative h-screen w-full pt-16 flex overflow-hidden">
+<!-- Full Page Map Background -->
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-surface-container-low" data-location="Chicago, IL" style="">
+<!-- Fallback background image for map with high-end detailed prompt -->
+<img class="w-full h-full object-cover opacity-60" data-alt="A highly detailed 3D topographic map of a modern urban landscape with clean, minimalist aesthetics. The map features surgical gray streets against a pale off-white terrain. Glowing neon-blue path lines trace a route through the grid-like city structure. The lighting is soft and even, mimicking a professional high-contrast GIS interface. Soft ambient occlusion shadows define the building blocks, creating a sense of sophisticated technical precision and clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8vGZu0CyOX7F7NpCqudTlPcJulvboqdtdeFBdvgs8YM6mLJJ6-7W02ShIg4IofPPEqSaBjpUeNJrvvTU8o_aA8Dj_1Rxq6GIFNiG8YEL8eaVS22F3QHCGg_t3OTO8EFWasNZtnYlUTfblomaokjjLqO7O_6D9piugppKvIPNJa1pU3c39So1BlwUE1gYs2RfiWCmH83BFaKw5sPIkcTTwIqnNRQEp80KfRjSe5jn5aQ4VvVHQOgw9LlWxMiXmupgCnOKs6p9trX0"/>
+</div>
+<!-- Map UI Elements (Simulated) -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+<!-- Moving Driver Marker -->
+<div class="relative flex items-center justify-center">
+<div class="absolute w-12 h-12 bg-secondary-container opacity-20 rounded-full pulse-animation"></div>
+<div class="z-10 bg-primary text-white p-2 rounded shadow-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">local_shipping</span>
+</div>
+<div class="absolute top-full mt-2 bg-white px-2 py-1 border border-outline shadow-sm whitespace-nowrap">
+<span class="text-label-sm font-mono-sm" id="map-marker-label">—</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Left Column: Status & Timeline -->
+<aside class="relative z-10 w-[380px] h-full bg-white border-r border-outline-variant flex flex-col shadow-2xl">
+<!-- Header -->
+<div class="p-6 border-b border-outline-variant">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h1 class="text-label-sm font-label-sm text-outline uppercase tracking-widest mb-1">Shipment ID</h1>
+<p class="text-headline-md font-headline-md text-primary" id="shipment-ref">—</p>
+</div>
+<div class="bg-secondary-container px-3 py-1 rounded-sm">
+<span class="text-label-sm font-label-sm text-on-secondary-container" id="shipment-status">—</span>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-low p-4 border border-outline-variant">
+<div class="flex-1">
+<p class="text-label-sm text-outline">Target Price</p>
+<p class="text-headline-md font-headline-md" id="shipment-price">—</p>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant"></div>
+<div class="flex-1">
+<p class="text-label-sm text-outline">Distance</p>
+<p class="text-headline-md font-headline-md" id="shipment-distance">— <span class="text-body-sm font-normal text-outline">mi</span></p>
+</div>
+</div>
+</div>
+<!-- Vertical Timeline -->
+<div class="flex-1 overflow-y-auto p-6">
+<h2 class="text-label-md font-label-md text-primary mb-6">Milestones</h2>
+<div class="relative space-y-6 pl-4" id="milestones-list"></div>
+</div>
+<!-- Driver/Action Footer -->
+<div class="p-6 bg-surface border-t border-outline-variant">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-outline">local_shipping</span>
+</div>
+<div class="flex-1">
+<p class="text-label-md font-label-md text-primary" id="driver-name">Unassigned</p>
+<p class="text-label-sm text-outline" id="driver-meta">Awaiting driver assignment</p>
+</div>
+</div>
+<!-- OTP Section (customer only) -->
+<div class="bg-primary-container p-4 border border-outline hidden" id="otp-section">
+<div class="flex justify-between items-center mb-2">
+<span class="text-label-sm font-label-sm text-outline-variant uppercase">Delivery OTP</span>
+<span class="material-symbols-outlined text-outline-variant text-[18px]">verified_user</span>
+</div>
+<div class="flex gap-2" id="otp-digits"></div>
+<p class="mt-2 text-[10px] text-outline-variant text-center">Share this code with the driver to confirm delivery</p>
+</div>
+<!-- Driver action panel (driver only) -->
+<div class="hidden space-y-3" id="driver-actions">
+<button class="w-full bg-primary text-white py-3 font-label-md text-label-md uppercase tracking-wider hover:opacity-90" id="advance-status-btn"></button>
+<div class="flex gap-2">
+<input class="flex-1 h-10 border border-outline-variant px-3 text-body-sm" id="ping-lat" placeholder="lat" type="number"/>
+<input class="flex-1 h-10 border border-outline-variant px-3 text-body-sm" id="ping-lng" placeholder="lng" type="number"/>
+<button class="px-4 border border-primary text-primary text-label-sm font-label-md" onclick="postPing()">Post Location</button>
+</div>
+</div>
+</div>
+</aside>
+<!-- Right Side: Floating Info Cards -->
+<div class="relative flex-1 p-8 pointer-events-none">
+<!-- Floating Route Info -->
+<div class="absolute top-8 right-8 w-80 bg-white border border-outline-variant p-6 shadow-xl pointer-events-auto">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-secondary">route</span>
+<h3 class="text-label-md font-label-md text-primary">Route Details</h3>
+</div>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-[1px] h-full border-l border-dashed border-outline"></div>
+</div>
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter">Origin</p>
+<p class="text-label-sm font-label-sm text-primary" id="route-origin">—</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-secondary text-[16px]">location_on</span>
+</div>
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter">Destination</p>
+<p class="text-label-sm font-label-sm text-primary" id="route-dest">—</p>
+</div>
+</div>
+</div>
+<button class="mt-8 w-full border border-primary py-2 text-label-sm font-label-sm text-primary hover:bg-surface transition-colors uppercase tracking-widest" onclick="window.location.href='negotiation-chat.html?id=' + deliveryId">
+                    Open Negotiation Chat
+                </button>
+</div>
+</div>
+</main>
+<!-- Micro-interactions Script -->
+<script>
+        // Simple map marker "movement" simulation
+        const marker = document.querySelector('.pulse-animation').parentElement;
+        let x = 0;
+        let y = 0;
+
+        function animate() {
+            x += Math.sin(Date.now() / 2000) * 0.1;
+            y += Math.cos(Date.now() / 3000) * 0.1;
+            marker.style.transform = `translate(${x}px, ${y}px)`;
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'scale(0.98)';
+                btn.style.opacity = '0.9';
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = 'scale(1)';
+                btn.style.opacity = '1';
+            });
+        });
+    </script>
+    <script src="/static/js/config.js"></script>
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/ui.js"></script>
+    <script>
+        const user = requireAuth();
+        document.getElementById('home-link').href = ROLE_HOME[user.role] || 'index.html';
+        document.getElementById('viewer-label').textContent = `${user.role.charAt(0).toUpperCase()}${user.role.slice(1)}`;
+
+        const deliveryId = qs('id');
+        let delivery = null;
+
+        const ALL_STATUSES = ['pending', 'negotiating', 'accepted', 'driver_arrived', 'in_transit', 'delivered'];
+        const NEXT_STATUS = { accepted: 'driver_arrived', driver_arrived: 'in_transit', in_transit: 'delivered' };
+
+        function renderMilestones() {
+            const list = document.getElementById('milestones-list');
+            const events = delivery.status_events || [];
+            const eventByStatus = {};
+            events.forEach((e) => { eventByStatus[e.status] = e; });
+            const currentIndex = ALL_STATUSES.indexOf(delivery.status);
+
+            list.innerHTML = ALL_STATUSES
+                .map((status, i) => {
+                    const event = eventByStatus[status];
+                    const done = event || i < currentIndex;
+                    const active = status === delivery.status;
+                    const dot = active
+                        ? `<div class="z-10 w-5 h-5 rounded-full border-4 border-secondary bg-white flex items-center justify-center"></div>`
+                        : done
+                            ? `<div class="z-10 w-5 h-5 rounded-full bg-secondary flex items-center justify-center"><span class="material-symbols-outlined text-[12px] text-white" style="font-variation-settings: 'FILL' 1;">check</span></div>`
+                            : `<div class="z-10 w-5 h-5 rounded-full border-2 border-outline-variant bg-white"></div>`;
+                    return `
+                <div class="relative flex items-start gap-4 ${done || active ? '' : 'opacity-40'}">
+                  ${dot}
+                  <div>
+                    <p class="text-label-md font-label-md text-primary">${status.replace(/_/g, ' ')}</p>
+                    <p class="text-label-sm ${active ? 'text-secondary font-bold' : 'text-outline'}">${event ? dateTime(event.created_at) : (active ? 'In progress' : 'Pending')}</p>
+                  </div>
+                </div>`;
+                })
+                .join('');
+        }
+
+        function renderDriverFooter(tracking) {
+            const isAssignedDriver = user.role === 'driver' && delivery.driver && delivery.driver.id === user.id;
+            const isCustomer = user.role === 'customer' && delivery.customer.id === user.id;
+
+            if (delivery.driver) {
+                document.getElementById('driver-name').textContent = `${delivery.driver.first_name} ${delivery.driver.last_name}`.trim() || delivery.driver.email;
+                document.getElementById('driver-meta').textContent = delivery.driver.driver_profile ? `Rating ${delivery.driver.driver_profile.rating}` : 'Driver';
+            }
+
+            if (isCustomer && tracking.delivery_otp) {
+                document.getElementById('otp-section').classList.remove('hidden');
+                document.getElementById('otp-digits').innerHTML = tracking.delivery_otp
+                    .split('')
+                    .map((d) => `<div class="flex-1 bg-white h-10 flex items-center justify-center text-headline-md font-mono-sm text-primary tracking-widest border border-outline">${d}</div>`)
+                    .join('');
+            }
+
+            if (isAssignedDriver) {
+                document.getElementById('driver-actions').classList.remove('hidden');
+                const next = NEXT_STATUS[delivery.status];
+                const btn = document.getElementById('advance-status-btn');
+                if (next) {
+                    btn.textContent = `Mark: ${next.replace(/_/g, ' ')}`;
+                    btn.classList.remove('hidden');
+                    btn.onclick = () => advanceStatus(next);
+                } else {
+                    btn.classList.add('hidden');
+                }
+            }
+        }
+
+        async function advanceStatus(status) {
+            let otp;
+            if (status === 'delivered') otp = prompt('Enter the delivery OTP given by the customer:');
+            try {
+                delivery = await API.deliveries.advanceStatus(deliveryId, { status, otp });
+                render();
+            } catch (err) {
+                alert('Failed to update status: ' + err.message);
+            }
+        }
+
+        async function postPing() {
+            const lat = parseFloat(document.getElementById('ping-lat').value);
+            const lng = parseFloat(document.getElementById('ping-lng').value);
+            if (Number.isNaN(lat) || Number.isNaN(lng)) return;
+            await API.deliveries.tracking.post(deliveryId, { lat, lng });
+            alert('Location posted.');
+        }
+
+        function render() {
+            document.getElementById('shipment-ref').textContent = delivery.reference;
+            document.getElementById('shipment-status').textContent = delivery.status.replace(/_/g, ' ').toUpperCase();
+            document.getElementById('shipment-price').textContent = money(delivery.final_price || delivery.target_price);
+            document.getElementById('shipment-distance').innerHTML = `${delivery.distance_miles || '—'} <span class="text-body-sm font-normal text-outline">mi</span>`;
+            document.getElementById('route-origin').textContent = delivery.pickup_address;
+            document.getElementById('route-dest').textContent = delivery.dropoff_address;
+            document.getElementById('map-marker-label').textContent = delivery.reference;
+            renderMilestones();
+        }
+
+        async function load() {
+            delivery = await API.deliveries.get(deliveryId);
+            const tracking = await API.deliveries.tracking.get(deliveryId);
+            render();
+            renderDriverFooter(tracking);
+        }
+
+        load().catch((err) => alert('Failed to load tracking: ' + err.message));
+    </script>
+</body></html>

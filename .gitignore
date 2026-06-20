@@ -26,3 +26,22 @@ Desktop.ini
 out/
 build/
 dist/
+
+# Python / Django
+__pycache__/
+*.py[cod]
+*.sqlite3
+backend/db.sqlite3
+backend/media/
+backend/staticfiles/
+.env
+.venv/
+venv/
+*.egg-info/
+
+# Raw design-prototype reference assets only — the working frontend now lives
+# in backend/templates and backend/static and is pushed as part of backend/.
+frontend/
+
+# Claude Code local config
+.claude/

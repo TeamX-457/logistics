@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Wallet &amp; Payments Dashboard | LogisticsPro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#c6c6cd",
+                    "on-tertiary-fixed-variant": "#574425",
+                    "on-secondary-fixed": "#2a1700",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "surface-container-highest": "#d3e4fe",
+                    "surface-tint": "#565e74",
+                    "inverse-surface": "#213145",
+                    "on-error": "#ffffff",
+                    "tertiary-container": "#271901",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#0b1c30",
+                    "surface-container": "#e5eeff",
+                    "on-surface-variant": "#45464d",
+                    "surface": "#f8f9ff",
+                    "surface-container-high": "#dce9ff",
+                    "on-tertiary-container": "#98805d",
+                    "inverse-on-surface": "#eaf1ff",
+                    "secondary-container": "#fea619",
+                    "on-error-container": "#93000a",
+                    "on-primary-container": "#7c839b",
+                    "surface-variant": "#d3e4fe",
+                    "on-background": "#0b1c30",
+                    "surface-container-low": "#eff4ff",
+                    "error-container": "#ffdad6",
+                    "on-tertiary": "#ffffff",
+                    "background": "#f8f9ff",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#cbdbf5",
+                    "primary": "#000000",
+                    "outline": "#76777d",
+                    "secondary": "#855300",
+                    "tertiary-fixed": "#fcdeb5",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "secondary-fixed": "#ffddb8",
+                    "surface-bright": "#f8f9ff",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed": "#131b2e",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "on-secondary-container": "#684000",
+                    "primary-container": "#131b2e",
+                    "primary-fixed-dim": "#bec6e0",
+                    "on-tertiary-fixed": "#271901",
+                    "inverse-primary": "#bec6e0",
+                    "tertiary-fixed-dim": "#dec29a",
+                    "tertiary": "#000000",
+                    "primary-fixed": "#dae2fd"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "lg": "0.75rem",
+                    "xl": "1rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "sm": "8px",
+                    "margin": "32px",
+                    "lg": "24px",
+                    "xs": "4px",
+                    "xl": "32px",
+                    "md": "16px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Geist"],
+                    "headline-xl": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "body-sm": ["Geist"],
+                    "body-lg": ["Geist"],
+                    "label-md": ["Geist"],
+                    "headline-lg-mobile": ["Geist"],
+                    "label-sm": ["Geist"],
+                    "body-md": ["Geist"],
+                    "mono-sm": ["Geist Mono"]
+            },
+            "fontSize": {
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "mono-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        button, input, select, textarea {
+            border-radius: 0.5rem;
+        }
+        [class*="border"]:not([class*="rounded"]) {
+            border-radius: 0.5rem;
+        }
+        body { font-family: 'Geist', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .chart-container {
+            position: relative;
+            height: 200px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- Top Navigation -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-xl">
+<span class="text-headline-md font-headline-md font-bold text-primary">LogisticsPro</span>
+<div class="hidden md:flex gap-lg items-center">
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" id="home-link" href="#">Dashboard</a>
+<a class="text-label-md font-label-md text-primary border-b-2 border-primary pb-1" href="#">Wallet</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes.html">Support</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-on-surface-variant" onclick="logout()">account_circle</button>
+</div>
+</nav>
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-full w-64 z-40 flex flex-col pt-20 pb-8 px-4 bg-surface-container-low border-r border-outline-variant hidden md:flex">
+<div class="mb-lg px-2">
+<div class="text-label-sm font-label-sm text-outline uppercase tracking-wider mb-xs">Account</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant" id="profile-name">Loading…</div>
+</div>
+<div class="flex flex-col gap-xs flex-grow">
+<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors" id="home-link-2" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 bg-secondary-container text-on-secondary-container border-r-4 border-secondary" href="wallet.html">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-label-md font-label-md">Wallet</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors" href="disputes.html">
+<span class="material-symbols-outlined">gavel</span>
+<span class="text-label-md font-label-md">Disputes</span>
+</a>
+</div>
+<div class="mt-auto border-t border-outline-variant pt-lg flex flex-col gap-xs">
+<a class="flex items-center gap-md px-4 py-2 text-on-surface-variant hover:bg-surface-container-high" href="/static/docs/index.html" target="_blank">
+<span class="material-symbols-outlined text-[20px]">description</span>
+<span class="text-label-md">Documentation</span>
+</a>
+<a class="flex items-center gap-md px-4 py-2 text-on-surface-variant hover:bg-surface-container-high" href="#" onclick="logout(); return false;">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span class="text-label-md">Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="md:ml-64 pt-24 px-margin pb-12 bg-surface">
+<div class="max-w-[1440px] mx-auto">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-xl gap-lg">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-primary mb-xs">Financial Overview</h1>
+<p class="text-body-md font-body-md text-on-surface-variant">Manage your marketplace funds and delivery transactions.</p>
+</div>
+<div class="flex gap-md">
+<button class="bg-secondary-container text-on-secondary-container px-xl py-md text-label-md font-label-md rounded-lg hover:opacity-90 transition-opacity flex items-center gap-sm" onclick="window.location.href='create-delivery.html'">
+<span class="material-symbols-outlined">add</span>
+                        New Delivery
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg">
+<!-- Balance & Quick Actions -->
+<div class="md:col-span-4 flex flex-col gap-lg">
+<!-- Total Balance Card -->
+<div class="bg-white border border-outline-variant p-xl flex flex-col justify-between h-full">
+<div>
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Available Balance</span>
+<div class="text-headline-xl font-headline-xl text-primary mt-sm" id="wallet-balance">—</div>
+</div>
+<div class="mt-xl flex gap-md">
+<button class="flex-1 bg-primary text-on-primary py-md text-label-md font-label-md rounded border border-primary hover:opacity-90" onclick="withdraw()">
+                                Withdraw
+                            </button>
+<button class="flex-1 bg-white text-primary py-md text-label-md font-label-md rounded border border-outline-variant hover:bg-surface-container-low" onclick="transfer()">
+                                Transfer
+                            </button>
+</div>
+</div>
+<!-- Payment Methods -->
+<div class="bg-white border border-outline-variant p-xl">
+<div class="flex justify-between items-center mb-lg">
+<h3 class="text-label-md font-label-md text-primary uppercase">Payment Methods</h3>
+</div>
+<div class="flex flex-col gap-md" id="payment-methods-list">
+<div class="text-on-surface-variant text-label-sm">Loading…</div>
+</div>
+<button class="w-full mt-md border-2 border-dashed border-outline-variant py-md text-label-md font-label-md text-outline hover:border-primary hover:text-primary transition-all flex items-center justify-center gap-sm" onclick="addPaymentMethod()">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                                Link New Method
+                            </button>
+</div>
+</div>
+<!-- Logistics Spending Visualization -->
+<div class="md:col-span-8">
+<div class="bg-white border border-outline-variant p-xl h-full flex flex-col">
+<div class="flex justify-between items-start mb-lg">
+<div>
+<h3 class="text-label-md font-label-md text-primary uppercase">Spending</h3>
+<div class="text-headline-md font-headline-md text-primary mt-xs" id="spending-total">—</div>
+</div>
+<div class="flex gap-xs bg-surface-container rounded p-xs">
+<button class="px-md py-xs text-label-sm font-label-sm rounded" data-range="1M" onclick="setRange('1M')">1M</button>
+<button class="px-md py-xs text-label-sm font-label-sm rounded" data-range="6M" onclick="setRange('6M')">6M</button>
+<button class="px-md py-xs text-label-sm font-label-sm rounded" data-range="1Y" onclick="setRange('1Y')">1Y</button>
+</div>
+</div>
+<div class="chart-container flex-grow flex items-end gap-md pt-lg" id="spending-chart"></div>
+<div class="flex justify-between mt-md px-xs" id="spending-labels"></div>
+</div>
+</div>
+<!-- Categorized Transaction History -->
+<div class="md:col-span-12">
+<div class="bg-white border border-outline-variant overflow-hidden">
+<div class="px-xl py-lg border-b border-outline-variant flex flex-col md:flex-row justify-between items-center gap-md">
+<h3 class="text-label-md font-label-md text-primary uppercase">Transaction History</h3>
+<div class="flex items-center gap-md w-full md:w-auto">
+<div class="relative flex-grow md:flex-grow-0">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="pl-10 pr-md py-xs border border-outline-variant rounded text-body-sm w-full md:w-64 focus:ring-1 focus:ring-primary focus:border-primary outline-none" id="txn-search" placeholder="Search ID, counterparty..." type="text"/>
+</div>
+<select class="px-md py-xs border border-outline-variant rounded text-body-sm bg-white outline-none" id="txn-filter">
+<option value="">All Types</option>
+<option value="deposit">Deposits</option>
+<option value="delivery_payment">Delivery Payments</option>
+<option value="refund">Refunds</option>
+<option value="withdrawal">Withdrawals</option>
+<option value="payout">Payouts</option>
+<option value="commission">Commission</option>
+</select>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="px-xl py-md text-label-sm font-label-sm text-outline uppercase">Transaction ID</th>
+<th class="px-xl py-md text-label-sm font-label-sm text-outline uppercase">Date</th>
+<th class="px-xl py-md text-label-sm font-label-sm text-outline uppercase">Category</th>
+<th class="px-xl py-md text-label-sm font-label-sm text-outline uppercase">Counterparty</th>
+<th class="px-xl py-md text-label-sm font-label-sm text-outline uppercase text-right">Amount</th>
+<th class="px-xl py-md text-label-sm font-label-sm text-outline uppercase text-center">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant" id="txn-body">
+<tr><td class="px-xl py-lg text-on-surface-variant" colspan="6">Loading…</td></tr>
+</tbody>
+</table>
+</div>
+<div class="px-xl py-lg bg-surface-container-low border-t border-outline-variant flex justify-between items-center">
+<span class="text-label-sm font-label-sm text-outline" id="txn-count">—</span>
+<div class="flex gap-xs">
+<button class="p-xs border border-outline-variant rounded hover:bg-white" id="txn-prev" onclick="loadTransactions(txnPage - 1)"><span class="material-symbols-outlined text-[18px]">chevron_left</span></button>
+<span class="px-sm text-label-sm font-bold flex items-center" id="txn-page-label">1</span>
+<button class="p-xs border border-outline-variant rounded hover:bg-white" id="txn-next" onclick="loadTransactions(txnPage + 1)"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script src="/static/js/config.js"></script>
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/ui.js"></script>
+    <script>
+        const user = requireAuth();
+        document.getElementById('home-link').href = ROLE_HOME[user.role] || 'index.html';
+        document.getElementById('home-link-2').href = ROLE_HOME[user.role] || 'index.html';
+        document.getElementById('profile-name').textContent = user.email;
+
+        let txnPage = 1;
+        let currentRange = '1M';
+        let allTransactions = [];
+
+        async function loadWallet() {
+            const wallet = await API.wallet.get();
+            document.getElementById('wallet-balance').textContent = money(wallet.balance);
+        }
+
+        async function loadPaymentMethods() {
+            const methods = await API.wallet.paymentMethods.list();
+            const list = document.getElementById('payment-methods-list');
+            list.innerHTML = methods.length
+                ? methods
+                    .map((m) => `
+                <div class="flex items-center justify-between p-md border border-outline-variant rounded ${m.is_default ? 'bg-surface' : ''}">
+                  <div class="flex items-center gap-md">
+                    <span class="material-symbols-outlined text-outline">${m.method_type === 'card' ? 'credit_card' : 'account_balance'}</span>
+                    <div>
+                      <div class="text-label-md font-label-md text-on-surface">${m.label}${m.last4 ? ' •••• ' + m.last4 : ''}</div>
+                      <div class="text-label-sm font-label-sm text-outline">${m.method_type}</div>
+                    </div>
+                  </div>
+                  ${m.is_default
+                    ? '<span class="bg-primary text-on-primary text-[10px] px-sm py-[2px] rounded uppercase font-bold">Default</span>'
+                    : `<button class="text-label-sm font-label-sm text-secondary font-bold" onclick="setDefaultMethod(${m.id})">Set Default</button>`}
+                </div>`)
+                    .join('')
+                : `<div class="text-on-surface-variant text-label-sm">No payment methods yet.</div>`;
+        }
+
+        async function setDefaultMethod(id) {
+            await API.wallet.paymentMethods.setDefault(id);
+            loadPaymentMethods();
+        }
+
+        async function addPaymentMethod() {
+            const label = prompt('Label for this method (e.g. Chase Business):');
+            if (!label) return;
+            const method_type = confirm('Is this a card? OK = Card, Cancel = Bank') ? 'card' : 'bank';
+            const last4 = method_type === 'card' ? (prompt('Last 4 digits:') || '') : '';
+            await API.wallet.paymentMethods.create({ label, method_type, last4 });
+            loadPaymentMethods();
+        }
+
+        async function withdraw() {
+            const amount = prompt('Amount to withdraw ($):');
+            if (!amount) return;
+            const methods = await API.wallet.paymentMethods.list();
+            if (!methods.length) return alert('Add a payment method first.');
+            try {
+                await API.wallet.withdraw({ amount: parseFloat(amount), payment_method: methods[0].id });
+                await Promise.all([loadWallet(), loadTransactions(1)]);
+            } catch (err) {
+                alert('Withdraw failed: ' + err.message);
+            }
+        }
+
+        async function transfer() {
+            const amount = prompt('Amount to transfer ($):');
+            if (!amount) return;
+            const recipient_email = prompt('Recipient email:');
+            if (!recipient_email) return;
+            try {
+                await API.wallet.transfer({ amount: parseFloat(amount), recipient_email });
+                await Promise.all([loadWallet(), loadTransactions(1)]);
+            } catch (err) {
+                alert('Transfer failed: ' + err.message);
+            }
+        }
+
+        async function setRange(range) {
+            currentRange = range;
+            document.querySelectorAll('[data-range]').forEach((b) => {
+                b.classList.toggle('bg-white', b.dataset.range === range);
+                b.classList.toggle('shadow-sm', b.dataset.range === range);
+                b.classList.toggle('text-outline', b.dataset.range !== range);
+            });
+            const summary = await API.wallet.spendingSummary(range);
+            document.getElementById('spending-total').textContent = money(summary.total);
+            const max = Math.max(1, ...summary.series.map((s) => parseFloat(s.total)));
+            document.getElementById('spending-chart').innerHTML = summary.series.length
+                ? summary.series
+                    .map((s) => `<div class="flex-1 bg-surface-container-highest rounded-t-sm transition-all hover:bg-primary-fixed" style="height:${(parseFloat(s.total) / max) * 100}%"></div>`)
+                    .join('')
+                : `<div class="text-on-surface-variant text-label-sm">No spending recorded yet.</div>`;
+            document.getElementById('spending-labels').innerHTML = summary.series.map((s) => `<span class="text-label-sm font-label-sm text-outline">${s.month}</span>`).join('');
+        }
+
+        function filterAndRenderTransactions() {
+            const search = document.getElementById('txn-search').value.toLowerCase();
+            const filter = document.getElementById('txn-filter').value;
+            const filtered = allTransactions.filter((t) => {
+                const matchesFilter = !filter || t.category === filter;
+                const matchesSearch = !search || t.transaction_id.toLowerCase().includes(search) || (t.counterparty || '').toLowerCase().includes(search);
+                return matchesFilter && matchesSearch;
+            });
+            const body = document.getElementById('txn-body');
+            body.innerHTML = filtered.length
+                ? filtered
+                    .map((t) => `
+                <tr class="hover:bg-surface-container transition-colors group">
+                  <td class="px-xl py-lg font-mono-sm text-primary">${t.transaction_id}</td>
+                  <td class="px-xl py-lg text-body-sm text-on-surface">${dateTime(t.created_at)}</td>
+                  <td class="px-xl py-lg"><span class="px-sm py-[2px] rounded-sm text-[11px] font-bold uppercase bg-blue-100 text-blue-800">${t.category.replace(/_/g, ' ')}</span></td>
+                  <td class="px-xl py-lg text-body-sm text-on-surface">${t.counterparty || '—'}</td>
+                  <td class="px-xl py-lg text-body-sm font-bold ${parseFloat(t.amount) < 0 ? 'text-error' : 'text-green-700'} text-right">${parseFloat(t.amount) >= 0 ? '+' : ''}${money(t.amount)}</td>
+                  <td class="px-xl py-lg text-center">${statusBadge(t.status)}</td>
+                </tr>`)
+                    .join('')
+                : `<tr><td class="px-xl py-lg text-on-surface-variant" colspan="6">No transactions found.</td></tr>`;
+        }
+
+        async function loadTransactions(page) {
+            if (page < 1) return;
+            txnPage = page;
+            const data = await API.wallet.transactions({ page });
+            allTransactions = data.results || data;
+            document.getElementById('txn-count').textContent = `${data.count !== undefined ? data.count : allTransactions.length} transactions`;
+            document.getElementById('txn-page-label').textContent = txnPage;
+            document.getElementById('txn-prev').disabled = !data.previous;
+            document.getElementById('txn-next').disabled = !data.next;
+            filterAndRenderTransactions();
+        }
+
+        document.getElementById('txn-search').addEventListener('input', filterAndRenderTransactions);
+        document.getElementById('txn-filter').addEventListener('change', filterAndRenderTransactions);
+
+        Promise.all([loadWallet(), loadPaymentMethods(), loadTransactions(1), setRange('1M')]).catch((err) =>
+            alert('Failed to load wallet: ' + err.message)
+        );
+    </script>
+</body></html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LogisticsPro - KYC Verification</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        button, input, select, textarea {
+            border-radius: 0.5rem;
+        }
+        [class*="border"]:not([class*="rounded"]) {
+            border-radius: 0.5rem;
+        }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #c6c6cd;
+      border-radius: 10px;
+    }
+    body {
+      font-family: 'Geist', sans-serif;
+    }
+    /* Surgical 1px borders as per design system */
+    .b-1 { border: 1px solid #e5eeff; }
+    .b-r-1 { border-right: 1px solid #e5eeff; }
+    .b-b-1 { border-bottom: 1px solid #e5eeff; }
+    
+    /* Glow shadow for focus/active */
+    .glow-shadow {
+      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.02);
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "primary-fixed-dim": "#bec6e0",
+                  "surface-variant": "#d3e4fe",
+                  "surface-container-highest": "#d3e4fe",
+                  "surface": "#f8f9ff",
+                  "on-tertiary-fixed-variant": "#574425",
+                  "error": "#ba1a1a",
+                  "error-container": "#ffdad6",
+                  "secondary-fixed": "#ffddb8",
+                  "surface-container-lowest": "#ffffff",
+                  "tertiary": "#000000",
+                  "surface-container-low": "#eff4ff",
+                  "secondary-fixed-dim": "#ffb95f",
+                  "secondary-container": "#fea619",
+                  "on-secondary-fixed-variant": "#653e00",
+                  "on-tertiary-fixed": "#271901",
+                  "surface-container-high": "#dce9ff",
+                  "surface-bright": "#f8f9ff",
+                  "primary-fixed": "#dae2fd",
+                  "on-secondary-fixed": "#2a1700",
+                  "secondary": "#855300",
+                  "background": "#f8f9ff",
+                  "surface-container": "#e5eeff",
+                  "on-secondary": "#ffffff",
+                  "outline-variant": "#c6c6cd",
+                  "primary": "#000000",
+                  "surface-tint": "#565e74",
+                  "tertiary-fixed-dim": "#dec29a",
+                  "tertiary-fixed": "#fcdeb5",
+                  "on-primary": "#ffffff",
+                  "on-surface": "#0b1c30",
+                  "inverse-on-surface": "#eaf1ff",
+                  "outline": "#76777d",
+                  "on-tertiary": "#ffffff",
+                  "on-error-container": "#93000a",
+                  "on-primary-container": "#7c839b",
+                  "on-error": "#ffffff",
+                  "on-secondary-container": "#684000",
+                  "primary-container": "#131b2e",
+                  "surface-dim": "#cbdbf5",
+                  "on-primary-fixed-variant": "#3f465c",
+                  "on-background": "#0b1c30",
+                  "inverse-surface": "#213145",
+                  "on-tertiary-container": "#98805d",
+                  "inverse-primary": "#bec6e0",
+                  "on-surface-variant": "#45464d",
+                  "tertiary-container": "#271901",
+                  "on-primary-fixed": "#131b2e"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.5rem",
+                  "lg": "0.75rem",
+                  "xl": "1rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "lg": "24px",
+                  "xs": "4px",
+                  "gutter": "24px",
+                  "xl": "32px",
+                  "sm": "8px",
+                  "margin": "32px",
+                  "base": "8px",
+                  "md": "16px"
+          },
+          "fontFamily": {
+                  "headline-lg": ["Geist"],
+                  "body-md": ["Geist"],
+                  "label-md": ["Geist"],
+                  "headline-md": ["Geist"],
+                  "label-sm": ["Geist"],
+                  "body-lg": ["Geist"],
+                  "mono-sm": ["Geist Mono"]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden">
+<!-- TopNavBar Implementation -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-8">
+<span class="text-headline-md font-headline-md font-bold text-primary">LogisticsPro</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="admin-overview.html">Overview</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes.html">Disputes</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-outline">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors" onclick="logout()">logout</span>
+</div>
+</div>
+</header>
+<!-- SideNavBar Implementation -->
+<aside class="fixed left-0 top-0 h-full w-64 z-40 flex flex-col pt-20 pb-8 px-4 bg-surface-container-low border-r border-outline-variant">
+<div class="mb-8 px-2">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="admin_panel_settings">admin_panel_settings</span>
+</div>
+<div>
+<p class="text-label-md font-bold text-primary">Admin Console</p>
+<p class="text-label-sm text-on-surface-variant" id="profile-name">Loading…</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-3 rounded-none text-on-surface-variant hover:bg-surface-container-high transition-transform active:scale-[0.99] group" href="admin-overview.html">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 bg-secondary-container text-on-secondary-container rounded-none border-r-4 border-secondary transition-transform active:scale-[0.99]" href="fleet-verification.html">
+<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
+<span class="text-label-md">Fleet Verification</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-none text-on-surface-variant hover:bg-surface-container-high transition-transform active:scale-[0.99]" href="financial-analytics.html">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="text-label-md">Financials</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-none text-on-surface-variant hover:bg-surface-container-high transition-transform active:scale-[0.99]" href="operations-monitoring.html">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="text-label-md">Operations</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-none text-on-surface-variant hover:bg-surface-container-high transition-transform active:scale-[0.99]" href="disputes.html">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+<span class="text-label-md">Disputes</span>
+</a>
+</nav>
+<div class="mt-auto space-y-1 border-t border-outline-variant pt-4">
+<a class="flex items-center gap-3 px-3 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors" href="/static/docs/index.html" target="_blank">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="text-label-md">Documentation</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 text-error hover:bg-error-container transition-colors" href="#" onclick="logout(); return false;">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="text-label-md">Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-16 h-screen flex overflow-hidden">
+<!-- Table & Filters Section -->
+<section class="flex-1 p-lg overflow-y-auto custom-scrollbar">
+<div class="mb-xl">
+<h1 class="text-headline-lg font-headline-lg text-primary mb-2">User Verification (KYC)</h1>
+<p class="text-body-md text-on-surface-variant">Review and manage documentation for logistics providers and fleet partners.</p>
+</div>
+<!-- Tabs & Filters Bar -->
+<div class="bg-surface-container-lowest border border-outline-variant p-4 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<!-- Tabbed Interface -->
+<div class="flex gap-1 bg-surface-container-low p-1 rounded-lg" id="entity-tabs">
+<button class="px-6 py-2 text-label-md rounded-lg bg-surface-container-lowest text-primary shadow-sm" data-entity="" onclick="setEntityTab('')">All</button>
+<button class="px-6 py-2 text-label-md rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" data-entity="individual" onclick="setEntityTab('individual')">Individual Drivers</button>
+<button class="px-6 py-2 text-label-md rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" data-entity="group" onclick="setEntityTab('group')">Groups</button>
+<button class="px-6 py-2 text-label-md rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" data-entity="enterprise" onclick="setEntityTab('enterprise')">Enterprises</button>
+</div>
+<!-- Search -->
+<div class="relative w-72">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface border border-outline-variant rounded-lg text-sm focus:ring-2 focus:ring-primary-fixed focus:border-primary" id="search-input" placeholder="Search by name or license..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<label class="text-label-sm text-outline-variant uppercase">Verification Status</label>
+<select class="border border-outline-variant rounded bg-surface px-3 py-1 text-label-md" id="status-filter">
+<option value="">All Statuses</option>
+<option value="pending">Pending</option>
+<option value="approved">Approved</option>
+<option value="rejected">Rejected</option>
+</select>
+</div>
+<div class="flex items-center gap-2">
+<label class="text-label-sm text-outline-variant uppercase">Vehicle Type</label>
+<select class="border border-outline-variant rounded bg-surface px-3 py-1 text-label-md" id="vehicle-filter">
+<option value="">Any Vehicle</option>
+<option value="bike">Bike</option>
+<option value="motorcycle">Motorcycle</option>
+<option value="van">Van</option>
+<option value="cargo_van">Cargo Van</option>
+<option value="truck">Truck</option>
+<option value="heavy_truck">Heavy Truck</option>
+</select>
+</div>
+<button class="ml-auto flex items-center gap-2 text-label-md text-on-surface-variant hover:text-primary" onclick="clearFilters()">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+            Clear Filters
+          </button>
+</div>
+</div>
+<!-- Data Table -->
+<div class="mt-lg overflow-x-auto border border-outline-variant bg-surface-container-lowest">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="px-6 py-4 text-label-sm uppercase font-bold text-on-surface-variant">Entity Name</th>
+<th class="px-6 py-4 text-label-sm uppercase font-bold text-on-surface-variant">Vehicle</th>
+<th class="px-6 py-4 text-label-sm uppercase font-bold text-on-surface-variant">Registration Date</th>
+<th class="px-6 py-4 text-label-sm uppercase font-bold text-on-surface-variant">Verification Status</th>
+<th class="px-6 py-4 text-label-sm uppercase font-bold text-on-surface-variant">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant" id="verification-rows">
+<tr><td class="px-6 py-4 text-on-surface-variant" colspan="5">Loading…</td></tr>
+</tbody>
+</table>
+<div class="p-4 border-t border-outline-variant flex items-center justify-between bg-surface-container-low">
+<p class="text-label-sm text-on-surface-variant" id="record-count">—</p>
+<div class="flex gap-2">
+<button class="w-8 h-8 border border-outline-variant rounded flex items-center justify-center text-outline hover:border-primary hover:text-primary transition-colors" id="page-prev" onclick="loadVerifications(currentPage - 1)">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 bg-primary text-on-primary rounded flex items-center justify-center text-label-sm font-bold" id="page-label">1</button>
+<button class="w-8 h-8 border border-outline-variant rounded flex items-center justify-center text-outline hover:border-primary hover:text-primary transition-colors" id="page-next" onclick="loadVerifications(currentPage + 1)">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Side Panel (Detail View) -->
+<aside class="w-[420px] bg-surface-container-lowest border-l border-outline-variant flex flex-col shadow-xl overflow-y-auto custom-scrollbar hidden" id="detail-panel">
+<div class="p-6 border-b border-outline-variant sticky top-0 bg-surface-container-lowest z-10">
+<div class="flex items-center justify-between mb-4">
+<span class="bg-secondary-container text-on-secondary-container px-2 py-1 rounded text-[10px] font-bold uppercase tracking-widest" id="detail-status-badge">—</span>
+<button class="text-outline hover:text-error transition-colors" onclick="closeDetail()">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-lg overflow-hidden border border-outline-variant bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-outline text-[32px]">person</span>
+</div>
+<div>
+<h2 class="text-headline-md font-bold text-primary leading-tight" id="detail-name">—</h2>
+<p class="text-body-sm text-on-surface-variant flex items-center gap-1" id="detail-meta">—</p>
+</div>
+</div>
+</div>
+<div class="p-6 space-y-8">
+<!-- Verification Section: NIN -->
+<div>
+<h3 class="text-label-md font-bold uppercase text-outline mb-3">NIN Verification</h3>
+<div class="bg-surface-container p-4 rounded border border-outline-variant">
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="text-[10px] uppercase text-outline-variant font-bold mb-1">NIN Number</p>
+<p class="text-mono-sm font-bold text-primary" id="detail-nin">—</p>
+</div>
+<div>
+<p class="text-[10px] uppercase text-outline-variant font-bold mb-1">Date of Birth</p>
+<p class="text-mono-sm font-bold text-primary" id="detail-dob">—</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Verification Section: License -->
+<div>
+<h3 class="text-label-md font-bold uppercase text-outline mb-3">License &amp; Documents</h3>
+<p class="text-mono-sm font-bold text-primary mb-3" id="detail-license">—</p>
+<div class="grid grid-cols-2 gap-3" id="detail-documents"></div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="mt-auto p-6 bg-surface-container-low border-t border-outline-variant grid grid-cols-2 gap-4" id="detail-actions">
+<button class="py-3 border border-error text-error text-label-md font-bold rounded-lg hover:bg-error-container transition-colors" onclick="rejectDriver()">Reject Application</button>
+<button class="py-3 bg-secondary-container text-on-secondary-container text-label-md font-bold rounded-lg hover:opacity-90 transition-opacity glow-shadow" onclick="approveDriver()">Approve Entity</button>
+</div>
+</aside>
+</main>
+<script>
+    // Micro-interactions for table rows
+  </script>
+  <script src="/static/js/config.js"></script>
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/ui.js"></script>
+  <script>
+    const user = requireAuth(['admin']);
+    document.getElementById('home-link') && (document.getElementById('home-link').href = 'admin-overview.html');
+    document.getElementById('profile-name').textContent = user.email;
+
+    let currentPage = 1;
+    let currentEntity = '';
+    let selectedDriverId = null;
+
+    function setEntityTab(entity) {
+      currentEntity = entity;
+      document.querySelectorAll('#entity-tabs button').forEach((btn) => {
+        const active = btn.dataset.entity === entity;
+        btn.classList.toggle('bg-surface-container-lowest', active);
+        btn.classList.toggle('text-primary', active);
+        btn.classList.toggle('shadow-sm', active);
+        btn.classList.toggle('text-on-surface-variant', !active);
+      });
+      loadVerifications(1);
+    }
+
+    function clearFilters() {
+      document.getElementById('search-input').value = '';
+      document.getElementById('status-filter').value = '';
+      document.getElementById('vehicle-filter').value = '';
+      setEntityTab('');
+    }
+
+    async function loadVerifications(page) {
+      if (page < 1) return;
+      currentPage = page;
+      const params = {
+        page,
+        entity_type: currentEntity,
+        verification_status: document.getElementById('status-filter').value,
+        vehicle_type: document.getElementById('vehicle-filter').value,
+        search: document.getElementById('search-input').value,
+      };
+      const data = await API.fleet.listVerifications(params);
+      const drivers = data.results || data;
+      document.getElementById('record-count').textContent = `Showing ${drivers.length} of ${data.count !== undefined ? data.count : drivers.length} records`;
+      document.getElementById('page-label').textContent = currentPage;
+      document.getElementById('page-prev').disabled = !data.previous;
+      document.getElementById('page-next').disabled = !data.next;
+
+      const rows = document.getElementById('verification-rows');
+      rows.innerHTML = drivers.length
+        ? drivers
+            .map((d) => {
+              const initials = (d.full_name || d.email).split(' ').map((s) => s[0]).slice(0, 2).join('').toUpperCase();
+              return `
+            <tr class="hover:bg-surface-container transition-colors cursor-pointer group" onclick="openDetail(${d.id})">
+              <td class="px-6 py-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-primary-fixed-dim flex items-center justify-center text-primary-container font-bold text-xs">${initials}</div>
+                  <div>
+                    <p class="text-label-md text-primary">${d.full_name}</p>
+                    <p class="text-xs text-on-surface-variant">${d.email}</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 text-body-sm text-on-surface-variant">${d.vehicle_type.replace(/_/g, ' ')}</td>
+              <td class="px-6 py-4 text-body-sm text-on-surface-variant">${dateTime(d.registration_date)}</td>
+              <td class="px-6 py-4">${statusBadge(d.verification_status)}</td>
+              <td class="px-6 py-4">
+                <button class="text-primary font-bold text-label-md hover:underline" onclick="event.stopPropagation(); openDetail(${d.id})">Review</button>
+              </td>
+            </tr>`;
+            })
+            .join('')
+        : `<tr><td class="px-6 py-4 text-on-surface-variant" colspan="5">No records match these filters.</td></tr>`;
+    }
+
+    const DOC_LABELS = {
+      license_front: 'License (Front)',
+      license_back: 'License (Back)',
+      nin_card: 'NIN Card',
+      tax_id: 'Tax / Business ID',
+      other: 'Other Document',
+    };
+
+    async function openDetail(id) {
+      selectedDriverId = id;
+      const d = await API.fleet.getVerification(id);
+      document.getElementById('detail-panel').classList.remove('hidden');
+      document.getElementById('detail-status-badge').textContent = d.verification_status;
+      document.getElementById('detail-name').textContent = d.full_name;
+      document.getElementById('detail-meta').textContent = `${d.email} · ${d.entity_type}`;
+      document.getElementById('detail-nin').textContent = d.nin_number || '—';
+      document.getElementById('detail-dob').textContent = d.date_of_birth || '—';
+      document.getElementById('detail-license').textContent = d.license_number || '—';
+
+      const docs = document.getElementById('detail-documents');
+      docs.innerHTML = d.documents.length
+        ? d.documents
+            .map((doc) => `
+          <div class="relative group cursor-zoom-in" onclick="window.open('${doc.file}', '_blank')">
+            <div class="aspect-[1.6/1] bg-surface-container rounded border border-outline-variant overflow-hidden flex items-center justify-center">
+              <img alt="${DOC_LABELS[doc.doc_type] || doc.doc_type}" class="w-full h-full object-cover" src="${doc.file}"/>
+            </div>
+            <p class="text-[10px] text-on-surface-variant mt-1">${DOC_LABELS[doc.doc_type] || doc.doc_type}</p>
+          </div>`)
+            .join('')
+        : `<p class="text-on-surface-variant text-body-sm col-span-2">No documents uploaded.</p>`;
+
+      const actions = document.getElementById('detail-actions');
+      actions.style.display = d.verification_status === 'pending' ? 'grid' : 'none';
+    }
+
+    function closeDetail() {
+      document.getElementById('detail-panel').classList.add('hidden');
+      selectedDriverId = null;
+    }
+
+    async function approveDriver() {
+      if (!selectedDriverId) return;
+      await API.fleet.approve(selectedDriverId);
+      await openDetail(selectedDriverId);
+      await loadVerifications(currentPage);
+    }
+
+    async function rejectDriver() {
+      if (!selectedDriverId) return;
+      const reason = prompt('Rejection reason (optional):') || '';
+      await API.fleet.reject(selectedDriverId, reason);
+      await openDetail(selectedDriverId);
+      await loadVerifications(currentPage);
+    }
+
+    document.getElementById('search-input').addEventListener('input', () => loadVerifications(1));
+    document.getElementById('status-filter').addEventListener('change', () => loadVerifications(1));
+    document.getElementById('vehicle-filter').addEventListener('change', () => loadVerifications(1));
+
+    loadVerifications(1).catch((err) => alert('Failed to load verifications: ' + err.message));
+  </script>
+</body></html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dispute Resolution | LogisticsPro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-container": "#7c839b",
+                    "error": "#ba1a1a",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-container-low": "#eff4ff",
+                    "surface-variant": "#d3e4fe",
+                    "on-surface": "#0b1c30",
+                    "on-background": "#0b1c30",
+                    "on-tertiary-fixed": "#271901",
+                    "primary-fixed": "#dae2fd",
+                    "tertiary-fixed-dim": "#dec29a",
+                    "tertiary-fixed": "#fcdeb5",
+                    "outline-variant": "#c6c6cd",
+                    "primary": "#000000",
+                    "tertiary": "#000000",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#dce9ff",
+                    "inverse-primary": "#bec6e0",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-container": "#684000",
+                    "background": "#f8f9ff",
+                    "on-tertiary-fixed-variant": "#574425",
+                    "surface-container-highest": "#d3e4fe",
+                    "surface-container": "#e5eeff",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-container": "#98805d",
+                    "surface": "#f8f9ff",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "surface-bright": "#f8f9ff",
+                    "secondary-fixed": "#ffddb8",
+                    "on-surface-variant": "#45464d",
+                    "secondary-container": "#fea619",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#131b2e",
+                    "outline": "#76777d",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "inverse-surface": "#213145",
+                    "surface-dim": "#cbdbf5",
+                    "on-primary-fixed": "#131b2e",
+                    "secondary": "#855300",
+                    "surface-tint": "#565e74",
+                    "primary-fixed-dim": "#bec6e0",
+                    "on-secondary-fixed": "#2a1700",
+                    "tertiary-container": "#271901",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "lg": "0.75rem",
+                    "xl": "1rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "xs": "4px",
+                    "lg": "24px",
+                    "sm": "8px",
+                    "xl": "32px",
+                    "md": "16px",
+                    "gutter": "24px",
+                    "margin": "32px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Geist"],
+                    "mono-sm": ["Geist Mono"],
+                    "label-sm": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "body-lg": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "headline-xl": ["Geist"],
+                    "body-md": ["Geist"],
+                    "headline-lg-mobile": ["Geist"],
+                    "label-md": ["Geist"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "mono-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        button, input, select, textarea {
+            border-radius: 0.5rem;
+        }
+        [class*="border"]:not([class*="rounded"]) {
+            border-radius: 0.5rem;
+        }
+        body { font-family: 'Geist', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e5eeff; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar Anchor -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant bg-surface-container-lowest flex flex-col py-lg px-md z-50">
+<div class="mb-xl">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Logistics Pro</h1>
+<p class="font-body-md text-body-sm text-on-surface-variant" id="profile-name">Loading…</p>
+</div>
+<nav class="flex-1 flex flex-col gap-xs">
+<a class="flex items-center gap-md p-sm transition-colors duration-150 cursor-pointer active:opacity-80 text-on-surface-variant hover:text-primary hover:bg-surface-container" id="home-link" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md p-sm transition-colors duration-150 cursor-pointer active:opacity-80 text-on-surface-variant hover:text-primary hover:bg-surface-container" href="wallet.html">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-body-md text-body-md">Wallet</span>
+</a>
+<!-- Active State: Disputes -->
+<a class="flex items-center gap-md p-sm transition-colors duration-150 cursor-pointer active:opacity-80 text-primary font-bold border-r-4 border-primary bg-surface-container-low" href="disputes.html">
+<span class="material-symbols-outlined">gavel</span>
+<span class="font-body-md text-body-md">Disputes</span>
+</a>
+</nav>
+<a class="mt-auto bg-primary text-on-primary py-sm px-md font-label-md text-label-md flex items-center justify-center gap-sm" href="#" onclick="logout(); return false;">
+            Log Out
+        </a>
+</aside>
+<!-- TopNavBar Anchor -->
+<header class="fixed top-0 right-0 left-64 h-16 border-b border-outline-variant bg-surface-container-lowest flex justify-between items-center px-gutter z-40">
+<div class="flex items-center gap-xl flex-1">
+<h2 class="font-headline-md text-headline-md font-bold text-primary">Logistics Portal</h2>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex gap-lg mr-lg">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="/static/docs/index.html" target="_blank">Help Center</a>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-16 min-h-screen bg-background">
+<!-- Page Header -->
+<div class="px-gutter py-xl bg-surface-container-lowest border-b border-outline-variant">
+<div class="flex items-center justify-between">
+<div class="flex flex-col gap-xs">
+<div class="flex items-center gap-sm text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase tracking-widest" id="case-id">Case ID: —</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-primary" id="case-title">Loading…</h1>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex items-center gap-xs px-sm py-xs bg-surface-variant/50 border border-outline-variant rounded">
+<span class="material-symbols-outlined text-body-sm" style="font-variation-settings: 'FILL' 1;">info</span>
+<span class="font-label-md text-label-md" id="case-status">—</span>
+</div>
+<div class="flex items-center gap-xs px-sm py-xs bg-error-container/20 border border-error/20 text-error rounded">
+<span class="material-symbols-outlined text-body-sm">priority_high</span>
+<span class="font-label-md text-label-md" id="case-priority">—</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Content Grid -->
+<div class="px-gutter py-xl grid grid-cols-12 gap-gutter">
+<!-- Left Column: Dispute Timeline -->
+<div class="col-span-8 space-y-gutter">
+<section class="bg-surface-container-lowest border border-outline-variant p-lg">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase mb-lg">Dispute Timeline &amp; Communications</h3>
+<div class="space-y-xl relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-surface-container" id="timeline">
+<div class="text-on-surface-variant text-body-sm pl-xl">Loading…</div>
+</div>
+<!-- New Message -->
+<div class="mt-xl pt-xl border-t border-outline-variant">
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-sm block uppercase">Add Message</label>
+<textarea class="w-full border-outline-variant focus:ring-primary focus:border-primary p-md font-body-sm text-body-sm h-24" id="message-input" placeholder="Write an update for this case..."></textarea>
+<div class="flex gap-md mt-sm">
+<button class="bg-primary text-on-primary px-lg py-sm font-label-md text-label-md" onclick="sendMessage()">Post Message</button>
+<button class="border border-outline-variant px-lg py-sm font-label-md text-label-md" onclick="document.getElementById('evidence-input').click()">Upload Evidence</button>
+<input accept="image/*" class="hidden" id="evidence-input" onchange="uploadEvidence(this)" type="file"/>
+</div>
+</div>
+<!-- Evidence Gallery -->
+<div class="mt-xl pt-xl border-t border-outline-variant">
+<h4 class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-md">Evidence</h4>
+<div class="grid grid-cols-3 gap-sm" id="evidence-gallery">
+<div class="text-on-surface-variant text-body-sm">No evidence uploaded yet.</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Shipment Summary & Adjudication -->
+<div class="col-span-4 space-y-gutter">
+<!-- Shipment Summary -->
+<section class="bg-surface-container-lowest border border-outline-variant p-lg">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase mb-lg">Shipment Summary</h3>
+<div class="space-y-md">
+<div class="flex flex-col gap-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Route</span>
+<div class="flex items-center gap-sm">
+<span class="font-body-md text-body-md font-bold" id="summary-origin">—</span>
+<span class="material-symbols-outlined text-on-surface-variant">arrow_forward</span>
+<span class="font-body-md text-body-md font-bold" id="summary-dest">—</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-md pt-md border-t border-outline-variant">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Cargo Weight</span>
+<p class="font-body-md text-body-md font-bold" id="summary-weight">—</p>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Service Type</span>
+<p class="font-body-md text-body-md font-bold" id="summary-service">—</p>
+</div>
+</div>
+<div class="pt-md border-t border-outline-variant">
+<div class="flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Contract Value</span>
+<span class="font-headline-md text-headline-md font-bold" id="summary-value">—</span>
+</div>
+</div>
+<div class="pt-md border-t border-outline-variant">
+<a class="text-primary hover:underline font-label-md text-label-md flex items-center gap-xs" href="#" id="tracking-link">
+<span class="material-symbols-outlined text-[18px]">local_shipping</span> View Live Tracking
+</a>
+</div>
+</div>
+</section>
+<!-- Adjudication Panel (admin only) -->
+<section class="bg-surface-container-lowest border border-primary p-lg relative overflow-hidden hidden" id="adjudication-panel">
+<h3 class="font-label-md text-label-md text-primary uppercase mb-lg flex items-center gap-sm">
+<span class="material-symbols-outlined text-[20px]">gavel</span>
+                        Adjudication Panel
+                    </h3>
+<div class="space-y-md">
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-lg">Selecting an action will finalize this dispute. This action cannot be undone.</p>
+<button class="w-full py-md px-lg bg-primary text-on-primary font-label-md text-label-md flex justify-between items-center transition-all hover:translate-x-1 active:scale-[0.98]" onclick="resolve('refund_customer')">
+                            Refund Customer Full Amount
+                            <span class="font-bold" id="resolve-amount-refund">—</span>
+</button>
+<button class="w-full py-md px-lg bg-surface-container-highest border border-outline text-on-surface font-label-md text-label-md flex justify-between items-center transition-all hover:translate-x-1 active:scale-[0.98]" onclick="resolve('release_driver')">
+                            Release Payment to Driver
+                            <span class="font-bold" id="resolve-amount-release">—</span>
+</button>
+<button class="w-full py-md px-lg bg-secondary-container text-on-secondary-fixed font-label-md text-label-md flex justify-between items-center transition-all hover:translate-x-1 active:scale-[0.98]" onclick="resolve('partial_settlement')">
+                            Partial Settlement (50/50)
+                            <span class="font-bold" id="resolve-amount-partial">—</span>
+</button>
+</div>
+</section>
+<!-- Resolution Status (non-admin / already resolved) -->
+<section class="bg-surface-container-lowest border border-outline-variant p-lg hidden" id="resolution-status-panel">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase mb-lg">Resolution</h3>
+<p class="font-body-md text-body-md" id="resolution-status-text">This case is still under review.</p>
+</section>
+</div>
+</div>
+</main>
+<script>
+        function openImageViewer(src, caption) {
+            const viewer = document.createElement('div');
+            viewer.className = 'fixed inset-0 bg-primary/95 z-[100] flex items-center justify-center p-xl cursor-zoom-out';
+            viewer.innerHTML = `
+                <div class="relative max-w-5xl w-full h-full flex flex-col items-center justify-center gap-lg">
+                    <img src="${src}" class="max-h-[819px] border border-outline-variant shadow-2xl">
+                    <p class="text-on-primary font-body-md text-center max-w-2xl">${caption || ''}</p>
+                </div>
+                <button class="absolute top-lg right-lg text-on-primary">
+                    <span class="material-symbols-outlined text-[32px]">close</span>
+                </button>
+            `;
+            viewer.onclick = () => viewer.remove();
+            document.body.appendChild(viewer);
+        }
+    </script>
+    <script src="/static/js/config.js"></script>
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/ui.js"></script>
+    <script>
+        const user = requireAuth();
+        document.getElementById('home-link').href = ROLE_HOME[user.role] || 'index.html';
+        document.getElementById('profile-name').textContent = user.email;
+
+        const disputeId = qs('id');
+        let dispute = null;
+
+        function senderIcon(sender) {
+            if (sender.role === 'admin') return 'admin_panel_settings';
+            if (sender.role === 'driver') return 'local_shipping';
+            return 'person';
+        }
+
+        function renderTimeline() {
+            const timeline = document.getElementById('timeline');
+            const messages = dispute.messages || [];
+            timeline.innerHTML = messages.length
+                ? messages
+                    .map((m) => `
+                <div class="relative pl-xl flex flex-col gap-xs">
+                  <div class="absolute left-0 top-1 w-6 h-6 bg-surface-container-high flex items-center justify-center rounded-full z-10">
+                    <span class="material-symbols-outlined text-[14px] text-on-primary-container">${senderIcon(m.sender)}</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="font-label-sm text-label-sm font-bold">${m.sender.first_name} ${m.sender.last_name} (${m.sender.role})</span>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant">${dateTime(m.created_at)}</span>
+                  </div>
+                  <div class="p-md border border-outline-variant">
+                    <p class="font-body-md text-body-md">${m.text}</p>
+                  </div>
+                </div>`)
+                    .join('')
+                : `<div class="text-on-surface-variant text-body-sm pl-xl">No messages yet.</div>`;
+        }
+
+        function renderEvidence() {
+            const gallery = document.getElementById('evidence-gallery');
+            const evidence = dispute.evidence || [];
+            gallery.innerHTML = evidence.length
+                ? evidence
+                    .map((e) => `
+                <div class="aspect-square bg-surface-container overflow-hidden group relative cursor-pointer" onclick="openImageViewer('${e.image}', '${(e.caption || '').replace(/'/g, "\\'")}')">
+                  <img alt="Evidence" class="w-full h-full object-cover" src="${e.image}"/>
+                  <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span class="material-symbols-outlined text-on-primary">zoom_in</span>
+                  </div>
+                </div>`)
+                    .join('')
+                : `<div class="text-on-surface-variant text-body-sm">No evidence uploaded yet.</div>`;
+        }
+
+        function renderResolution() {
+            const value = dispute.delivery.target_price;
+            document.getElementById('resolve-amount-refund').textContent = `-${money(value)}`;
+            document.getElementById('resolve-amount-release').textContent = `+${money(value)}`;
+            document.getElementById('resolve-amount-partial').textContent = money(value / 2);
+
+            if (user.role === 'admin' && dispute.status !== 'resolved') {
+                document.getElementById('adjudication-panel').classList.remove('hidden');
+            } else {
+                const panel = document.getElementById('resolution-status-panel');
+                panel.classList.remove('hidden');
+                document.getElementById('resolution-status-text').textContent = dispute.status === 'resolved'
+                    ? `Resolved: ${dispute.resolution_type.replace(/_/g, ' ')} — ${money(dispute.resolved_amount)}. ${dispute.admin_note || ''}`
+                    : `Status: ${dispute.status.replace(/_/g, ' ')}`;
+            }
+        }
+
+        function render() {
+            document.getElementById('case-id').textContent = `Case ID: ${dispute.case_id}`;
+            document.getElementById('case-title').textContent = dispute.title;
+            document.getElementById('case-status').textContent = dispute.status.replace(/_/g, ' ');
+            document.getElementById('case-priority').textContent = `${dispute.priority} priority`;
+            document.getElementById('summary-origin').textContent = dispute.delivery.pickup_address;
+            document.getElementById('summary-dest').textContent = dispute.delivery.dropoff_address;
+            document.getElementById('summary-weight').textContent = `${dispute.delivery.weight_kg} kg`;
+            document.getElementById('summary-service').textContent = dispute.delivery.service_type;
+            document.getElementById('summary-value').textContent = money(dispute.delivery.target_price);
+            document.getElementById('tracking-link').href = `live-tracking.html?id=${dispute.delivery.id}`;
+            renderTimeline();
+            renderEvidence();
+            renderResolution();
+        }
+
+        async function sendMessage() {
+            const text = document.getElementById('message-input').value.trim();
+            if (!text) return;
+            await API.disputes.messages.create(disputeId, { text });
+            document.getElementById('message-input').value = '';
+            dispute = await API.disputes.get(disputeId);
+            render();
+        }
+
+        async function uploadEvidence(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const caption = prompt('Caption (optional):') || '';
+            const formData = new FormData();
+            formData.append('image', file);
+            formData.append('caption', caption);
+            await API.disputes.evidence.create(disputeId, formData);
+            dispute = await API.disputes.get(disputeId);
+            render();
+            input.value = '';
+        }
+
+        async function resolve(resolutionType) {
+            const value = dispute.delivery.target_price;
+            const amounts = { refund_customer: value, release_driver: value, partial_settlement: value / 2 };
+            if (!confirm(`Finalize this case as "${resolutionType.replace(/_/g, ' ')}"? This cannot be undone.`)) return;
+            const admin_note = prompt('Admin note (optional):') || '';
+            try {
+                dispute = await API.disputes.resolve(disputeId, {
+                    resolution_type: resolutionType,
+                    resolved_amount: amounts[resolutionType],
+                    admin_note,
+                });
+                render();
+            } catch (err) {
+                alert('Failed to resolve: ' + err.message);
+            }
+        }
+
+        async function load() {
+            dispute = await API.disputes.get(disputeId);
+            render();
+        }
+
+        load().catch((err) => alert('Failed to load dispute: ' + err.message));
+    </script>
+</body></html>

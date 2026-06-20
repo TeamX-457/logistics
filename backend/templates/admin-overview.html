@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        button, input, select, textarea {
+            border-radius: 0.5rem;
+        }
+        [class*="border"]:not([class*="rounded"]) {
+            border-radius: 0.5rem;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Geist', sans-serif;
+            background-color: #f8f9ff;
+        }
+        .custom-ring {
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.04), 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+        .zebra-table tr:hover {
+            background-color: #f8f9ff;
+        }
+        .metric-card-glow:hover {
+            box-shadow: 0 0 0 2px #00000010;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed-dim": "#bec6e0",
+                      "surface-variant": "#d3e4fe",
+                      "surface-container-highest": "#d3e4fe",
+                      "surface": "#f8f9ff",
+                      "on-tertiary-fixed-variant": "#574425",
+                      "error": "#ba1a1a",
+                      "error-container": "#ffdad6",
+                      "secondary-fixed": "#ffddb8",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary": "#000000",
+                      "surface-container-low": "#eff4ff",
+                      "secondary-fixed-dim": "#ffb95f",
+                      "secondary-container": "#fea619",
+                      "on-secondary-fixed-variant": "#653e00",
+                      "on-tertiary-fixed": "#271901",
+                      "surface-container-high": "#dce9ff",
+                      "surface-bright": "#f8f9ff",
+                      "primary-fixed": "#dae2fd",
+                      "on-secondary-fixed": "#2a1700",
+                      "secondary": "#855300",
+                      "background": "#f8f9ff",
+                      "surface-container": "#e5eeff",
+                      "on-secondary": "#ffffff",
+                      "outline-variant": "#c6c6cd",
+                      "primary": "#000000",
+                      "surface-tint": "#565e74",
+                      "tertiary-fixed-dim": "#dec29a",
+                      "tertiary-fixed": "#fcdeb5",
+                      "on-primary": "#ffffff",
+                      "on-surface": "#0b1c30",
+                      "inverse-on-surface": "#eaf1ff",
+                      "outline": "#76777d",
+                      "on-tertiary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "on-primary-container": "#7c839b",
+                      "on-error": "#ffffff",
+                      "on-secondary-container": "#684000",
+                      "primary-container": "#131b2e",
+                      "surface-dim": "#cbdbf5",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "on-background": "#0b1c30",
+                      "inverse-surface": "#213145",
+                      "on-tertiary-container": "#98805d",
+                      "inverse-primary": "#bec6e0",
+                      "on-surface-variant": "#45464d",
+                      "tertiary-container": "#271901",
+                      "on-primary-fixed": "#131b2e"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.5rem",
+                      "lg": "0.75rem",
+                      "xl": "1rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "lg": "24px",
+                      "xs": "4px",
+                      "gutter": "24px",
+                      "xl": "32px",
+                      "sm": "8px",
+                      "margin": "32px",
+                      "base": "8px",
+                      "md": "16px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["Geist"],
+                      "body-md": ["Geist"],
+                      "label-md": ["Geist"],
+                      "headline-lg": ["Geist"],
+                      "body-sm": ["Geist"],
+                      "headline-md": ["Geist"],
+                      "label-sm": ["Geist"],
+                      "body-lg": ["Geist"],
+                      "mono-sm": ["Geist Mono"],
+                      "headline-xl": ["Geist"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "mono-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-8">
+<span class="text-headline-md font-headline-md font-bold text-primary">LogisticsPro</span>
+<nav class="hidden md:flex gap-6">
+<a class="text-label-md font-label-md text-primary border-b-2 border-primary pb-1" href="admin-overview.html">Overview</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="fleet-verification.html">Fleet</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes.html">Disputes</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded transition-colors" onclick="logout()">
+<span class="material-symbols-outlined">logout</span>
+</button>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-full w-64 z-40 flex flex-col pt-20 pb-8 px-4 bg-surface-container-low border-r border-outline-variant">
+<div class="mb-8 px-2">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-sm bg-primary-container flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">shield</span>
+</div>
+<div>
+<p class="text-label-md font-label-md text-primary">Admin Console</p>
+<p class="text-label-sm font-label-sm text-outline" id="profile-name">Loading…</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container rounded-none border-r-4 border-secondary transition-transform active:scale-[0.99]" href="admin-overview.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-none transition-colors" href="fleet-verification.html">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="text-label-md font-label-md">Fleet Verification</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-none transition-colors" href="financial-analytics.html">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-label-md font-label-md">Financials</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-none transition-colors" href="operations-monitoring.html">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-label-md font-label-md">Operations</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-none transition-colors" href="disputes.html">
+<span class="material-symbols-outlined">gavel</span>
+<span class="text-label-md font-label-md">Disputes</span>
+</a>
+</nav>
+<div class="mt-auto space-y-1 pt-4 border-t border-outline-variant">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-none transition-colors" href="/static/docs/index.html" target="_blank">
+<span class="material-symbols-outlined">description</span>
+<span class="text-label-md font-label-md">Documentation</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-none transition-colors" href="#" onclick="logout(); return false;">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-label-md font-label-md">Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-20 px-margin pb-12">
+<div class="max-w-[1440px] mx-auto space-y-lg">
+<!-- Page Header -->
+<div class="flex justify-between items-end">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary">System Overview</h1>
+<p class="text-body-md text-on-surface-variant">Real-time logistics network status and critical performance indicators.</p>
+</div>
+<div class="flex gap-3">
+<a class="flex items-center gap-2 border border-outline-variant px-4 py-2 text-label-md font-label-md hover:bg-surface-container transition-colors" href="financial-analytics.html">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+                        Financial Analytics
+                    </a>
+<a class="flex items-center gap-2 border border-outline-variant px-4 py-2 text-label-md font-label-md hover:bg-surface-container transition-colors" href="operations-monitoring.html">
+<span class="material-symbols-outlined text-[20px]">monitoring</span>
+                        Operations Monitoring
+                    </a>
+</div>
+</div>
+<!-- Metric Cards (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant p-md metric-card-glow transition-all">
+<div class="flex justify-between items-start mb-4">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Active Deliveries</span>
+<span class="material-symbols-outlined text-primary">local_shipping</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-lg font-headline-lg" id="metric-active-deliveries">—</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant p-md metric-card-glow transition-all">
+<div class="flex justify-between items-start mb-4">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Pending KYC Approvals</span>
+<span class="material-symbols-outlined text-secondary">verified_user</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-lg font-headline-lg text-secondary" id="metric-pending-kyc">—</span>
+</div>
+<a class="text-label-sm font-label-sm text-primary hover:underline mt-2 block" href="fleet-verification.html">Review now</a>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant p-md metric-card-glow transition-all">
+<div class="flex justify-between items-start mb-4">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Daily Revenue (Commission)</span>
+<span class="material-symbols-outlined text-primary">payments</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-lg font-headline-lg" id="metric-daily-revenue">—</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant p-md metric-card-glow transition-all">
+<div class="flex justify-between items-start mb-4">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Active Disputes</span>
+<span class="material-symbols-outlined text-error">gavel</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-lg font-headline-lg text-error" id="metric-active-disputes">—</span>
+</div>
+<a class="text-label-sm font-label-sm text-primary hover:underline mt-2 block" href="disputes.html">View disputes</a>
+</div>
+</div>
+<!-- Middle Section: Active Deliveries and Chart -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Active Deliveries Widget -->
+<div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant flex flex-col h-[400px]">
+<div class="p-md border-b border-outline-variant flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">hub</span>
+<h3 class="text-label-md font-label-md text-primary">Active Deliveries</h3>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-md space-y-2" id="active-deliveries-list">
+<div class="text-on-surface-variant text-body-sm">Loading…</div>
+</div>
+</div>
+<!-- Volume Chart -->
+<div class="bg-surface-container-lowest border border-outline-variant p-md flex flex-col h-[400px]">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="text-label-md font-label-md text-primary">Delivery Volume</h3>
+<p class="text-label-sm font-label-sm text-outline">Last 7 Operational Days</p>
+</div>
+<span class="material-symbols-outlined text-outline">bar_chart</span>
+</div>
+<div class="flex-1 flex items-end gap-3 justify-between pb-4" id="volume-chart"></div>
+</div>
+</div>
+<!-- Bottom Section: Critical Alerts Table -->
+<div class="bg-surface-container-lowest border border-outline-variant">
+<div class="p-md border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error">warning</span>
+<h3 class="text-label-md font-label-md text-primary uppercase tracking-wider">Recent Critical Alerts</h3>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left zebra-table">
+<thead class="bg-surface border-b border-outline-variant text-[12px] font-bold text-outline uppercase">
+<tr>
+<th class="px-md py-3">Timestamp</th>
+<th class="px-md py-3">Alert Type</th>
+<th class="px-md py-3">Reference ID</th>
+<th class="px-md py-3">Assigned Agent</th>
+<th class="px-md py-3">Severity</th>
+<th class="px-md py-3">Status</th>
+</tr>
+</thead>
+<tbody class="text-body-sm" id="alerts-body">
+<tr><td class="px-md py-4 text-on-surface-variant" colspan="6">Loading…</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+<script>
+        document.querySelectorAll('.metric-card-glow').forEach(card => {
+            card.addEventListener('mouseenter', () => card.classList.add('custom-ring'));
+            card.addEventListener('mouseleave', () => card.classList.remove('custom-ring'));
+        });
+    </script>
+    <script src="/static/js/config.js"></script>
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/ui.js"></script>
+    <script>
+        const user = requireAuth(['admin']);
+        document.getElementById('profile-name').textContent = user.email;
+
+        async function loadActiveDeliveries() {
+            const page = await API.deliveries.list({ ordering: '-created_at' });
+            const deliveries = (page.results || page).filter((d) =>
+                ['accepted', 'driver_arrived', 'in_transit', 'delayed', 'negotiating', 'pending'].includes(d.status)
+            );
+            const list = document.getElementById('active-deliveries-list');
+            list.innerHTML = deliveries.length
+                ? deliveries
+                    .map((d) => `
+                <a href="live-tracking.html?id=${d.id}" class="flex items-center justify-between p-2 border border-outline-variant hover:bg-surface-container transition-colors">
+                  <div>
+                    <span class="font-mono-sm text-mono-sm text-primary">${d.reference}</span>
+                    <span class="text-body-sm text-on-surface-variant ml-2">${d.pickup_address} &rarr; ${d.dropoff_address}</span>
+                  </div>
+                  ${statusBadge(d.status)}
+                </a>`)
+                    .join('')
+                : `<div class="text-on-surface-variant text-body-sm">No active deliveries right now.</div>`;
+        }
+
+        async function load() {
+            const data = await API.dashboard.adminOverview();
+            document.getElementById('metric-active-deliveries').textContent = data.active_deliveries;
+            document.getElementById('metric-pending-kyc').textContent = data.pending_kyc_approvals;
+            document.getElementById('metric-daily-revenue').textContent = money(data.daily_revenue);
+            document.getElementById('metric-active-disputes').textContent = data.active_disputes;
+
+            const max = Math.max(1, ...data.delivery_volume.map((d) => d.count));
+            document.getElementById('volume-chart').innerHTML = data.delivery_volume.length
+                ? data.delivery_volume
+                    .map((d) => `
+                <div class="flex flex-col items-center gap-2 flex-1 group">
+                  <div class="w-full bg-surface-container-high h-full relative overflow-hidden rounded-sm">
+                    <div class="absolute bottom-0 w-full bg-primary" style="height:${(d.count / max) * 100}%"></div>
+                  </div>
+                  <span class="text-[10px] text-outline font-bold">${d.day.slice(5)}</span>
+                </div>`)
+                    .join('')
+                : `<div class="text-on-surface-variant text-body-sm">No deliveries in the last 7 days.</div>`;
+
+            const alerts = document.getElementById('alerts-body');
+            alerts.innerHTML = data.alerts.length
+                ? data.alerts
+                    .map((a) => `
+                <tr class="border-b border-outline-variant/50">
+                  <td class="px-md py-4 font-mono-sm">${dateTime(a.created_at)}</td>
+                  <td class="px-md py-4 font-label-md">${a.alert_type}</td>
+                  <td class="px-md py-4">${a.reference_id || '—'}</td>
+                  <td class="px-md py-4">${a.assigned_agent ? a.assigned_agent.email : '—'}</td>
+                  <td class="px-md py-4">${statusBadge(a.severity)}</td>
+                  <td class="px-md py-4">${statusBadge(a.status)}</td>
+                </tr>`)
+                    .join('')
+                : `<tr><td class="px-md py-4 text-on-surface-variant" colspan="6">No alerts.</td></tr>`;
+        }
+
+        Promise.all([load(), loadActiveDeliveries()]).catch((err) => alert('Failed to load overview: ' + err.message));
+    </script>
+</body></html>

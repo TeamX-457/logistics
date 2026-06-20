@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LogisticsPro | Premium Global Freight Marketplace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        button, input, select, textarea {
+            border-radius: 0.5rem;
+        }
+        [class*="border"]:not([class*="rounded"]) {
+            border-radius: 0.5rem;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        body {
+            font-family: 'Geist', sans-serif;
+            background-color: #f8f9ff;
+            scroll-behavior: smooth;
+        }
+        .glow-hover:hover {
+            box-shadow: 0 0 0 2px #00000008, 0 0 20px 2px rgba(254, 166, 25, 0.15);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 3px; }
+        
+        .section-padding { padding-top: 120px; padding-bottom: 120px; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline-variant": "#c6c6cd",
+                      "on-tertiary-fixed-variant": "#574425",
+                      "on-secondary-fixed": "#2a1700",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-fixed-variant": "#653e00",
+                      "surface-container-highest": "#d3e4fe",
+                      "surface-tint": "#565e74",
+                      "inverse-surface": "#213145",
+                      "on-error": "#ffffff",
+                      "tertiary-container": "#271901",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface": "#0b1c30",
+                      "surface-container": "#e5eeff",
+                      "on-surface-variant": "#45464d",
+                      "surface": "#f8f9ff",
+                      "surface-container-high": "#dce9ff",
+                      "on-tertiary-container": "#98805d",
+                      "inverse-on-surface": "#eaf1ff",
+                      "secondary-container": "#fea619",
+                      "on-error-container": "#93000a",
+                      "on-primary-container": "#7c839b",
+                      "surface-variant": "#d3e4fe",
+                      "on-background": "#0b1c30",
+                      "surface-container-low": "#eff4ff",
+                      "error-container": "#ffdad6",
+                      "on-tertiary": "#ffffff",
+                      "background": "#f8f9ff",
+                      "on-primary": "#ffffff",
+                      "surface-dim": "#cbdbf5",
+                      "primary": "#000000",
+                      "outline": "#76777d",
+                      "secondary": "#855300",
+                      "tertiary-fixed": "#fcdeb5",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "secondary-fixed": "#ffddb8",
+                      "surface-bright": "#f8f9ff",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed": "#131b2e",
+                      "secondary-fixed-dim": "#ffb95f",
+                      "on-secondary-container": "#684000",
+                      "primary-container": "#131b2e",
+                      "primary-fixed-dim": "#bec6e0",
+                      "on-tertiary-fixed": "#271901",
+                      "inverse-primary": "#bec6e0",
+                      "tertiary-fixed-dim": "#dec29a",
+                      "tertiary": "#000000",
+                      "primary-fixed": "#dae2fd"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.5rem",
+                      "lg": "0.75rem",
+                      "xl": "1rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "sm": "8px",
+                      "margin": "32px",
+                      "lg": "24px",
+                      "xs": "4px",
+                      "xl": "32px",
+                      "md": "16px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Geist"],
+                      "headline-xl": ["Geist"],
+                      "headline-lg": ["Geist"],
+                      "body-sm": ["Geist"],
+                      "body-lg": ["Geist"],
+                      "label-md": ["Geist"],
+                      "headline-lg-mobile": ["Geist"],
+                      "label-sm": ["Geist"],
+                      "body-md": ["Geist"],
+                      "mono-sm": ["Geist Mono"]
+              },
+              "fontSize": {
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "mono-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface selection:bg-secondary-container">
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-20 bg-surface/90 backdrop-blur-md border-b border-outline-variant">
+<div class="flex items-center gap-xl">
+<span class="text-headline-md font-headline-md font-bold text-primary">LogisticsPro</span>
+<nav class="hidden md:flex items-center gap-lg">
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#features">Solutions</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#how-it-works">How it Works</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#enterprise">Enterprise</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#safety">Safety</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="hidden lg:flex items-center gap-2 px-md py-2 border border-outline text-label-md font-label-md hover:bg-surface-container-low transition-colors" onclick="window.location.href='login.html'">
+<span class="material-symbols-outlined text-[18px]">account_circle</span>
+            Log In
+        </button>
+<button class="px-md py-2 bg-primary text-on-primary text-label-md font-label-md transition-all active:scale-95 shadow-sm" onclick="window.location.href='login.html'">
+            Create Order
+        </button>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center bg-surface-container-lowest overflow-hidden pt-20">
+<div class="max-w-[1440px] mx-auto grid grid-cols-12 px-margin items-center gap-gutter w-full">
+<div class="col-span-12 lg:col-span-6 space-y-xl fade-in">
+<div class="inline-flex items-center gap-2 bg-secondary-container/10 px-3 py-1 rounded-[2px] border border-secondary/20">
+<span class="flex h-2 w-2 rounded-full bg-secondary"></span>
+<span class="text-label-sm font-label-sm uppercase tracking-widest text-secondary">Global Logistics Infrastructure</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-primary leading-tight">Precision Freight. <br/><span class="text-outline">Engineered for Reliability.</span></h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                    The definitive marketplace for modern logistics. Connect with a global network of vetted carriers, monitor shipments with real-time telemetry, and settle instantly with smart escrow.
+                </p>
+<div class="flex flex-wrap gap-md pt-4">
+<button class="px-xl py-lg bg-secondary-container text-on-secondary-container font-label-md text-label-md flex items-center gap-2 glow-hover transition-all" onclick="window.location.href='register-customer.html'">
+                        Ship a Package
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="px-xl py-lg border border-primary text-primary font-label-md text-label-md flex items-center gap-2 hover:bg-primary hover:text-on-primary transition-all" onclick="window.location.href='register-driver.html'">
+                        Become a Carrier
+                        <span class="material-symbols-outlined">local_shipping</span>
+</button>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-6 relative h-[500px] lg:h-[700px] fade-in" style="animation-delay: 0.2s;">
+<div class="absolute inset-0 border border-outline-variant bg-surface-container-low p-4">
+<img alt="High-tech warehouse" class="w-full h-full object-cover grayscale-[0.2] hover:grayscale-0 transition-all duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjSq2liw5ManVGYrZJ0wI7T-W-__g5P33wF4HhVwpUYLNg3gIJM-NDSX0SXAvGF5Sy4RlgsMElMqDx-QE_Y8xhErCzWw8PoBSIe7X9nrXFg1AjMlqwZ2dY1Ig6tUuhw7zlSzAoKj5an6fbnyaOL1UlsENUs9qSDJ3Ziqw4Sm1HO5w704hIWMmJ1y_5HTzvK9Ou6oc0VwTUvEgjAtV0iJOTh_NFsDvpj_8Arl2rp2JgBGjHKXfyyOIpck4Z3apRMAcYnKZS-x6IIh8"/>
+</div>
+<div class="absolute -bottom-10 -left-10 bg-surface border border-primary p-lg hidden xl:block w-80 shadow-2xl">
+<div class="flex justify-between items-start mb-md">
+<span class="text-label-sm font-label-sm text-outline">TX_REF: LPR-2024-99</span>
+<span class="text-label-sm font-label-sm text-secondary bg-secondary-container px-2">EN_ROUTE</span>
+</div>
+<div class="space-y-base">
+<div class="flex justify-between text-label-sm">
+<span class="text-outline">Progress</span>
+<span class="text-primary font-bold">78%</span>
+</div>
+<div class="h-1.5 bg-surface-container-high w-full overflow-hidden">
+<div class="h-full bg-secondary w-[78%]"></div>
+</div>
+<p class="text-label-md font-label-md text-primary">ETA: 16:45 Local Time</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Bar -->
+<section class="bg-primary text-on-primary py-xl border-y border-outline">
+<div class="max-w-[1440px] mx-auto px-margin">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter text-center">
+<div class="space-y-xs">
+<span class="text-headline-lg font-headline-lg block">50k+</span>
+<span class="text-label-sm font-label-sm text-outline-variant uppercase tracking-widest">Global Deliveries</span>
+</div>
+<div class="space-y-xs">
+<span class="text-headline-lg font-headline-lg block">10k+</span>
+<span class="text-label-sm font-label-sm text-outline-variant uppercase tracking-widest">Vetted Carriers</span>
+</div>
+<div class="space-y-xs">
+<span class="text-headline-lg font-headline-lg block">99.9%</span>
+<span class="text-label-sm font-label-sm text-outline-variant uppercase tracking-widest">Success Rate</span>
+</div>
+<div class="space-y-xs">
+<span class="text-headline-lg font-headline-lg block">24/7</span>
+<span class="text-label-sm font-label-sm text-outline-variant uppercase tracking-widest">Ops Support</span>
+</div>
+</div>
+</div>
+</section>
+<!-- How It Works -->
+<section class="section-padding bg-surface border-b border-outline-variant" id="how-it-works">
+<div class="max-w-[1440px] mx-auto px-margin">
+<div class="text-center mb-20">
+<h2 class="text-headline-lg font-headline-lg text-primary">Streamlined Operations</h2>
+<p class="text-body-md text-on-surface-variant mt-base max-w-2xl mx-auto">One platform, two distinct experiences tailored for peak performance.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-20">
+<!-- For Customers -->
+<div class="space-y-lg">
+<h3 class="text-headline-md font-bold flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">inventory_2</span>
+                        For Shippers
+                    </h3>
+<div class="space-y-8 relative before:absolute before:left-4 before:top-2 before:bottom-2 before:w-px before:bg-outline-variant">
+<div class="relative pl-12">
+<span class="absolute left-0 top-0 w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center text-label-md font-bold z-10">1</span>
+<h4 class="text-label-md font-bold uppercase text-primary">Post Your Freight</h4>
+<p class="text-body-sm text-on-surface-variant">Specify dimensions, destination, and requirements. Our system calculates optimal price routing.</p>
+</div>
+<div class="relative pl-12">
+<span class="absolute left-0 top-0 w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center text-label-md font-bold z-10">2</span>
+<h4 class="text-label-md font-bold uppercase text-primary">Select Carrier</h4>
+<p class="text-body-sm text-on-surface-variant">Review live bids from verified drivers based on ratings, equipment, and historical performance.</p>
+</div>
+<div class="relative pl-12">
+<span class="absolute left-0 top-0 w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center text-label-md font-bold z-10">3</span>
+<h4 class="text-label-md font-bold uppercase text-primary">Track &amp; Pay</h4>
+<p class="text-body-sm text-on-surface-variant">Funds are held in secure escrow. Release payment only after successful proof-of-delivery.</p>
+</div>
+</div>
+</div>
+<!-- For Drivers -->
+<div class="space-y-lg">
+<h3 class="text-headline-md font-bold flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">local_shipping</span>
+                        For Carriers
+                    </h3>
+<div class="space-y-8 relative before:absolute before:left-4 before:top-2 before:bottom-2 before:w-px before:bg-outline-variant">
+<div class="relative pl-12">
+<span class="absolute left-0 top-0 w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center text-label-md font-bold z-10">1</span>
+<h4 class="text-label-md font-bold uppercase text-primary">Onboarding</h4>
+<p class="text-body-sm text-on-surface-variant">Complete our rigorous 5-step vetting process including identity, insurance, and vehicle checks.</p>
+</div>
+<div class="relative pl-12">
+<span class="absolute left-0 top-0 w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center text-label-md font-bold z-10">2</span>
+<h4 class="text-label-md font-bold uppercase text-primary">Bid on Loads</h4>
+<p class="text-body-sm text-on-surface-variant">Access a transparent marketplace. Set your own rates or accept fixed-price premium contracts.</p>
+</div>
+<div class="relative pl-12">
+<span class="absolute left-0 top-0 w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center text-label-md font-bold z-10">3</span>
+<h4 class="text-label-md font-bold uppercase text-primary">Instant Settlement</h4>
+<p class="text-body-sm text-on-surface-variant">Get paid within minutes of delivery confirmation. No more 30-day billing cycles.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Bento Grid -->
+<section class="section-padding bg-surface-container-lowest" id="features">
+<div class="max-w-[1440px] mx-auto px-margin">
+<div class="mb-xl flex flex-col md:flex-row justify-between items-end gap-lg">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-primary">Marketplace Infrastructure</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-base max-w-2xl">Industrial-grade tools designed for operators who demand technical excellence over rhetoric.</p>
+</div>
+<button class="text-label-md font-bold text-primary flex items-center gap-2 hover:underline">
+                    View All Features <span class="material-symbols-outlined">east</span>
+</button>
+</div>
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Real-time Tracking -->
+<div class="col-span-12 md:col-span-8 bg-surface-container-low border border-outline-variant p-xl flex flex-col justify-between min-h-[400px] group transition-all hover:border-primary">
+<div class="space-y-base">
+<span class="material-symbols-outlined text-secondary text-4xl">location_on</span>
+<h3 class="text-headline-md font-headline-md text-primary">Real-time Telemetry</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant max-w-md">Global GPS tracking with sub-meter precision. Integrated environmental sensors monitor temperature, humidity, and tilt for sensitive cargo in real-time.</p>
+</div>
+<div class="mt-xl h-24 border border-outline-variant bg-surface flex items-end gap-1 p-2 overflow-hidden">
+<!-- Simulated Waveform -->
+<div class="flex-1 bg-secondary-container/30 h-1/2"></div>
+<div class="flex-1 bg-secondary-container/50 h-3/4"></div>
+<div class="flex-1 bg-secondary-container h-1/2"></div>
+<div class="flex-1 bg-secondary h-full"></div>
+<div class="flex-1 bg-secondary-container/80 h-2/3"></div>
+<div class="flex-1 bg-secondary-container/40 h-1/3"></div>
+</div>
+</div>
+<!-- Secure Escrow -->
+<div class="col-span-12 md:col-span-4 bg-primary text-on-primary p-xl flex flex-col justify-between min-h-[400px] shadow-xl">
+<div class="space-y-base">
+<span class="material-symbols-outlined text-secondary text-4xl">account_balance_wallet</span>
+<h3 class="text-headline-md font-headline-md">Smart Escrow</h3>
+<p class="text-body-sm font-body-sm text-outline-variant">Funds are captured at order creation and held in an encrypted digital vault. Automated release ensures zero-risk for both parties.</p>
+</div>
+<div class="flex items-center gap-4 p-md bg-white/10 rounded-lg">
+<span class="material-symbols-outlined text-secondary">verified</span>
+<div>
+<p class="text-label-sm font-bold uppercase">Transaction Security</p>
+<p class="text-body-sm text-outline-variant">AES-256 Encrypted</p>
+</div>
+</div>
+</div>
+<!-- Transparent Bidding -->
+<div class="col-span-12 md:col-span-4 bg-surface border border-outline-variant p-xl flex flex-col gap-lg hover:border-primary transition-all">
+<span class="material-symbols-outlined text-secondary text-4xl">gavel</span>
+<div>
+<h3 class="text-headline-md font-headline-md text-primary">Transparent Bidding</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-base">True market discovery. Compare historical pricing data and live quotes to secure the best value for every route.</p>
+</div>
+</div>
+<!-- Analytics -->
+<div class="col-span-12 md:col-span-4 bg-surface border border-outline-variant p-xl flex flex-col gap-lg hover:border-primary transition-all">
+<span class="material-symbols-outlined text-secondary text-4xl">analytics</span>
+<div>
+<h3 class="text-headline-md font-headline-md text-primary">Fleet Analytics</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-base">Visualize supply chain bottlenecks with granular performance metrics and predictive ETA modeling.</p>
+</div>
+</div>
+<!-- API -->
+<div class="col-span-12 md:col-span-4 bg-surface border border-outline-variant p-xl flex flex-col gap-lg hover:border-primary transition-all">
+<span class="material-symbols-outlined text-secondary text-4xl">api</span>
+<div>
+<h3 class="text-headline-md font-headline-md text-primary">Developer API</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-base">Full headless logistics infrastructure. Integrate LogisticsPro directly into your ERP or WMS.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Platform Benefits for Enterprise -->
+<section class="section-padding bg-surface-container-low border-y border-outline-variant" id="enterprise">
+<div class="max-w-[1440px] mx-auto px-margin">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+<div class="space-y-xl">
+<h2 class="text-headline-lg font-headline-lg text-primary leading-tight">Built for Enterprise Scalability.</h2>
+<p class="text-body-lg text-on-surface-variant">
+                        Whether you're managing 10 or 10,000 shipments a day, LogisticsPro provides the technical foundation to scale your supply chain with zero friction.
+                    </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-2">
+<h4 class="text-label-md font-bold text-primary uppercase">Custom Insurance</h4>
+<p class="text-body-sm text-on-surface-variant">Tiered cargo protection up to $2.5M per shipment with instant digital certification.</p>
+</div>
+<div class="space-y-2">
+<h4 class="text-label-md font-bold text-primary uppercase">Dedicated Support</h4>
+<p class="text-body-sm text-on-surface-variant">Enterprise accounts receive a dedicated Logistics Manager and 15-minute SLA response time.</p>
+</div>
+<div class="space-y-2">
+<h4 class="text-label-md font-bold text-primary uppercase">ERP Integration</h4>
+<p class="text-body-sm text-on-surface-variant">Pre-built connectors for SAP, Oracle, and NetSuite to automate your entire workflow.</p>
+</div>
+<div class="space-y-2">
+<h4 class="text-label-md font-bold text-primary uppercase">Bulk Operations</h4>
+<p class="text-body-sm text-on-surface-variant">Batch order processing and multi-route optimization tools for high-volume shippers.</p>
+</div>
+</div>
+<button class="px-xl py-md bg-primary text-on-primary text-label-md font-label-md shadow-lg hover:shadow-primary/20 transition-all">
+                        Request Enterprise Demo
+                    </button>
+</div>
+<div class="relative bg-primary p-gutter shadow-2xl rounded-sm">
+<div class="bg-surface-container-lowest p-xl border border-outline-variant space-y-lg">
+<div class="flex justify-between items-center">
+<span class="text-label-md font-bold">OPERATIONS_DASHBOARD</span>
+<span class="flex gap-1">
+<span class="w-3 h-3 rounded-full bg-error"></span>
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="w-3 h-3 rounded-full bg-green-500"></span>
+</span>
+</div>
+<div class="h-64 bg-surface-container-low border border-outline-variant flex items-center justify-center italic text-outline text-sm">
+                            [Interactive Fleet Visualization Map]
+                        </div>
+<div class="grid grid-cols-3 gap-4">
+<div class="bg-surface p-3 border border-outline-variant">
+<p class="text-[10px] text-outline font-bold uppercase">Active Routes</p>
+<p class="text-headline-md font-bold">142</p>
+</div>
+<div class="bg-surface p-3 border border-outline-variant">
+<p class="text-[10px] text-outline font-bold uppercase">On-Time %</p>
+<p class="text-headline-md font-bold text-secondary">98.4</p>
+</div>
+<div class="bg-surface p-3 border border-outline-variant">
+<p class="text-[10px] text-outline font-bold uppercase">Avg. Savings</p>
+<p class="text-headline-md font-bold">22%</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust & Safety Section -->
+<section class="section-padding bg-surface" id="safety">
+<div class="max-w-[1440px] mx-auto px-margin">
+<div class="grid grid-cols-12 gap-gutter items-center">
+<div class="col-span-12 lg:col-span-5 space-y-xl">
+<div class="inline-flex items-center gap-2 bg-primary text-on-primary px-3 py-1 rounded-full">
+<span class="material-symbols-outlined text-[16px]">shield</span>
+<span class="text-label-sm uppercase tracking-widest font-bold">Zero Compromise Safety</span>
+</div>
+<h2 class="text-headline-lg font-headline-lg text-primary">Vetted Drivers. <br/>Verified Assets.</h2>
+<p class="text-body-lg text-on-surface-variant">
+                        Our proprietary TrustScore™ system evaluates every participant based on telemetric driving data, document validity, and historical reliability.
+                    </p>
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-1">check_circle</span>
+<div>
+<h4 class="text-label-md font-bold">Rigorous Background Vetting</h4>
+<p class="text-body-sm text-on-surface-variant">Multi-jurisdictional criminal and professional history verification for every driver.</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-1">check_circle</span>
+<div>
+<h4 class="text-label-md font-bold">24/7 Incident Control Center</h4>
+<p class="text-body-sm text-on-surface-variant">Live monitoring and rapid-response teams available around the clock for any deviation.</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-1">check_circle</span>
+<div>
+<h4 class="text-label-md font-bold">Hardware-Locked Compliance</h4>
+<p class="text-body-sm text-on-surface-variant">Electronic Logging Device (ELD) integration ensures strict adherence to hours-of-service regulations.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="col-span-12 lg:col-span-7">
+<div class="grid grid-cols-2 gap-gutter">
+<img alt="Reliable fleet" class="w-full aspect-square object-cover grayscale border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMuOTr7vKKi32lz9H634syiQldn58pYF-kFgKu_ETCKMNGyPpHQNZHXsBIY-bITUEWDK3SQv4FTcSNxU8Oe_8qBpkVi_VBKH0znkvtcDu7pBs6DDp0lOuQAnElWeQ5VIPBbjZgopnW-LDTRgpCxjKUHmSc9v_NGdMT8RqnhwBOZhdJiOtL-z-pyiNtadthdW81m1gSkUMIoC1VaTXlPK5Ikgrtw6qIJPmUlv3Ggjt7Mo7NSfysK7OoYrk1KSafXQyVclEgOw4N_OA"/>
+<div class="bg-surface-container-high border border-outline-variant p-xl flex flex-col justify-center">
+<span class="text-headline-xl font-bold text-primary">100%</span>
+<p class="text-label-md font-bold uppercase mt-2">Carrier Compliance</p>
+<p class="text-body-sm text-on-surface-variant mt-4">Every driver in our network maintains up-to-date insurance and license certifications, verified daily by our automated compliance engine.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="section-padding bg-primary text-on-primary text-center">
+<div class="max-w-3xl mx-auto px-margin space-y-xl">
+<h2 class="text-headline-xl font-headline-xl">Ready to Optimize Your Logistics?</h2>
+<p class="text-body-lg text-outline-variant">Join the thousands of enterprises and independent carriers already operating on the platform of the future.</p>
+<div class="flex flex-col sm:flex-row gap-md justify-center">
+<button class="px-xl py-lg bg-secondary-container text-on-secondary-container font-label-md text-label-md" onclick="window.location.href='register-customer.html'">Get Started as Shipper</button>
+<button class="px-xl py-lg border border-on-primary text-on-primary font-label-md text-label-md hover:bg-on-primary hover:text-primary transition-all" onclick="window.location.href='register-driver.html'">Partner as Carrier</button>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-surface border-t border-outline-variant py-xl">
+<div class="max-w-[1440px] mx-auto px-margin grid grid-cols-12 gap-gutter">
+<div class="col-span-12 lg:col-span-4 space-y-md">
+<span class="text-headline-md font-headline-md font-bold text-primary">LogisticsPro</span>
+<p class="text-body-sm font-body-sm text-on-surface-variant max-w-xs">Global logistics infrastructure for the modern enterprise. Built for precision, operated for reliability.</p>
+<div class="flex gap-md">
+<a class="w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">public</span>
+</a>
+<a class="w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+</a>
+</div>
+</div>
+<div class="col-span-6 lg:col-span-2 space-y-base">
+<h5 class="text-label-md font-bold text-primary uppercase tracking-wider">Solutions</h5>
+<nav class="flex flex-col gap-xs text-body-sm text-on-surface-variant">
+<a class="hover:text-primary" href="#">Marketplace</a>
+<a class="hover:text-primary" href="#">Enterprise API</a>
+<a class="hover:text-primary" href="#">Fleet Analytics</a>
+<a class="hover:text-primary" href="#">Smart Escrow</a>
+</nav>
+</div>
+<div class="col-span-6 lg:col-span-2 space-y-base">
+<h5 class="text-label-md font-bold text-primary uppercase tracking-wider">Resources</h5>
+<nav class="flex flex-col gap-xs text-body-sm text-on-surface-variant">
+<a class="hover:text-primary" href="#">Documentation</a>
+<a class="hover:text-primary" href="#">Support Center</a>
+<a class="hover:text-primary" href="#">Safety Guide</a>
+<a class="hover:text-primary" href="#">Developer Portal</a>
+</nav>
+</div>
+<div class="col-span-6 lg:col-span-2 space-y-base">
+<h5 class="text-label-md font-bold text-primary uppercase tracking-wider">Company</h5>
+<nav class="flex flex-col gap-xs text-body-sm text-on-surface-variant">
+<a class="hover:text-primary" href="#">About Us</a>
+<a class="hover:text-primary" href="#">Careers</a>
+<a class="hover:text-primary" href="#">Newsroom</a>
+<a class="hover:text-primary" href="#">Sustainability</a>
+</nav>
+</div>
+<div class="col-span-6 lg:col-span-2 space-y-base">
+<h5 class="text-label-md font-bold text-primary uppercase tracking-wider">Legal</h5>
+<nav class="flex flex-col gap-xs text-body-sm text-on-surface-variant">
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+<a class="hover:text-primary" href="#">Terms of Service</a>
+<a class="hover:text-primary" href="#">Insurance Terms</a>
+<a class="hover:text-primary" href="#">Security Policy</a>
+</nav>
+</div>
+</div>
+<div class="max-w-[1440px] mx-auto px-margin mt-xl pt-lg border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-md">
+<span class="text-label-sm font-label-sm text-outline">© 2024 LOGISTICSPRO SYSTEMS INC. ALL RIGHTS RESERVED.</span>
+<div class="flex gap-lg text-label-sm font-label-sm text-outline uppercase tracking-wider">
+<span>Global HQ: Chicago, IL</span>
+<span>v2.4.0-STABLE</span>
+</div>
+</div>
+</footer>
+<script>
+    const observerOptions = { threshold: 0.15 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('section').forEach(section => {
+        section.classList.add('opacity-0');
+        observer.observe(section);
+    });
+</script>
+<script src="/static/js/config.js"></script>
+<script src="/static/js/api.js"></script>
+<script src="/static/js/auth.js"></script>
+<script>
+    const loggedInUser = getCurrentUser();
+    if (loggedInUser && getAccessToken()) {
+        window.location.href = ROLE_HOME[loggedInUser.role] || "login.html";
+    }
+</script>
+</body></html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LogisticsPro | Matching & Bidding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#c6c6cd",
+                    "on-tertiary-fixed-variant": "#574425",
+                    "on-secondary-fixed": "#2a1700",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "surface-container-highest": "#d3e4fe",
+                    "surface-tint": "#565e74",
+                    "inverse-surface": "#213145",
+                    "on-error": "#ffffff",
+                    "tertiary-container": "#271901",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#0b1c30",
+                    "surface-container": "#e5eeff",
+                    "on-surface-variant": "#45464d",
+                    "surface": "#f8f9ff",
+                    "surface-container-high": "#dce9ff",
+                    "on-tertiary-container": "#98805d",
+                    "inverse-on-surface": "#eaf1ff",
+                    "secondary-container": "#fea619",
+                    "on-error-container": "#93000a",
+                    "on-primary-container": "#7c839b",
+                    "surface-variant": "#d3e4fe",
+                    "on-background": "#0b1c30",
+                    "surface-container-low": "#eff4ff",
+                    "error-container": "#ffdad6",
+                    "on-tertiary": "#ffffff",
+                    "background": "#f8f9ff",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#cbdbf5",
+                    "primary": "#000000",
+                    "outline": "#76777d",
+                    "secondary": "#855300",
+                    "tertiary-fixed": "#fcdeb5",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "secondary-fixed": "#ffddb8",
+                    "surface-bright": "#f8f9ff",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed": "#131b2e",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "on-secondary-container": "#684000",
+                    "primary-container": "#131b2e",
+                    "primary-fixed-dim": "#bec6e0",
+                    "on-tertiary-fixed": "#271901",
+                    "inverse-primary": "#bec6e0",
+                    "tertiary-fixed-dim": "#dec29a",
+                    "tertiary": "#000000",
+                    "primary-fixed": "#dae2fd"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "lg": "0.75rem",
+                    "xl": "1rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "sm": "8px",
+                    "margin": "32px",
+                    "lg": "24px",
+                    "xs": "4px",
+                    "xl": "32px",
+                    "md": "16px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Geist"],
+                    "headline-xl": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "body-sm": ["Geist"],
+                    "body-lg": ["Geist"],
+                    "label-md": ["Geist"],
+                    "label-sm": ["Geist"],
+                    "body-md": ["Geist"],
+                    "mono-sm": ["Geist Mono"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        button, input, select, textarea {
+            border-radius: 0.5rem;
+        }
+        [class*="border"]:not([class*="rounded"]) {
+            border-radius: 0.5rem;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .pulse-ring {
+            animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.33); }
+            80%, 100% { opacity: 0; }
+        }
+        .scanning-line {
+            animation: scan 3s linear infinite;
+        }
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+        .cascade-timer {
+            font-variant-numeric: tabular-nums;
+        }
+        body {
+            background-color: #f8f9ff;
+            font-family: 'Geist', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-xl">
+<span class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed">LogisticsPro</span>
+<nav class="hidden md:flex gap-lg">
+<a class="text-label-md font-label-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors" href="#" id="home-link">Dashboard</a>
+<a class="text-label-md font-label-md text-primary dark:text-primary-fixed border-b-2 border-primary dark:border-primary-fixed pb-1" href="#">Bidding</a>
+<a class="text-label-md font-label-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors" href="disputes.html">Support</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined p-2 text-on-surface-variant" onclick="logout()">account_circle</button>
+<button class="bg-primary text-on-primary px-4 py-2 text-label-md font-label-md rounded shadow-sm hover:opacity-80 transition-opacity" onclick="window.location.href='create-delivery.html'">Create Order</button>
+</div>
+</header>
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-full w-64 z-40 flex flex-col pt-20 pb-8 px-4 bg-surface-container-low dark:bg-inverse-surface border-r border-outline-variant dark:border-outline hidden md:flex">
+<div class="mb-lg px-4">
+<p class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Shipper Console</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant" id="profile-name">Loading…</p>
+</div>
+<nav class="flex-1 flex flex-col gap-xs">
+<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform" id="home-link-2" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 bg-secondary-container text-on-secondary-container border-r-4 border-secondary transition-transform" href="bidding.html">
+<span class="material-symbols-outlined">gavel</span>
+<span class="text-label-md font-label-md">This Bidding</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform" href="wallet.html">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-label-md font-label-md">Wallet</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform" href="disputes.html">
+<span class="material-symbols-outlined">gavel</span>
+<span class="text-label-md font-label-md">Disputes</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-xs">
+<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high" href="/static/docs/index.html" target="_blank">
+<span class="material-symbols-outlined">description</span>
+<span class="text-label-md font-label-md">Documentation</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high" href="#" onclick="logout(); return false;">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-label-md font-label-md">Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="md:ml-64 pt-16 min-h-screen">
+<div class="p-margin max-w-7xl mx-auto">
+<!-- Hero Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-lg mb-xl border-b border-outline-variant pb-xl">
+<div>
+<div class="flex items-center gap-sm mb-xs">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-secondary"></span>
+</span>
+<span class="text-label-sm font-label-sm text-secondary uppercase font-bold tracking-widest">Live Matching</span>
+</div>
+<h1 class="text-headline-lg font-headline-lg text-primary">Searching for Drivers</h1>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-xl" id="order-summary">Loading order…</p>
+</div>
+<!-- Cascade Timer -->
+<div class="bg-surface-container-highest border border-outline-variant p-lg min-w-[200px]" id="timer-card">
+<p class="text-label-sm font-label-sm text-outline mb-1 uppercase">Selection Window Ends</p>
+<div class="flex items-baseline gap-xs">
+<span class="text-headline-lg font-headline-lg cascade-timer text-primary" id="timer-minutes">--</span>
+<span class="text-headline-md font-headline-md text-outline">:</span>
+<span class="text-headline-lg font-headline-lg cascade-timer text-primary" id="timer-seconds">--</span>
+<span class="text-label-sm font-label-sm text-outline ml-1">SEC</span>
+</div>
+</div>
+</div>
+<!-- Dashboard Grid Layout -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Active Offers Feed (Left Side) -->
+<div class="col-span-12 lg:col-span-8">
+<div class="flex items-center justify-between mb-md">
+<h2 class="text-label-md font-label-md text-on-surface uppercase tracking-wide" id="offers-heading">Incoming Driver Offers</h2>
+</div>
+<div class="space-y-md" id="offers-list">
+<div class="text-on-surface-variant">Loading offers…</div>
+</div>
+</div>
+<!-- Right Sidebar / Map & Details -->
+<div class="col-span-12 lg:col-span-4 space-y-gutter">
+<!-- Scanning Map View -->
+<div class="bg-white border border-outline-variant overflow-hidden">
+<div class="h-64 relative bg-surface-container">
+<img alt="Logistics Map" class="w-full h-full object-cover grayscale opacity-50" data-alt="A detailed, high-contrast overhead map of a coastal shipping port and its surrounding highway infrastructure. The map is presented in a sophisticated slate-grey and navy color scheme with glowing amber data overlays showing traffic density and vehicle positions. Surgical 1px lines represent route optimizations, while circular pulse indicators show active logistics hubs. The aesthetic is purely technical and high-precision." data-location="Savannah, Georgia" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb1p7QxutJ8gpx8B32NUAWYi9tbLE_ewS5YnfaPpvEqI-4WLdGZhkGeFDfIzHYBNkeyjzi5GLiBB7XLmj5FL_3lG52WG4StEcTIlBz6RJT7KYwx2c8_L1nqxja4d_zdo3Zscu7Us9ZZalIccRgLN1Z7fk4Eev9s123bY8yY49vmwJw_COIu93z8nX2IOPMUWBZb27PCfkjmRP7ZnXN1Iipd37rVvBwBoc_UnpXdOEQhIg8vt7cjPdPEYCfqsSELLs1kP2xzv86VfY"/>
+<!-- Scanning Overlay -->
+<div class="absolute inset-0 scanning-line h-0.5 bg-secondary/50 shadow-[0_0_15px_rgba(254,166,25,0.8)] z-10"></div>
+<!-- Pulse Markers -->
+<div class="absolute top-1/2 left-1/3 w-4 h-4 bg-secondary rounded-full z-20">
+<div class="absolute inset-0 pulse-ring bg-secondary rounded-full opacity-75"></div>
+</div>
+<div class="absolute top-1/4 right-1/4 w-4 h-4 bg-primary rounded-full z-20 border-2 border-white">
+<div class="absolute inset-0 pulse-ring bg-primary rounded-full opacity-75"></div>
+</div>
+<!-- Map Floating Controls -->
+<div class="absolute bottom-md right-md flex flex-col gap-xs">
+<button class="w-8 h-8 bg-white border border-outline-variant flex items-center justify-center text-on-surface shadow-sm hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+<button class="w-8 h-8 bg-white border border-outline-variant flex items-center justify-center text-on-surface shadow-sm hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+</div>
+</div>
+<div class="p-lg border-t border-outline-variant flex items-center justify-between">
+<div>
+<p class="text-label-sm font-label-sm text-outline uppercase">Drivers in Vicinity</p>
+<p class="text-body-md font-body-md text-on-surface font-bold" id="offers-count">— Offers</p>
+</div>
+<span class="material-symbols-outlined text-secondary">explore</span>
+</div>
+</div>
+<!-- Shipment Parameters -->
+<div class="bg-white border border-outline-variant p-lg">
+<h3 class="text-label-md font-label-md text-on-surface uppercase tracking-wide mb-lg">Order Parameters</h3>
+<div class="space-y-md">
+<div class="flex items-start gap-md">
+<div class="w-8 h-8 shrink-0 bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">trip_origin</span>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-outline uppercase">Origin</p>
+<p class="text-body-sm font-body-sm text-on-surface" id="param-origin">—</p>
+</div>
+</div>
+<div class="ml-4 border-l-2 border-dashed border-outline-variant h-8"></div>
+<div class="flex items-start gap-md">
+<div class="w-8 h-8 shrink-0 bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-outline uppercase">Destination</p>
+<p class="text-body-sm font-body-sm text-on-surface" id="param-dest">—</p>
+</div>
+</div>
+</div>
+<div class="mt-lg pt-lg border-t border-outline-variant grid grid-cols-2 gap-lg">
+<div>
+<p class="text-label-sm font-label-sm text-outline uppercase">Load Weight</p>
+<p class="text-body-md font-body-md text-on-surface font-bold" id="param-weight">—</p>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-outline uppercase">Target Price</p>
+<p class="text-body-md font-body-md text-on-surface font-bold" id="param-price">—</p>
+</div>
+</div>
+</div>
+<!-- Market Insights -->
+<div class="bg-inverse-surface text-inverse-on-surface p-lg">
+<div class="flex items-center gap-md mb-md">
+<span class="material-symbols-outlined text-secondary">insights</span>
+<h3 class="text-label-md font-label-md uppercase tracking-wide">Market Pulse</h3>
+</div>
+<p class="text-body-sm font-body-sm text-outline-variant" id="market-pulse-text">Waiting for offers…</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Random live activity simulation (decorative map markers)
+        setInterval(() => {
+            const markers = document.querySelectorAll('.pulse-ring');
+            markers.forEach(m => {
+                m.parentElement.style.top = (Math.random() * 80 + 10) + '%';
+                m.parentElement.style.left = (Math.random() * 80 + 10) + '%';
+            });
+        }, 8000);
+    </script>
+    <script src="/static/js/config.js"></script>
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/ui.js"></script>
+    <script>
+        const user = requireAuth(['customer']);
+        document.getElementById('home-link').href = 'customer-dashboard.html';
+        document.getElementById('home-link-2').href = 'customer-dashboard.html';
+        document.getElementById('profile-name').textContent = user.email;
+
+        const deliveryId = qs('id');
+        let delivery = null;
+        let countdownTimer = null;
+
+        function startCountdown(expiresAt) {
+            const minEl = document.getElementById('timer-minutes');
+            const secEl = document.getElementById('timer-seconds');
+            if (!expiresAt) {
+                document.getElementById('timer-card').querySelector('p').textContent = 'No Expiry Set';
+                minEl.textContent = '--';
+                secEl.textContent = '--';
+                return;
+            }
+            const target = new Date(expiresAt).getTime();
+            countdownTimer = setInterval(() => {
+                const diff = Math.max(0, Math.floor((target - Date.now()) / 1000));
+                minEl.textContent = Math.floor(diff / 60).toString().padStart(2, '0');
+                secEl.textContent = (diff % 60).toString().padStart(2, '0');
+                if (diff <= 0) clearInterval(countdownTimer);
+                if (diff < 60) {
+                    minEl.classList.add('text-error');
+                    secEl.classList.add('text-error');
+                }
+            }, 1000);
+        }
+
+        function tierBadge(driver) {
+            const tier = driver.driver_profile ? driver.driver_profile.tier : 'standard';
+            const map = {
+                elite: '<div class="flex items-center gap-xs px-2 py-0.5 bg-green-50 border border-green-200 text-green-700 text-label-sm rounded-sm"><span class="material-symbols-outlined text-[14px]">verified</span><span>ELITE</span></div>',
+                repeat: '<div class="flex items-center gap-xs px-2 py-0.5 bg-surface-container-high border border-outline-variant text-on-surface-variant text-label-sm rounded-sm"><span class="material-symbols-outlined text-[14px]">history</span><span>REPEAT DRIVER</span></div>',
+                carrier: '<span class="text-label-sm bg-primary text-on-primary px-2 py-0.5">CARRIER</span>',
+            };
+            return map[tier] || '';
+        }
+
+        async function loadOffers() {
+            const bids = await API.deliveries.bids.list(deliveryId);
+            document.getElementById('offers-heading').textContent = `Incoming Driver Offers (${bids.length})`;
+            document.getElementById('offers-count').textContent = `${bids.length} Offer${bids.length === 1 ? '' : 's'}`;
+
+            const list = document.getElementById('offers-list');
+            const pending = bids.filter((b) => b.status === 'pending');
+            list.innerHTML = pending.length
+                ? pending
+                    .map((bid) => {
+                        const driver = bid.driver;
+                        const rating = driver.driver_profile ? driver.driver_profile.rating : '5.00';
+                        const trips = driver.driver_profile ? driver.driver_profile.total_trips : 0;
+                        const vsTarget = delivery.target_price ? (((parseFloat(bid.amount) - parseFloat(delivery.target_price)) / parseFloat(delivery.target_price)) * 100).toFixed(1) : null;
+                        return `
+                <div class="bg-white border border-outline-variant p-lg flex flex-col md:flex-row gap-lg items-center relative overflow-hidden group hover:border-secondary transition-all">
+                  <div class="absolute top-0 left-0 w-1 h-full bg-secondary"></div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-sm mb-xs">
+                      <h3 class="text-label-md font-label-md text-on-surface">${driver.first_name} ${driver.last_name}</h3>
+                      ${tierBadge(driver)}
+                    </div>
+                    <div class="flex items-center gap-md text-body-sm text-on-surface-variant">
+                      <div class="flex items-center gap-xs">
+                        <span class="material-symbols-outlined text-[18px] text-secondary">star</span>
+                        <span class="font-bold text-on-surface">${rating}</span>
+                        <span class="text-outline">(${trips} trips)</span>
+                      </div>
+                    </div>
+                    ${bid.message ? `<p class="text-body-sm text-on-surface-variant mt-xs">"${bid.message}"</p>` : ''}
+                  </div>
+                  <div class="text-right shrink-0">
+                    <p class="text-label-sm font-label-sm text-outline uppercase">Offer Price</p>
+                    <p class="text-headline-md font-headline-md text-primary">${money(bid.amount)}</p>
+                    ${vsTarget !== null ? `<p class="text-label-sm font-label-sm ${vsTarget <= 0 ? 'text-green-600' : 'text-on-surface-variant'} font-bold">${vsTarget > 0 ? '+' : ''}${vsTarget}% vs Target</p>` : ''}
+                  </div>
+                  <div class="flex gap-sm border-l border-outline-variant pl-lg">
+                    <button class="p-3 bg-surface-container border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant flex items-center justify-center" onclick="window.location.href='negotiation-chat.html?id=${deliveryId}'">
+                      <span class="material-symbols-outlined">chat_bubble</span>
+                    </button>
+                    <button class="p-3 bg-error-container/10 border border-error/20 hover:bg-error-container/20 transition-colors text-error flex items-center justify-center" onclick="rejectBid(${bid.id})">
+                      <span class="material-symbols-outlined">close</span>
+                    </button>
+                    <button class="px-6 py-3 bg-secondary text-on-secondary font-label-md text-label-md hover:opacity-90 transition-opacity uppercase tracking-widest" onclick="acceptBid(${bid.id})">Accept</button>
+                  </div>
+                </div>`;
+                    })
+                    .join('')
+                : `<div class="bg-white border border-outline-variant p-lg text-center text-on-surface-variant">No offers yet — drivers are reviewing your load.</div>`;
+
+            if (pending.length) {
+                const avg = pending.reduce((sum, b) => sum + parseFloat(b.amount), 0) / pending.length;
+                const diffPct = delivery.target_price ? (((avg - parseFloat(delivery.target_price)) / parseFloat(delivery.target_price)) * 100).toFixed(1) : 0;
+                document.getElementById('market-pulse-text').textContent = `Average incoming bid is ${money(avg)}, ${diffPct > 0 ? diffPct + '% above' : Math.abs(diffPct) + '% below'} your target price.`;
+            }
+        }
+
+        async function acceptBid(bidId) {
+            try {
+                await API.deliveries.bids.accept(deliveryId, bidId);
+                window.location.href = `live-tracking.html?id=${deliveryId}`;
+            } catch (err) {
+                alert('Failed to accept bid: ' + err.message);
+            }
+        }
+
+        async function rejectBid(bidId) {
+            await API.deliveries.bids.reject(deliveryId, bidId);
+            loadOffers();
+        }
+
+        async function load() {
+            delivery = await API.deliveries.get(deliveryId);
+            document.getElementById('order-summary').textContent = `Order ${delivery.reference}: ${delivery.package_type.replace(/_/g, ' ')} (${delivery.weight_kg} kg) from ${delivery.pickup_address} to ${delivery.dropoff_address}.`;
+            document.getElementById('param-origin').textContent = delivery.pickup_address;
+            document.getElementById('param-dest').textContent = delivery.dropoff_address;
+            document.getElementById('param-weight').textContent = `${delivery.weight_kg} kg`;
+            document.getElementById('param-price').textContent = money(delivery.target_price);
+            startCountdown(delivery.bidding_expires_at);
+            await loadOffers();
+        }
+
+        load().catch((err) => alert('Failed to load bidding view: ' + err.message));
+    </script>
+</body></html>

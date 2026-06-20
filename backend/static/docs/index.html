@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LogisticsPro API Reference</title>
+<style>
+:root {
+  --navy: #0F172A;
+  --amber: #F59E0B;
+  --slate-50: #F8FAFC;
+  --slate-100: #F1F5F9;
+  --slate-200: #E2E8F0;
+  --slate-400: #94A3B8;
+  --slate-500: #64748B;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-900: #0F172A;
+  --sidebar-w: 280px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--slate-900);
+  background: #fff;
+  font-size: 15px;
+  line-height: 1.65;
+}
+a { color: var(--navy); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; height: 56px;
+  background: var(--navy); color: #fff; z-index: 20;
+  display: flex; align-items: center; padding: 0 20px;
+  gap: 10px;
+}
+.topbar .dot { width: 8px; height: 8px; background: var(--amber); border-radius: 1px; }
+.topbar .title { font-weight: 600; font-size: 15px; letter-spacing: 0.01em; }
+.topbar .sub { color: var(--slate-400); font-size: 13px; margin-left: 6px; }
+.topbar .right { margin-left: auto; font-size: 13px; }
+.topbar .right a { color: #fff; opacity: 0.85; margin-left: 18px; }
+
+.sidebar {
+  position: fixed; top: 56px; left: 0; bottom: 0; width: var(--sidebar-w);
+  overflow-y: auto; background: var(--slate-50); border-right: 1px solid var(--slate-200);
+  padding: 20px 0 40px;
+}
+.sidebar nav { display: flex; flex-direction: column; }
+.sidebar a {
+  color: var(--slate-600); padding: 7px 24px; font-size: 13.5px; font-weight: 500;
+  border-left: 2px solid transparent;
+}
+.sidebar a:hover { color: var(--navy); text-decoration: none; background: var(--slate-100); }
+.sidebar a.active { color: var(--navy); border-left-color: var(--amber); background: #fff; font-weight: 600; }
+
+.content-wrap {
+  margin-left: var(--sidebar-w); margin-top: 56px;
+  max-width: 760px; padding: 48px 56px 120px;
+}
+.content-wrap h1 {
+  font-size: 30px; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.01em;
+}
+.content-wrap > p:first-of-type { color: var(--slate-600); font-size: 16px; margin-top: 0; }
+.content-wrap h2 {
+  font-size: 22px; font-weight: 700; margin: 48px 0 16px; padding-top: 16px;
+  border-top: 1px solid var(--slate-200); letter-spacing: -0.01em; color: var(--slate-900);
+}
+.content-wrap h2:first-of-type { border-top: none; margin-top: 32px; }
+.content-wrap h3 { font-size: 17px; font-weight: 600; margin: 32px 0 12px; color: var(--slate-900); }
+.content-wrap p { color: var(--slate-700); }
+.content-wrap ul, .content-wrap ol { color: var(--slate-700); padding-left: 22px; }
+.content-wrap li { margin: 4px 0; }
+.content-wrap li p { margin: 0; color: var(--slate-700); }
+.content-wrap code {
+  font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.87em;
+  background: var(--slate-100); padding: 2px 5px; border-radius: 4px; color: var(--slate-900);
+}
+.content-wrap pre {
+  background: var(--navy); color: #e2e8f0; padding: 16px 18px; border-radius: 8px;
+  overflow-x: auto; font-size: 13px; line-height: 1.6; margin: 16px 0;
+}
+.content-wrap pre code { background: transparent; padding: 0; color: inherit; font-size: 1em; }
+.content-wrap blockquote {
+  margin: 16px 0; padding: 10px 16px; background: #FFFBEB; border-left: 3px solid var(--amber);
+  border-radius: 0 6px 6px 0; color: var(--slate-700); font-size: 14px;
+}
+.content-wrap blockquote p { margin: 0; color: var(--slate-700); }
+.content-wrap table {
+  width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13.5px;
+}
+.content-wrap th, .content-wrap td {
+  text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--slate-200); color: var(--slate-700);
+}
+.content-wrap th { background: var(--slate-50); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--slate-500); }
+.content-wrap td code { white-space: nowrap; }
+.content-wrap hr { border: none; border-top: 1px solid var(--slate-200); margin: 32px 0; }
+
+@media (max-width: 900px) {
+  .sidebar { display: none; }
+  .content-wrap { margin-left: 0; padding: 32px 24px 100px; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="dot"></div>
+  <div class="title">LogisticsPro</div>
+  <div class="sub">API Reference</div>
+  <div class="right">
+    <a href="http://localhost:8000/api/docs/" target="_blank">Swagger UI &#8599;</a>
+    <a href="./API_REFERENCE.md" target="_blank">Raw Markdown &#8599;</a>
+  </div>
+</div>
+
+<div class="sidebar">
+  <nav id="sidebar-nav">
+<a href="#authentication">Authentication</a>
+<a href="#errors">Errors</a>
+<a href="#pagination">Pagination</a>
+<a href="#conventions">Conventions</a>
+<a href="#accounts">Accounts</a>
+<a href="#fleet-verification">Fleet Verification</a>
+<a href="#deliveries">Deliveries</a>
+<a href="#disputes">Disputes</a>
+<a href="#wallet">Wallet</a>
+<a href="#dashboard">Dashboard</a>
+<a href="#real-time-websockets">Real-time (WebSockets)</a>
+<a href="#object--enum-reference">Object &amp; enum reference</a>
+  </nav>
+</div>
+
+<div class="content-wrap" id="content">
+<h1 id="logisticspro-api-reference">LogisticsPro API Reference</h1>
+<p>The LogisticsPro API is organized around REST. It uses standard HTTP response codes, standard HTTP verbs, and JSON request/response bodies for everything except file uploads (<code>multipart/form-data</code>).</p>
+<p>All requests must be made over HTTP to your local backend during development:</p>
+<pre><code>http://localhost:8000/api
+</code></pre>
+<p>Interactive, auto-generated schema browsing is also available once the server is running:</p>
+<ul>
+<li>OpenAPI schema: <code>GET /api/schema/</code></li>
+<li>Swagger UI: <code>GET /api/docs/</code></li>
+</ul>
+<p>This document is the hand-written, narrative companion to that schema — it explains <em>why</em> each endpoint exists, what triggers it on the frontend, and what the full request/response shapes look like.</p>
+<hr>
+<h2 id="authentication">Authentication</h2>
+<p>LogisticsPro uses <strong>JSON Web Tokens</strong> (JWT) via <code>djangorestframework-simplejwt</code>. There is no session/cookie auth — every authenticated request carries a bearer token.</p>
+<pre><code>Authorization: Bearer &lt;access_token&gt;
+</code></pre>
+<h3 id="token-lifecycle">Token lifecycle</h3>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Lifetime</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>access</code></td>
+<td>60 minutes</td>
+<td>sent on every request</td>
+</tr>
+<tr>
+<td><code>refresh</code></td>
+<td>7 days</td>
+<td>rotates on use (<code>ROTATE_REFRESH_TOKENS=True</code>) — exchange it for a new <code>access</code>/<code>refresh</code> pair</td>
+</tr>
+</tbody></table>
+<p>Registration and login both return an <code>access</code>/<code>refresh</code> pair immediately — there&#39;s no separate &quot;verify email then log in&quot; step required to start calling the API.</p>
+<h3 id="typical-frontend-flow">Typical frontend flow</h3>
+<pre><code class="language-js">// 1. Register or log in, store both tokens
+const { access, refresh, user } = await api.login(email, password);
+localStorage.setItem(&quot;access_token&quot;, access);
+localStorage.setItem(&quot;refresh_token&quot;, refresh);
+localStorage.setItem(&quot;user&quot;, JSON.stringify(user));
+
+// 2. Attach the access token to every subsequent request
+fetch(`${BASE_URL}/deliveries/`, {
+  headers: { Authorization: `Bearer ${access}` },
+});
+
+// 3. When a request 401s, refresh once and retry
+const res = await fetch(`${BASE_URL}/auth/token/refresh/`, {
+  method: &quot;POST&quot;,
+  headers: { &quot;Content-Type&quot;: &quot;application/json&quot; },
+  body: JSON.stringify({ refresh: localStorage.getItem(&quot;refresh_token&quot;) }),
+});
+</code></pre>
+<p>This exact pattern is implemented in <a href="../js/api.js"><code>backend/static/js/api.js</code></a> if you want working reference code.</p>
+<h3 id="roles">Roles</h3>
+<p>Every user has exactly one <code>role</code>: <code>customer</code>, <code>driver</code>, or <code>admin</code>. Roles are assigned at registration (customer/driver) or via <code>createsuperuser</code> / Django admin (admin). Most endpoints are gated by role at the view level — see each endpoint&#39;s <strong>Auth</strong> line below.</p>
+<hr>
+<h2 id="errors">Errors</h2>
+<p>LogisticsPro uses standard HTTP status codes:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>200</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>201</code></td>
+<td>Created</td>
+</tr>
+<tr>
+<td><code>204</code></td>
+<td>No Content (successful delete)</td>
+</tr>
+<tr>
+<td><code>400</code></td>
+<td>Bad Request — validation error, see body</td>
+</tr>
+<tr>
+<td><code>401</code></td>
+<td>Unauthorized — missing/invalid/expired access token</td>
+</tr>
+<tr>
+<td><code>403</code></td>
+<td>Forbidden — authenticated, but role doesn&#39;t permit this action</td>
+</tr>
+<tr>
+<td><code>404</code></td>
+<td>Not Found</td>
+</tr>
+<tr>
+<td><code>429</code></td>
+<td>Too Many Requests (rate-limited endpoints, if enabled)</td>
+</tr>
+<tr>
+<td><code>500</code></td>
+<td>Server error</td>
+</tr>
+</tbody></table>
+<p><strong>Validation errors</strong> (<code>400</code>) come back as a field → message(s) map, matching DRF&#39;s default serializer error format:</p>
+<pre><code class="language-json">{
+  &quot;email&quot;: [&quot;An account with this email already exists.&quot;],
+  &quot;password&quot;: [&quot;This field must be at least 8 characters.&quot;]
+}
+</code></pre>
+<p><strong>Permission errors</strong> (<code>403</code>):</p>
+<pre><code class="language-json">{ &quot;detail&quot;: &quot;Only customers can create delivery requests.&quot; }
+</code></pre>
+<p><strong>Not found</strong> (<code>404</code>):</p>
+<pre><code class="language-json">{ &quot;detail&quot;: &quot;Not found.&quot; }
+</code></pre>
+<hr>
+<h2 id="pagination">Pagination</h2>
+<p>List endpoints that can grow unbounded (deliveries, transactions, disputes, fleet verifications) are paginated with DRF&#39;s <code>PageNumberPagination</code>:</p>
+<pre><code class="language-json">{
+  &quot;count&quot;: 248,
+  &quot;next&quot;: &quot;http://localhost:8000/api/wallet/transactions/?page=3&quot;,
+  &quot;previous&quot;: &quot;http://localhost:8000/api/wallet/transactions/?page=1&quot;,
+  &quot;results&quot;: [ /* ... */ ]
+}
+</code></pre>
+<p>Query params: <code>?page=2&amp;page_size=50</code> (max <code>page_size</code> is 100, default 20).</p>
+<p>Sub-resources nested under a single delivery (bids, messages, proposals, tracking pings) are <strong>not</strong> paginated — they return a plain array, since they&#39;re scoped to one delivery and bounded in practice.</p>
+<hr>
+<h2 id="conventions">Conventions</h2>
+<ul>
+<li><strong>IDs</strong> are integers (<code>id</code>), except for human-facing reference codes which are short strings: <code>DeliveryRequest.reference</code> (<code>LP-XXXXXXXX</code>), <code>Dispute.case_id</code> (<code>DP-XXXXXXXX</code>), <code>Transaction.transaction_id</code> (<code>TXN-XXXXXXXXXX</code>).</li>
+<li><strong>Money</strong> fields are decimal strings (e.g. <code>&quot;1240.00&quot;</code>), not floats — avoid parsing them as JS <code>Number</code> for arithmetic; display as-is or use a decimal library.</li>
+<li><strong>Timestamps</strong> are ISO-8601 UTC (e.g. <code>&quot;2026-06-18T10:29:27.821185Z&quot;</code>).</li>
+<li><strong>Enums</strong> are lowercase snake_case strings (e.g. <code>&quot;in_transit&quot;</code>, <code>&quot;standard_freight&quot;</code>). Full enum tables are in the <a href="#object--enum-reference">reference appendix</a>.</li>
+<li><strong>Booleans</strong> sent in form data over <code>multipart/form-data</code> (file upload endpoints) must be the strings <code>&quot;true&quot;</code>/<code>&quot;false&quot;</code>.</li>
+</ul>
+<hr>
+<h2 id="accounts">Accounts</h2>
+<h3 id="register-a-customer-shipper">Register a customer (shipper)</h3>
+<p>Maps to the <strong>Customer Registration</strong> screen.</p>
+<pre><code>POST /api/auth/register/customer/
+Auth: none
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>email</code></td>
+<td>string</td>
+<td>yes</td>
+<td>must be unique</td>
+</tr>
+<tr>
+<td><code>password</code></td>
+<td>string</td>
+<td>yes</td>
+<td>min 8 characters</td>
+</tr>
+<tr>
+<td><code>full_name</code></td>
+<td>string</td>
+<td>yes</td>
+<td>split into <code>first_name</code>/<code>last_name</code> on the first space</td>
+</tr>
+<tr>
+<td><code>company_name</code></td>
+<td>string</td>
+<td>no</td>
+<td>shown on the dashboard header</td>
+</tr>
+<tr>
+<td><code>phone_number</code></td>
+<td>string</td>
+<td>no</td>
+<td></td>
+</tr>
+</tbody></table>
+<pre><code class="language-bash">curl -X POST http://localhost:8000/api/auth/register/customer/ \
+  -H &quot;Content-Type: application/json&quot; \
+  -d &#39;{
+    &quot;email&quot;: &quot;jane@acme.com&quot;,
+    &quot;password&quot;: &quot;SuperSecret1!&quot;,
+    &quot;full_name&quot;: &quot;Jane Shipper&quot;,
+    &quot;company_name&quot;: &quot;Acme Corp&quot;,
+    &quot;phone_number&quot;: &quot;+15551234567&quot;
+  }&#39;
+</code></pre>
+<p><strong>Response <code>201</code></strong></p>
+<pre><code class="language-json">{
+  &quot;access&quot;: &quot;&lt;jwt&gt;&quot;,
+  &quot;refresh&quot;: &quot;&lt;jwt&gt;&quot;,
+  &quot;user&quot;: {
+    &quot;id&quot;: 1,
+    &quot;email&quot;: &quot;jane@acme.com&quot;,
+    &quot;first_name&quot;: &quot;Jane&quot;,
+    &quot;last_name&quot;: &quot;Shipper&quot;,
+    &quot;role&quot;: &quot;customer&quot;,
+    &quot;phone_number&quot;: &quot;+15551234567&quot;,
+    &quot;is_phone_verified&quot;: false,
+    &quot;avatar&quot;: null,
+    &quot;customer_profile&quot;: { &quot;company_name&quot;: &quot;Acme Corp&quot;, &quot;account_type&quot;: &quot;enterprise&quot; },
+    &quot;driver_profile&quot;: null,
+    &quot;created_at&quot;: &quot;2026-06-18T10:23:26.336012Z&quot;
+  }
+}
+</code></pre>
+<h3 id="register-a-driver-carrier">Register a driver (carrier)</h3>
+<p>Maps to the <strong>Join as a Driver</strong> screen.</p>
+<pre><code>POST /api/auth/register/driver/
+Auth: none
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>email</code></td>
+<td>string</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td><code>password</code></td>
+<td>string</td>
+<td>yes</td>
+<td>min 8 characters</td>
+</tr>
+<tr>
+<td><code>full_name</code></td>
+<td>string</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td><code>vehicle_type</code></td>
+<td>enum</td>
+<td>yes</td>
+<td><code>bike</code>, <code>motorcycle</code>, <code>van</code>, <code>cargo_van</code>, <code>truck</code>, <code>heavy_truck</code></td>
+</tr>
+<tr>
+<td><code>license_number</code></td>
+<td>string</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td><code>nin_number</code></td>
+<td>string</td>
+<td>yes</td>
+<td>11-digit national ID</td>
+</tr>
+<tr>
+<td><code>phone_number</code></td>
+<td>string</td>
+<td>no</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>Response shape is identical to customer registration, with <code>role: &quot;driver&quot;</code> and a populated <code>driver_profile</code> (<code>verification_status: &quot;pending&quot;</code> until an admin approves it — see <a href="#fleet-verification">Fleet Verification</a>).</p>
+<h3 id="login">Login</h3>
+<pre><code>POST /api/auth/login/
+Auth: none
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>email</code></td>
+<td>string</td>
+</tr>
+<tr>
+<td><code>password</code></td>
+<td>string</td>
+</tr>
+</tbody></table>
+<p>Response is the same <code>{ access, refresh, user }</code> shape as registration. Invalid credentials return <code>401</code> with <code>{&quot;detail&quot;: &quot;No active account found with the given credentials&quot;}</code>.</p>
+<h3 id="refresh-token">Refresh token</h3>
+<pre><code>POST /api/auth/token/refresh/
+Auth: none
+Body: { &quot;refresh&quot;: &quot;&lt;jwt&gt;&quot; }
+</code></pre>
+<pre><code class="language-json">{ &quot;access&quot;: &quot;&lt;new-jwt&gt;&quot;, &quot;refresh&quot;: &quot;&lt;new-jwt&gt;&quot; }
+</code></pre>
+<h3 id="password-reset">Password reset</h3>
+<pre><code>POST /api/auth/password-reset/          Body: { &quot;email&quot;: &quot;jane@acme.com&quot; }
+POST /api/auth/password-reset/confirm/  Body: { &quot;uid&quot;: &quot;...&quot;, &quot;token&quot;: &quot;...&quot;, &quot;new_password&quot;: &quot;...&quot; }
+</code></pre>
+<p>In development, the request endpoint returns the <code>uid</code>/<code>token</code> directly in the response body so you can test the flow without an email backend configured. In production, wire <code>PasswordResetRequestView</code> to send these via email instead of returning them.</p>
+<h3 id="current-user">Current user</h3>
+<pre><code>GET   /api/auth/me/   Auth: any authenticated user
+PATCH /api/auth/me/   Auth: any authenticated user
+</code></pre>
+<p><code>PATCH</code> accepts any subset of <code>first_name</code>, <code>last_name</code>, <code>phone_number</code>, <code>avatar</code> (<code>role</code> is read-only — it cannot be changed after registration).</p>
+<h3 id="driver-online-status">Driver online status</h3>
+<p>Maps to the <strong>Driver Dashboard</strong> &quot;Online / Go Offline&quot; toggle.</p>
+<pre><code>PATCH /api/drivers/me/status/
+Auth: driver
+Body: { &quot;is_online&quot;: true, &quot;current_lat&quot;?: 33.12, &quot;current_lng&quot;?: -83.45 }
+</code></pre>
+<p>Returns the updated <code>DriverProfile</code>.</p>
+<h3 id="address-book">Address book</h3>
+<p>Maps to the customer&#39;s saved addresses (used to prefill the <strong>Create Delivery</strong> wizard).</p>
+<pre><code>GET    /api/addresses/        Auth: customer
+POST   /api/addresses/        Auth: customer
+GET    /api/addresses/{id}/   Auth: customer (own only)
+PATCH  /api/addresses/{id}/   Auth: customer (own only)
+DELETE /api/addresses/{id}/   Auth: customer (own only)
+</code></pre>
+<p><strong>Address object</strong></p>
+<pre><code class="language-json">{
+  &quot;id&quot;: 4,
+  &quot;label&quot;: &quot;Warehouse - Savannah&quot;,
+  &quot;line1&quot;: &quot;100 Port Rd&quot;,
+  &quot;line2&quot;: &quot;&quot;,
+  &quot;city&quot;: &quot;Savannah&quot;,
+  &quot;state&quot;: &quot;GA&quot;,
+  &quot;country&quot;: &quot;US&quot;,
+  &quot;postal_code&quot;: &quot;31401&quot;,
+  &quot;lat&quot;: &quot;32.080900&quot;,
+  &quot;lng&quot;: &quot;-81.091200&quot;,
+  &quot;is_default&quot;: true,
+  &quot;created_at&quot;: &quot;2026-06-18T10:23:26.336012Z&quot;
+}
+</code></pre>
+<hr>
+<h2 id="fleet-verification">Fleet Verification</h2>
+<p>Admin-only review queue for driver/fleet KYC. Maps to the <strong>Fleet Verification</strong> screen (tabs: Individual / Group / Enterprise map to <code>entity_type</code>).</p>
+<pre><code>GET  /api/verifications/                Auth: admin
+GET  /api/verifications/{id}/           Auth: admin
+POST /api/verifications/{id}/approve/   Auth: admin
+POST /api/verifications/{id}/reject/    Auth: admin   Body: { &quot;reason&quot;?: string }
+</code></pre>
+<p><strong>Filters</strong> (query params on the list endpoint): <code>verification_status</code> (<code>pending</code>/<code>approved</code>/<code>rejected</code>), <code>vehicle_type</code>, <code>entity_type</code>, <code>search</code> (matches email/name/license number).</p>
+<p><strong>List item</strong></p>
+<pre><code class="language-json">{
+  &quot;id&quot;: 1,
+  &quot;full_name&quot;: &quot;Dan Driver&quot;,
+  &quot;email&quot;: &quot;driver@fleet.com&quot;,
+  &quot;avatar&quot;: null,
+  &quot;entity_type&quot;: &quot;individual&quot;,
+  &quot;vehicle_type&quot;: &quot;truck&quot;,
+  &quot;registration_date&quot;: &quot;2026-06-18T10:23:30.702571Z&quot;,
+  &quot;verification_status&quot;: &quot;pending&quot;
+}
+</code></pre>
+<p><strong>Detail</strong> adds: <code>phone_number</code>, <code>license_number</code>, <code>nin_number</code>, <code>date_of_birth</code>, <code>company_name</code>, <code>rejection_reason</code>, <code>verified_at</code>, and <code>documents</code> (array of <code>{ id, doc_type, file, uploaded_at }</code>, where <code>doc_type</code> is one of <code>license_front</code>, <code>license_back</code>, <code>nin_card</code>, <code>tax_id</code>, <code>other</code>).</p>
+<p>Approving or rejecting returns the full detail object with <code>verification_status</code> updated and <code>verified_at</code>/<code>verified_by</code> stamped server-side.</p>
+<hr>
+<h2 id="deliveries">Deliveries</h2>
+<p>This is the core of the platform — a <code>DeliveryRequest</code> is a shipment that moves through this lifecycle:</p>
+<pre><code>draft → pending → negotiating → accepted → driver_arrived → in_transit → delivered
+                                                        ↘ delayed ↗
+              (any non-terminal state) → cancelled
+              (any state) → disputed
+</code></pre>
+<h3 id="the-deliveryrequest-object">The DeliveryRequest object</h3>
+<pre><code class="language-json">{
+  &quot;id&quot;: 2,
+  &quot;reference&quot;: &quot;LP-AFD8F9C8&quot;,
+  &quot;customer&quot;: { &quot;...&quot;: &quot;UserSerializer&quot; },
+  &quot;driver&quot;: { &quot;...&quot;: &quot;UserSerializer | null&quot; },
+  &quot;pickup_address&quot;: &quot;Port of Savannah&quot;,
+  &quot;pickup_lat&quot;: &quot;32.080900&quot;,
+  &quot;pickup_lng&quot;: &quot;-81.091200&quot;,
+  &quot;dropoff_address&quot;: &quot;Atlanta Distribution Hub&quot;,
+  &quot;dropoff_lat&quot;: &quot;33.749000&quot;,
+  &quot;dropoff_lng&quot;: &quot;-84.388000&quot;,
+  &quot;distance_miles&quot;: &quot;223.25&quot;,
+  &quot;package_type&quot;: &quot;standard_freight&quot;,
+  &quot;weight_kg&quot;: &quot;4200.00&quot;,
+  &quot;is_fragile&quot;: false,
+  &quot;is_perishable&quot;: false,
+  &quot;is_hazardous&quot;: false,
+  &quot;is_stackable&quot;: false,
+  &quot;target_price&quot;: &quot;1240.00&quot;,
+  &quot;allow_counter_offers&quot;: true,
+  &quot;market_average_price&quot;: &quot;1043.01&quot;,
+  &quot;service_fee&quot;: &quot;31.00&quot;,
+  &quot;final_price&quot;: null,
+  &quot;service_type&quot;: &quot;standard&quot;,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;payment_method&quot;: &quot;wallet&quot;,
+  &quot;delivery_otp&quot;: &quot;&quot;,
+  &quot;bidding_expires_at&quot;: null,
+  &quot;status_events&quot;: [{ &quot;status&quot;: &quot;pending&quot;, &quot;note&quot;: &quot;&quot;, &quot;created_at&quot;: &quot;...&quot; }],
+  &quot;bids&quot;: [ &quot;...BidObject&quot; ],
+  &quot;proposals&quot;: [ &quot;...PriceProposalObject&quot; ],
+  &quot;latest_ping&quot;: null,
+  &quot;created_at&quot;: &quot;2026-06-18T10:23:30.000000Z&quot;,
+  &quot;updated_at&quot;: &quot;2026-06-18T10:23:30.000000Z&quot;
+}
+</code></pre>
+<blockquote>
+<p>The <strong>list</strong> serializer omits <code>status_events</code>, <code>bids</code>, <code>proposals</code>, <code>latest_ping</code>, and the lat/lng/flag fields — fetch the detail endpoint for the full object.</p>
+</blockquote>
+<h3 id="estimate-price--distance">Estimate price &amp; distance</h3>
+<p>Maps to steps 2–4 of the <strong>Create Delivery</strong> wizard (&quot;Estimated Distance&quot; and &quot;Market Average&quot;).</p>
+<pre><code>POST /api/deliveries/estimate/
+Auth: any authenticated user
+</code></pre>
+<pre><code class="language-json">{
+  &quot;pickup_lat&quot;: 32.0809, &quot;pickup_lng&quot;: -81.0912,
+  &quot;dropoff_lat&quot;: 33.7490, &quot;dropoff_lng&quot;: -84.3880,
+  &quot;weight_kg&quot;: 4200,
+  &quot;package_type&quot;: &quot;standard_freight&quot;
+}
+</code></pre>
+<pre><code class="language-json">{ &quot;distance_miles&quot;: &quot;223.25&quot;, &quot;market_average_price&quot;: &quot;1043.01&quot; }
+</code></pre>
+<blockquote>
+<p>This uses a haversine-distance + per-mile/per-kg placeholder formula (<code>deliveries/services.py</code>) — swap in a real routing/pricing provider before production use.</p>
+</blockquote>
+<h3 id="create-a-delivery">Create a delivery</h3>
+<p>Maps to the final &quot;Confirm Order&quot; step of the <strong>Create Delivery</strong> wizard.</p>
+<pre><code>POST /api/deliveries/
+Auth: customer
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>pickup_address</code></td>
+<td>string</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>pickup_lat</code>, <code>pickup_lng</code></td>
+<td>decimal</td>
+<td>no (omit to skip auto distance/price calc)</td>
+</tr>
+<tr>
+<td><code>dropoff_address</code></td>
+<td>string</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>dropoff_lat</code>, <code>dropoff_lng</code></td>
+<td>decimal</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>package_type</code></td>
+<td>enum</td>
+<td>yes — <code>standard_freight</code>, <code>oversized_equipment</code>, <code>small_parcel</code>, <code>liquid_bulk</code></td>
+</tr>
+<tr>
+<td><code>weight_kg</code></td>
+<td>decimal</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>is_fragile</code>, <code>is_perishable</code>, <code>is_hazardous</code>, <code>is_stackable</code></td>
+<td>bool</td>
+<td>no, default <code>false</code></td>
+</tr>
+<tr>
+<td><code>target_price</code></td>
+<td>decimal</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>allow_counter_offers</code></td>
+<td>bool</td>
+<td>no, default <code>true</code></td>
+</tr>
+<tr>
+<td><code>service_type</code></td>
+<td>enum</td>
+<td>no, default <code>standard</code> — or <code>priority</code></td>
+</tr>
+<tr>
+<td><code>payment_method</code></td>
+<td>enum</td>
+<td>no, default <code>wallet</code> — or <code>card</code></td>
+</tr>
+</tbody></table>
+<p>Returns the full <code>DeliveryRequest</code> detail object (<code>201</code>), with <code>service_fee</code> computed as 2.5% of <code>target_price</code>, and <code>distance_miles</code>/<code>market_average_price</code> auto-filled if all four lat/lng values were provided.</p>
+<h3 id="list--retrieve-deliveries">List / retrieve deliveries</h3>
+<pre><code>GET /api/deliveries/                Auth: any role — see scoping below
+GET /api/deliveries/{id}/           Auth: any role — see scoping below
+</code></pre>
+<p>Query params: <code>status</code>, <code>package_type</code>, <code>service_type</code>, <code>ordering</code> (<code>created_at</code>, <code>target_price</code>, <code>eta</code>, prefix <code>-</code> for descending).</p>
+<p><strong>Visibility scoping</strong> (enforced server-side, not just a UI filter):</p>
+<ul>
+<li><strong>customer</strong> → only their own delivery requests</li>
+<li><strong>driver</strong> → deliveries assigned to them, <strong>plus</strong> any unassigned <code>pending</code> delivery (the open marketplace)</li>
+<li><strong>admin</strong> → everything</li>
+</ul>
+<h3 id="browse-the-marketplace">Browse the marketplace</h3>
+<p>Maps to the <strong>Driver Dashboard &quot;Available Loads&quot;</strong> panel and the <strong>Live Marketplace</strong> screen (from the customer&#39;s side, &quot;Searching for Drivers&quot; — that view is really just <em>this delivery&#39;s</em> <code>bids</code> array growing in real time, see <a href="#real-time-websockets">WebSockets</a>).</p>
+<pre><code>GET /api/deliveries/marketplace/
+Auth: any authenticated user (intended for drivers)
+</code></pre>
+<p>Returns a paginated list of <code>pending</code>, unassigned deliveries — i.e. the same object shape as the list endpoint, scoped to open loads regardless of who&#39;s asking.</p>
+<h3 id="cancel">Cancel</h3>
+<pre><code>POST /api/deliveries/{id}/cancel/
+Auth: the delivery&#39;s customer, or admin
+</code></pre>
+<p>Fails with <code>400</code> if the delivery is already <code>delivered</code> or <code>cancelled</code>.</p>
+<h3 id="accept-a-load-directly">Accept a load directly</h3>
+<p>The driver-dashboard &quot;Accept Load&quot; button — skips bidding/negotiation and locks in the customer&#39;s <code>target_price</code>.</p>
+<pre><code>POST /api/deliveries/{id}/accept-load/
+Auth: driver
+</code></pre>
+<p>Fails with <code>400</code> if the load already has a driver or isn&#39;t <code>pending</code>. On success: assigns <code>driver</code>, sets <code>final_price = target_price</code>, <code>status = accepted</code>, generates a 4-digit <code>delivery_otp</code>, and logs a <code>status_events</code> entry.</p>
+<h3 id="advance-status--mark-delivered">Advance status / mark delivered</h3>
+<p>Drives the <strong>Live Tracking</strong> milestone timeline and the <strong>Driver Dashboard</strong> &quot;mark complete&quot; action.</p>
+<pre><code>POST /api/deliveries/{id}/advance-status/
+Auth: the assigned driver, the customer, or admin
+Body: { &quot;status&quot;: &quot;in_transit&quot;, &quot;note&quot;?: &quot;string&quot;, &quot;otp&quot;?: &quot;1234&quot; }
+</code></pre>
+<p><code>status</code> must be one of the <a href="#deliveryrequeststatus">DeliveryRequest.Status</a> values. If <code>status</code> is <code>delivered</code> and the delivery has a non-empty <code>delivery_otp</code>, the request must also include a matching <code>otp</code> — this is the 4-digit code shown on the customer&#39;s tracking screen and read aloud/handed to the driver on physical handoff. Mismatched OTP returns <code>400</code>.</p>
+<h3 id="bids-the-negotiationbidding-marketplace">Bids (the negotiation/bidding marketplace)</h3>
+<p>Maps to the <strong>Live Marketplace</strong> &quot;Incoming Driver Offers&quot; panel.</p>
+<pre><code>GET  /api/deliveries/{id}/bids/                  Auth: any party to the delivery
+POST /api/deliveries/{id}/bids/                  Auth: driver   Body: { &quot;amount&quot;: &quot;1190.00&quot;, &quot;message&quot;?: &quot;string&quot; }
+POST /api/deliveries/{id}/bids/{bid_id}/accept/   Auth: the delivery&#39;s customer
+POST /api/deliveries/{id}/bids/{bid_id}/reject/   Auth: the delivery&#39;s customer
+</code></pre>
+<p>Submitting a bid flips the parent delivery to <code>negotiating</code>. Accepting a bid: marks it <code>accepted</code>, auto-rejects every other bid on that delivery, assigns the driver, sets <code>final_price</code> to the bid amount, generates the delivery OTP, and moves the delivery to <code>accepted</code>.</p>
+<p><strong>Bid object</strong></p>
+<pre><code class="language-json">{
+  &quot;id&quot;: 1,
+  &quot;delivery&quot;: 2,
+  &quot;driver&quot;: { &quot;...&quot;: &quot;UserSerializer, includes driver_profile.rating/tier&quot; },
+  &quot;amount&quot;: &quot;1190.00&quot;,
+  &quot;message&quot;: &quot;Can deliver by tomorrow&quot;,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;created_at&quot;: &quot;2026-06-18T10:29:28.623778Z&quot;
+}
+</code></pre>
+<h3 id="tracking">Tracking</h3>
+<p>Maps to the <strong>Live Tracking</strong> screen.</p>
+<pre><code>GET  /api/deliveries/{id}/tracking/
+Auth: any party to the delivery
+
+POST /api/deliveries/{id}/tracking/
+Auth: the assigned driver only
+Body: { &quot;lat&quot;: 33.12, &quot;lng&quot;: -83.45, &quot;heading&quot;?: 90.0 }
+</code></pre>
+<p><strong>GET response</strong></p>
+<pre><code class="language-json">{
+  &quot;milestones&quot;: [
+    { &quot;status&quot;: &quot;pending&quot;, &quot;note&quot;: &quot;&quot;, &quot;created_at&quot;: &quot;...&quot; },
+    { &quot;status&quot;: &quot;accepted&quot;, &quot;note&quot;: &quot;Bid #1 accepted&quot;, &quot;created_at&quot;: &quot;...&quot; }
+  ],
+  &quot;pings&quot;: [{ &quot;id&quot;: 9, &quot;lat&quot;: &quot;33.120000&quot;, &quot;lng&quot;: &quot;-83.450000&quot;, &quot;heading&quot;: &quot;90.00&quot;, &quot;recorded_at&quot;: &quot;...&quot; }],
+  &quot;eta&quot;: null,
+  &quot;delivery_otp&quot;: &quot;3401&quot;
+}
+</code></pre>
+<blockquote>
+<p><code>delivery_otp</code> is only populated in the response when the requester <strong>is</strong> the customer — drivers and admins get <code>null</code> here (the OTP is meant to be relayed to the driver verbally/in person at drop-off, not read from their own app).</p>
+</blockquote>
+<h3 id="negotiation-chat">Negotiation chat</h3>
+<p>Maps to the <strong>Negotiation Chat</strong> screen.</p>
+<pre><code>GET  /api/deliveries/{id}/messages/   Auth: any party to the delivery
+POST /api/deliveries/{id}/messages/   Auth: any party to the delivery   Body: { &quot;text&quot;: &quot;string&quot;, &quot;attachment&quot;?: file }
+</code></pre>
+<h3 id="price-proposals-counter-offers">Price proposals (counter-offers)</h3>
+<p>The &quot;PRICE PROPOSAL&quot; card in the negotiation chat.</p>
+<pre><code>GET  /api/deliveries/{id}/proposals/                       Auth: any party to the delivery
+POST /api/deliveries/{id}/proposals/                       Auth: any party    Body: { &quot;amount&quot;: &quot;1450.00&quot;, &quot;justification&quot;?: &quot;string&quot; }
+POST /api/deliveries/{id}/proposals/{proposal_id}/accept/   Auth: any party — sets delivery.final_price
+POST /api/deliveries/{id}/proposals/{proposal_id}/decline/  Auth: any party
+</code></pre>
+<hr>
+<h2 id="disputes">Disputes</h2>
+<p>Maps to <strong>Dispute Resolution Detail</strong> and <strong>Operations Monitoring</strong>&#39;s dispute queue.</p>
+<pre><code>GET  /api/disputes/                  Auth: any role — see scoping below
+POST /api/disputes/                  Auth: any role   Body: { &quot;delivery&quot;: 2, &quot;title&quot;: &quot;string&quot;, &quot;description&quot;?: &quot;string&quot;, &quot;priority&quot;?: &quot;low&quot;|&quot;medium&quot;|&quot;high&quot;|&quot;critical&quot; }
+GET  /api/disputes/{id}/             Auth: any role — see scoping below
+GET  /api/disputes/{id}/messages/    Auth: any role — see scoping below
+POST /api/disputes/{id}/messages/    Auth: any role — see scoping below   Body: { &quot;text&quot;: &quot;string&quot; }
+POST /api/disputes/{id}/evidence/    Auth: any role — see scoping below   multipart/form-data: { &quot;image&quot;: file, &quot;caption&quot;?: &quot;string&quot; }
+POST /api/disputes/{id}/resolve/     Auth: admin only
+</code></pre>
+<p><strong>Visibility scoping</strong>: customer/driver see disputes where they raised it, or where they&#39;re the customer/driver on the underlying delivery. Admin sees all.</p>
+<p><strong>Resolve</strong> body:</p>
+<pre><code class="language-json">{
+  &quot;resolution_type&quot;: &quot;partial_settlement&quot;,
+  &quot;resolved_amount&quot;: &quot;2425.00&quot;,
+  &quot;admin_note&quot;: &quot;50/50 split per force-majeure policy for 4+ hour delays.&quot;
+}
+</code></pre>
+<p><code>resolution_type</code> is one of <code>refund_customer</code>, <code>release_driver</code>, <code>partial_settlement</code> (maps directly to the three buttons on the <strong>Dispute Resolution Detail</strong> adjudication panel). Resolving sets <code>status: &quot;resolved&quot;</code>, stamps <code>resolved_by</code>/<code>resolved_at</code>.</p>
+<p><strong>Dispute object</strong> (detail)</p>
+<pre><code class="language-json">{
+  &quot;id&quot;: 2,
+  &quot;case_id&quot;: &quot;DP-7A4E097C&quot;,
+  &quot;delivery&quot;: { &quot;...&quot;: &quot;DeliveryRequestListSerializer&quot; },
+  &quot;delivery_reference&quot;: &quot;LP-AFD8F9C8&quot;,
+  &quot;raised_by&quot;: { &quot;...&quot;: &quot;UserSerializer&quot; },
+  &quot;title&quot;: &quot;Cargo Damage Claim&quot;,
+  &quot;status&quot;: &quot;under_investigation&quot;,
+  &quot;priority&quot;: &quot;high&quot;,
+  &quot;assigned_agent&quot;: null,
+  &quot;description&quot;: &quot;Box arrived crushed&quot;,
+  &quot;resolution_type&quot;: &quot;&quot;,
+  &quot;resolved_amount&quot;: null,
+  &quot;admin_note&quot;: &quot;&quot;,
+  &quot;resolved_by&quot;: null,
+  &quot;resolved_at&quot;: null,
+  &quot;messages&quot;: [],
+  &quot;evidence&quot;: [],
+  &quot;created_at&quot;: &quot;...&quot;,
+  &quot;updated_at&quot;: &quot;...&quot;
+}
+</code></pre>
+<hr>
+<h2 id="wallet">Wallet</h2>
+<p>Maps to <strong>Financial Wallet</strong> (customer) and contributes data to <strong>Financial Analytics</strong> (admin).</p>
+<pre><code>GET  /api/wallet/                              Auth: any authenticated user — auto-created on first access
+GET  /api/wallet/transactions/                 Auth: own transactions, or all if admin
+GET  /api/wallet/spending-summary/?range=1M    Auth: any authenticated user   range: 1M | 6M | 1Y
+POST /api/wallet/withdraw/                     Auth: any authenticated user   Body: { &quot;amount&quot;: &quot;100.00&quot;, &quot;payment_method&quot;: 1 }
+POST /api/wallet/transfer/                     Auth: any authenticated user   Body: { &quot;amount&quot;: &quot;50.00&quot;, &quot;recipient_email&quot;: &quot;other@user.com&quot; }
+GET  /api/wallet/payment-methods/              Auth: own payment methods
+POST /api/wallet/payment-methods/              Auth: any authenticated user   Body: { &quot;method_type&quot;: &quot;card&quot;, &quot;label&quot;: &quot;Chase Business&quot;, &quot;last4&quot;: &quot;4291&quot;, &quot;expiry_month&quot;: 9, &quot;expiry_year&quot;: 2027 }
+PATCH/DELETE /api/wallet/payment-methods/{id}/  Auth: own payment methods
+POST /api/wallet/payment-methods/{id}/set-default/  Auth: own payment methods
+GET  /api/wallet/settlements/                  Auth: admin — enterprise/group payout table
+</code></pre>
+<p><strong>Transaction object</strong></p>
+<pre><code class="language-json">{
+  &quot;id&quot;: 5,
+  &quot;transaction_id&quot;: &quot;TXN-9F2C1A4B7D&quot;,
+  &quot;delivery&quot;: 2,
+  &quot;category&quot;: &quot;delivery_payment&quot;,
+  &quot;amount&quot;: &quot;-1190.00&quot;,
+  &quot;counterparty&quot;: &quot;driver@fleet.com&quot;,
+  &quot;status&quot;: &quot;completed&quot;,
+  &quot;created_at&quot;: &quot;...&quot;
+}
+</code></pre>
+<p><code>category</code> is one of <code>delivery_payment</code>, <code>deposit</code>, <code>refund</code>, <code>withdrawal</code>, <code>payout</code>, <code>commission</code>. <code>amount</code> is signed — negative for money leaving the wallet, positive for money arriving.</p>
+<p><strong>Spending summary response</strong></p>
+<pre><code class="language-json">{ &quot;range&quot;: &quot;1M&quot;, &quot;total&quot;: &quot;412.50&quot;, &quot;series&quot;: [{ &quot;month&quot;: &quot;2026-06&quot;, &quot;total&quot;: &quot;412.50&quot; }] }
+</code></pre>
+<hr>
+<h2 id="dashboard">Dashboard</h2>
+<p>Read-only aggregation endpoints that back each role&#39;s home screen — exactly the numbers shown on the summary cards, with no business logic the frontend needs to replicate.</p>
+<pre><code>GET /api/dashboard/customer/              Auth: customer
+GET /api/dashboard/driver/                Auth: driver
+GET /api/dashboard/admin-overview/        Auth: admin
+GET /api/dashboard/financial-analytics/   Auth: admin
+GET /api/dashboard/operations-monitoring/ Auth: admin
+GET /api/dashboard/notifications/         Auth: any role — own notifications
+POST /api/dashboard/notifications/clear/  Auth: any role — marks all own notifications read
+GET/POST/PATCH /api/dashboard/alerts/     Auth: admin — critical alerts table
+</code></pre>
+<p><strong><code>/api/dashboard/customer/</code></strong></p>
+<pre><code class="language-json">{
+  &quot;active_shipments_count&quot;: 2,
+  &quot;recent_orders_count&quot;: 2,
+  &quot;wallet_balance&quot;: &quot;0.00&quot;,
+  &quot;current_shipments&quot;: [ &quot;...DeliveryRequestListSerializer&quot; ],
+  &quot;recent_orders&quot;: [ &quot;...DeliveryRequestListSerializer&quot; ]
+}
+</code></pre>
+<p><strong><code>/api/dashboard/driver/</code></strong></p>
+<pre><code class="language-json">{
+  &quot;daily_earnings&quot;: &quot;0.00&quot;,
+  &quot;completed_deliveries_today&quot;: 0,
+  &quot;rating&quot;: &quot;5.00&quot;,
+  &quot;total_trips&quot;: 0,
+  &quot;is_online&quot;: false,
+  &quot;active_delivery&quot;: null,
+  &quot;weekly_earnings&quot;: [{ &quot;day&quot;: &quot;2026-06-18&quot;, &quot;total&quot;: &quot;0.00&quot; }]
+}
+</code></pre>
+<p><strong><code>/api/dashboard/admin-overview/</code></strong></p>
+<pre><code class="language-json">{
+  &quot;active_deliveries&quot;: 2,
+  &quot;pending_kyc_approvals&quot;: 1,
+  &quot;daily_revenue&quot;: 0,
+  &quot;active_disputes&quot;: 0,
+  &quot;delivery_volume&quot;: [{ &quot;day&quot;: &quot;2026-06-18&quot;, &quot;count&quot;: 2 }],
+  &quot;alerts&quot;: [ &quot;...AlertSerializer&quot; ]
+}
+</code></pre>
+<p><strong><code>/api/dashboard/financial-analytics/</code></strong></p>
+<pre><code class="language-json">{
+  &quot;total_platform_commission&quot;: 0,
+  &quot;inflow_escrow&quot;: 0,
+  &quot;outflow_payouts&quot;: 0,
+  &quot;net_revenue&quot;: 0,
+  &quot;revenue_trends&quot;: [{ &quot;month&quot;: &quot;2026-06-01&quot;, &quot;total&quot;: 0 }]
+}
+</code></pre>
+<hr>
+<h2 id="real-time-websockets">Real-time (WebSockets)</h2>
+<p>Three screens are explicitly &quot;live&quot; in the design — live tracking, negotiation chat, and the live marketplace bid feed — so they&#39;re backed by WebSocket consumers (Django Channels) in addition to the plain REST endpoints above. <strong>REST is always sufficient on its own</strong> (poll if you don&#39;t need push); WebSockets are an enhancement, not a requirement.</p>
+<p>Connect with the access token as a query param (there&#39;s no cookie session to rely on):</p>
+<pre><code class="language-js">const ws = new WebSocket(
+  `ws://localhost:8000/ws/deliveries/${deliveryId}/tracking/?token=${accessToken}`
+);
+ws.onmessage = (e) =&gt; {
+  const { event, data } = JSON.parse(e.data);
+  // event === &quot;tracking_update&quot;
+};
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Direction</th>
+<th>Client sends</th>
+<th>Server broadcasts</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/ws/deliveries/{id}/tracking/</code></td>
+<td>bidirectional (driver sends, all receive)</td>
+<td><code>{ &quot;lat&quot;: 33.1, &quot;lng&quot;: -83.4, &quot;heading&quot;?: 90 }</code></td>
+<td><code>{ &quot;event&quot;: &quot;tracking_update&quot;, &quot;data&quot;: TrackingPing }</code></td>
+</tr>
+<tr>
+<td><code>/ws/deliveries/{id}/chat/</code></td>
+<td>bidirectional</td>
+<td><code>{ &quot;text&quot;: &quot;string&quot; }</code></td>
+<td><code>{ &quot;event&quot;: &quot;new_message&quot;, &quot;data&quot;: Message }</code></td>
+</tr>
+<tr>
+<td><code>/ws/deliveries/{id}/marketplace/</code></td>
+<td>receive-only (server → client)</td>
+<td>—</td>
+<td><code>{ &quot;event&quot;: &quot;new_bid&quot;, &quot;data&quot;: Bid }</code></td>
+</tr>
+</tbody></table>
+<p>A REST <code>POST</code> to <code>bids/</code>, <code>tracking/</code>, or <code>messages/</code> on the same delivery also triggers the matching broadcast — so a client that mixes REST writes with WebSocket reads still sees consistent live updates.</p>
+<p>In local dev the channel layer is in-memory (single process, fine for <code>runserver</code>). Set <code>USE_REDIS_CHANNEL_LAYER=True</code> and <code>REDIS_URL</code> in <code>.env</code> for a multi-process/production deployment.</p>
+<hr>
+<h2 id="object--enum-reference">Object &amp; enum reference</h2>
+<h3 id="deliveryrequeststatus">DeliveryRequest.status</h3>
+<p><code>draft</code> <code>pending</code> <code>negotiating</code> <code>accepted</code> <code>driver_arrived</code> <code>in_transit</code> <code>delayed</code> <code>delivered</code> <code>disputed</code> <code>cancelled</code></p>
+<h3 id="deliveryrequestpackage_type">DeliveryRequest.package_type</h3>
+<p><code>standard_freight</code> <code>oversized_equipment</code> <code>small_parcel</code> <code>liquid_bulk</code></p>
+<h3 id="deliveryrequestservice_type">DeliveryRequest.service_type</h3>
+<p><code>standard</code> <code>priority</code></p>
+<h3 id="deliveryrequestpayment_method">DeliveryRequest.payment_method</h3>
+<p><code>wallet</code> <code>card</code></p>
+<h3 id="bidstatus--priceproposalstatus">Bid.status / PriceProposal.status</h3>
+<p><code>pending</code> <code>accepted</code> <code>rejected</code> (<code>withdrawn</code> also valid for Bid) / <code>pending</code> <code>accepted</code> <code>declined</code></p>
+<h3 id="driverprofilevehicle_type">DriverProfile.vehicle_type</h3>
+<p><code>bike</code> <code>motorcycle</code> <code>van</code> <code>cargo_van</code> <code>truck</code> <code>heavy_truck</code></p>
+<h3 id="driverprofileverification_status">DriverProfile.verification_status</h3>
+<p><code>pending</code> <code>approved</code> <code>rejected</code></p>
+<h3 id="driverprofileentity_type">DriverProfile.entity_type</h3>
+<p><code>individual</code> <code>group</code> <code>enterprise</code></p>
+<h3 id="driverprofiletier">DriverProfile.tier</h3>
+<p><code>standard</code> <code>repeat</code> <code>elite</code> <code>carrier</code></p>
+<h3 id="disputestatus">Dispute.status</h3>
+<p><code>under_investigation</code> <code>active</code> <code>resolved</code></p>
+<h3 id="disputepriority">Dispute.priority</h3>
+<p><code>low</code> <code>medium</code> <code>high</code> <code>critical</code></p>
+<h3 id="disputeresolution_type">Dispute.resolution_type</h3>
+<p><code>refund_customer</code> <code>release_driver</code> <code>partial_settlement</code></p>
+<h3 id="transactioncategory">Transaction.category</h3>
+<p><code>delivery_payment</code> <code>deposit</code> <code>refund</code> <code>withdrawal</code> <code>payout</code> <code>commission</code></p>
+<h3 id="transactionstatus">Transaction.status</h3>
+<p><code>completed</code> <code>processing</code> <code>pending</code> <code>failed</code></p>
+<h3 id="paymentmethodmethod_type">PaymentMethod.method_type</h3>
+<p><code>card</code> <code>bank</code> <code>wallet</code></p>
+<h3 id="settlemententity_type--settlementstatus">Settlement.entity_type / Settlement.status</h3>
+<p><code>enterprise</code> <code>group</code> / <code>processing</code> <code>scheduled</code> <code>completed</code> <code>flagged</code></p>
+<h3 id="alertseverity--alertstatus">Alert.severity / Alert.status</h3>
+<p><code>low</code> <code>medium</code> <code>high</code> <code>critical</code> / <code>investigating</code> <code>active</code> <code>pending</code> <code>resolved</code></p>
+
+</div>
+
+<script>
+  var links = Array.from(document.querySelectorAll("#sidebar-nav a"));
+  var sections = Array.from(document.querySelectorAll("#content h2"));
+  var observer = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          links.forEach(function (l) { l.classList.remove("active"); });
+          var match = document.querySelector('#sidebar-nav a[href="#' + entry.target.id + '"]');
+          if (match) match.classList.add("active");
+        }
+      });
+    },
+    { rootMargin: "-20% 0px -70% 0px" }
+  );
+  sections.forEach(function (h2) { observer.observe(h2); });
+</script>
+
+</body>
+</html>
