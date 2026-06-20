@@ -3,7 +3,9 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Customer Dashboard | LogisticsPro</title>
+<title>Customer Dashboard | Logistica</title>
+<link href="/static/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/static/favicon.ico" rel="alternate icon"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -124,10 +126,29 @@
     </style>
 </head>
 <body class="bg-background text-on-background selection:bg-secondary-container selection:text-on-secondary-container overflow-hidden">
+<style>
+  #app-loader{position:fixed;inset:0;z-index:9999;background:#131b2e;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .4s ease,visibility .4s ease;}
+  #app-loader.app-loader-hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  #app-loader .loader-badge{width:72px;height:72px;border-radius:50%;animation:loader-pulse 1.6s ease-in-out infinite;}
+  #app-loader .loader-name{margin-top:20px;font-family:'Geist',sans-serif;font-weight:700;font-size:22px;color:#ffffff;letter-spacing:-0.01em;}
+  #app-loader .loader-tag{margin-top:6px;font-family:'Geist',sans-serif;font-size:11px;letter-spacing:.18em;color:#fea619;text-transform:uppercase;}
+  #app-loader .loader-track{width:160px;height:3px;background:rgba(255,255,255,.15);overflow:hidden;border-radius:2px;margin-top:22px;}
+  #app-loader .loader-fill{width:40%;height:100%;background:#fea619;border-radius:2px;animation:loader-slide 1.2s ease-in-out infinite;}
+  @keyframes loader-slide{0%{transform:translateX(-100%);}50%{transform:translateX(60%);}100%{transform:translateX(220%);}}
+  @keyframes loader-pulse{0%,100%{opacity:1;}50%{opacity:.75;}}
+</style>
+<div id="app-loader">
+<img alt="Logistica" class="loader-badge" src="/static/img/logo-mark.svg"/>
+<div class="loader-name">Logistica</div>
+<div class="loader-tag">Loading</div>
+<div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+
 <!-- TopNavBar Alignment -->
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
 <div class="flex items-center gap-md">
-<span class="text-headline-md font-headline-md font-bold text-primary">LogisticsPro</span>
+<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
+<span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
 <div class="hidden md:flex gap-lg ml-xl">
 <a class="text-label-md font-label-md text-primary border-b-2 border-primary pb-1" href="#">Marketplace</a>
 <a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Active Shipments</a>
@@ -135,13 +156,13 @@
 </div>
 </div>
 <div class="flex items-center gap-md">
-<button class="bg-primary text-on-primary px-md py-xs text-label-md font-label-md rounded flex items-center gap-xs hover:opacity-80 transition-all" onclick="window.location.href='create-delivery.html'">
+<button class="bg-primary text-on-primary px-md py-xs text-label-md font-label-md rounded flex items-center gap-xs hover:opacity-80 transition-all" onclick="window.location.href='create-delivery'">
 <span class="material-symbols-outlined text-[18px]">add</span>
                 Create Order
             </button>
 <div class="flex items-center gap-sm">
 <span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary" onclick="document.getElementById('alerts-panel').scrollIntoView({behavior:'smooth'})">notifications</span>
-<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary" onclick="logout()">account_circle</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary" onclick="window.location.href='profile'">account_circle</span>
 </div>
 </div>
 </header>
@@ -159,7 +180,7 @@
 </div>
 </div>
 <nav class="flex-1 space-y-1">
-<a class="flex items-center gap-md px-md py-3 bg-secondary-container text-on-secondary-container border-r-4 border-secondary transition-transform active:scale-[0.99]" href="customer-dashboard.html">
+<a class="flex items-center gap-md px-md py-3 bg-secondary-container text-on-secondary-container border-r-4 border-secondary transition-transform active:scale-[0.99]" href="customer-dashboard">
 <span class="material-symbols-outlined">dashboard</span>
 <span class="text-label-md font-label-md">Dashboard</span>
 </a>
@@ -167,11 +188,11 @@
 <span class="material-symbols-outlined">local_shipping</span>
 <span class="text-label-md font-label-md">My Deliveries</span>
 </a>
-<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform active:scale-[0.99]" href="wallet.html">
+<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform active:scale-[0.99]" href="wallet">
 <span class="material-symbols-outlined">account_balance_wallet</span>
 <span class="text-label-md font-label-md">Wallet</span>
 </a>
-<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform active:scale-[0.99]" href="disputes.html">
+<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform active:scale-[0.99]" href="disputes">
 <span class="material-symbols-outlined">gavel</span>
 <span class="text-label-md font-label-md">Disputes</span>
 </a>
@@ -197,7 +218,7 @@
 <p class="text-body-md text-on-surface-variant mt-xs" id="welcome-text">Welcome back.</p>
 </div>
 <div class="flex gap-sm">
-<button class="bg-secondary text-on-secondary px-lg py-sm text-label-md font-label-md glow-active flex items-center gap-xs" onclick="window.location.href='create-delivery.html'">
+<button class="bg-secondary text-on-secondary px-lg py-sm text-label-md font-label-md glow-active flex items-center gap-xs" onclick="window.location.href='create-delivery'">
 <span class="material-symbols-outlined">add_circle</span>
                         Create New Delivery
                     </button>
@@ -236,7 +257,7 @@
 <p class="text-label-sm font-label-sm text-primary-fixed opacity-70 uppercase tracking-widest">Wallet Balance</p>
 <h2 class="text-headline-lg font-headline-lg text-on-primary" id="wallet-balance">—</h2>
 </div>
-<button class="mt-md text-label-sm font-label-sm text-secondary-container hover:underline flex items-center gap-xs" onclick="window.location.href='wallet.html'">
+<button class="mt-md text-label-sm font-label-sm text-secondary-container hover:underline flex items-center gap-xs" onclick="window.location.href='wallet'">
                             Manage Funds <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
 </button>
 </div>
@@ -309,7 +330,7 @@
 <p class="text-label-sm font-label-md text-primary">Support &amp; Disputes</p>
 <p class="text-[10px] text-on-surface-variant">Response within 24 hours</p>
 </div>
-<button class="bg-primary text-on-primary p-xs rounded-sm hover:opacity-80" onclick="window.location.href='disputes.html'">
+<button class="bg-primary text-on-primary p-xs rounded-sm hover:opacity-80" onclick="window.location.href='disputes'">
 <span class="material-symbols-outlined text-[18px]">gavel</span>
 </button>
 </div>
@@ -387,13 +408,13 @@
                   <td class="px-md py-md">${d.dropoff_address}</td>
                   <td class="px-md py-md">${money(d.target_price)}</td>
                   <td class="px-md py-md"><span class="${statusPillClasses(d.status)} px-sm py-xs text-[11px] font-bold rounded-[2px] uppercase">${d.status.replace(/_/g, ' ')}</span></td>
-                  <td class="px-md py-md"><button class="text-primary hover:underline text-label-sm font-bold" onclick="window.location.href='${['pending', 'negotiating'].includes(d.status) ? 'bidding' : 'live-tracking'}.html?id=${d.id}'">${['pending', 'negotiating'].includes(d.status) ? 'View Offers' : 'Track'}</button></td>
+                  <td class="px-md py-md"><button class="text-primary hover:underline text-label-sm font-bold" onclick="window.location.href='${['pending', 'negotiating'].includes(d.status) ? 'bidding' : 'live-tracking'}?id=${d.id}'">${['pending', 'negotiating'].includes(d.status) ? 'View Offers' : 'Track'}</button></td>
                 </tr>`)
                     .join('')
                 : `<tr><td class="px-md py-md text-on-surface-variant" colspan="5">No shipments yet — create your first delivery.</td></tr>`;
         }
 
-        loadDashboard().catch((err) => alert('Failed to load dashboard: ' + err.message));
+        loadDashboard().catch((err) => uiAlert('Failed to load dashboard: ' + err.message, { kind: 'error' }));
         loadNotifications().catch((err) => console.error(err));
     </script>
 </body></html>

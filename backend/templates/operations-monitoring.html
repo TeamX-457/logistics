@@ -3,7 +3,9 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LogisticsPro | Global Delivery Monitoring</title>
+<title>Logistica | Global Delivery Monitoring</title>
+<link href="/static/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/static/favicon.ico" rel="alternate icon"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
@@ -115,14 +117,33 @@
     </script>
 </head>
 <body class="bg-background text-on-background font-body-md min-h-screen">
+<style>
+  #app-loader{position:fixed;inset:0;z-index:9999;background:#131b2e;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .4s ease,visibility .4s ease;}
+  #app-loader.app-loader-hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  #app-loader .loader-badge{width:72px;height:72px;border-radius:50%;animation:loader-pulse 1.6s ease-in-out infinite;}
+  #app-loader .loader-name{margin-top:20px;font-family:'Geist',sans-serif;font-weight:700;font-size:22px;color:#ffffff;letter-spacing:-0.01em;}
+  #app-loader .loader-tag{margin-top:6px;font-family:'Geist',sans-serif;font-size:11px;letter-spacing:.18em;color:#fea619;text-transform:uppercase;}
+  #app-loader .loader-track{width:160px;height:3px;background:rgba(255,255,255,.15);overflow:hidden;border-radius:2px;margin-top:22px;}
+  #app-loader .loader-fill{width:40%;height:100%;background:#fea619;border-radius:2px;animation:loader-slide 1.2s ease-in-out infinite;}
+  @keyframes loader-slide{0%{transform:translateX(-100%);}50%{transform:translateX(60%);}100%{transform:translateX(220%);}}
+  @keyframes loader-pulse{0%,100%{opacity:1;}50%{opacity:.75;}}
+</style>
+<div id="app-loader">
+<img alt="Logistica" class="loader-badge" src="/static/img/logo-mark.svg"/>
+<div class="loader-name">Logistica</div>
+<div class="loader-tag">Loading</div>
+<div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+
 <!-- TopNavBar (Fixed) -->
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
 <div class="flex items-center gap-xl">
-<span class="text-headline-md font-headline-md font-bold text-primary">LogisticsPro</span>
+<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
+<span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
 <nav class="hidden md:flex gap-lg items-center">
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="admin-overview.html">Overview</a>
-<a class="text-label-md font-label-md text-primary border-b-2 border-primary pb-1" href="operations-monitoring.html">Operations</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes.html">Disputes</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="admin-overview">Overview</a>
+<a class="text-label-md font-label-md text-primary border-b-2 border-primary pb-1" href="operations-monitoring">Operations</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes">Disputes</a>
 </nav>
 </div>
 <div class="flex items-center gap-md">
@@ -143,24 +164,24 @@
 </div>
 </div>
 <nav class="flex-grow space-y-1">
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="admin-overview.html">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="admin-overview">
 <span class="material-symbols-outlined text-[20px]">dashboard</span>
 <span class="text-label-md font-label-md">Dashboard</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="fleet-verification.html">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="fleet-verification">
 <span class="material-symbols-outlined text-[20px]">local_shipping</span>
 <span class="text-label-md font-label-md">Fleet Verification</span>
 </a>
 <!-- Active State -->
-<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container border-r-4 border-secondary transition-all" href="operations-monitoring.html">
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container border-r-4 border-secondary transition-all" href="operations-monitoring">
 <span class="material-symbols-outlined text-[20px]">map</span>
 <span class="text-label-md font-label-md">Operations</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="financial-analytics.html">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="financial-analytics">
 <span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
 <span class="text-label-md font-label-md">Financials</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="disputes.html">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="disputes">
 <span class="material-symbols-outlined text-[20px]">gavel</span>
 <span class="text-label-md font-label-md">Disputes</span>
 </a>
@@ -242,7 +263,7 @@
             list.innerHTML = deliveries.length
                 ? deliveries
                     .map((d) => `
-                <div class="p-4 border-b border-outline-variant hover:bg-surface-container transition-colors cursor-pointer ${d.status === 'delayed' ? 'bg-error-container/20 border-l-4 border-l-error' : ''}" onclick="window.location.href='live-tracking.html?id=${d.id}'">
+                <div class="p-4 border-b border-outline-variant hover:bg-surface-container transition-colors cursor-pointer ${d.status === 'delayed' ? 'bg-error-container/20 border-l-4 border-l-error' : ''}" onclick="window.location.href='live-tracking?id=${d.id}'">
                   <div class="flex justify-between items-start mb-2">
                     <span class="text-mono-sm font-mono-sm ${d.status === 'delayed' ? 'text-error' : 'text-outline'}">${d.reference}</span>
                     ${statusBadge(d.status)}
@@ -264,7 +285,7 @@
             queue.innerHTML = disputes.length
                 ? disputes
                     .map((d) => `
-                <div class="min-w-[280px] bg-white border border-outline-variant rounded p-4 shadow-sm hover:border-error transition-colors cursor-pointer" onclick="window.location.href='dispute-detail.html?id=${d.id}'">
+                <div class="min-w-[280px] bg-white border border-outline-variant rounded p-4 shadow-sm hover:border-error transition-colors cursor-pointer" onclick="window.location.href='dispute-detail?id=${d.id}'">
                   <div class="flex justify-between mb-2">
                     <span class="text-mono-sm font-mono-sm text-outline">${d.case_id}</span>
                     <span class="text-label-sm font-label-sm text-error">${d.priority}</span>
@@ -285,7 +306,7 @@
         }
 
         Promise.all([loadStats(), loadActiveDeliveries(), loadDisputeQueue()]).catch((err) =>
-            alert('Failed to load operations monitoring: ' + err.message)
+            uiAlert('Failed to load operations monitoring: ' + err.message, { kind: 'error' })
         );
     </script>
 </body></html>

@@ -1,5 +1,5 @@
 /**
- * LogisticsPro API client.
+ * Logistica API client.
  * Thin async wrapper around fetch() — every call returns a Promise that
  * resolves to the parsed JSON body, or throws an ApiError on failure.
  *
@@ -89,7 +89,7 @@ async function request(path, opts = {}) {
       res = await doFetch();
     } catch {
       clearSession();
-      window.location.href = "login.html";
+      window.location.href = "login";
       return;
     }
   }

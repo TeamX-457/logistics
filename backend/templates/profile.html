@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Profile | Logistica</title>
+<link href="/static/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/static/favicon.ico" rel="alternate icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#c6c6cd",
+                    "on-tertiary-fixed-variant": "#574425",
+                    "on-secondary-fixed": "#2a1700",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "surface-container-highest": "#d3e4fe",
+                    "surface-tint": "#565e74",
+                    "inverse-surface": "#213145",
+                    "on-error": "#ffffff",
+                    "tertiary-container": "#271901",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#0b1c30",
+                    "surface-container": "#e5eeff",
+                    "on-surface-variant": "#45464d",
+                    "surface": "#f8f9ff",
+                    "surface-container-high": "#dce9ff",
+                    "on-tertiary-container": "#98805d",
+                    "inverse-on-surface": "#eaf1ff",
+                    "secondary-container": "#fea619",
+                    "on-error-container": "#93000a",
+                    "on-primary-container": "#7c839b",
+                    "surface-variant": "#d3e4fe",
+                    "on-background": "#0b1c30",
+                    "surface-container-low": "#eff4ff",
+                    "error-container": "#ffdad6",
+                    "on-tertiary": "#ffffff",
+                    "background": "#f8f9ff",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#cbdbf5",
+                    "primary": "#000000",
+                    "outline": "#76777d",
+                    "secondary": "#855300",
+                    "tertiary-fixed": "#fcdeb5",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "secondary-fixed": "#ffddb8",
+                    "surface-bright": "#f8f9ff",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed": "#131b2e",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "on-secondary-container": "#684000",
+                    "primary-container": "#131b2e",
+                    "primary-fixed-dim": "#bec6e0",
+                    "on-tertiary-fixed": "#271901",
+                    "inverse-primary": "#bec6e0",
+                    "tertiary-fixed-dim": "#dec29a",
+                    "tertiary": "#000000",
+                    "primary-fixed": "#dae2fd"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "lg": "0.75rem",
+                    "xl": "1rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "sm": "8px",
+                    "margin": "32px",
+                    "lg": "24px",
+                    "xs": "4px",
+                    "xl": "32px",
+                    "md": "16px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Geist"],
+                    "headline-xl": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "body-sm": ["Geist"],
+                    "body-lg": ["Geist"],
+                    "label-md": ["Geist"],
+                    "headline-lg-mobile": ["Geist"],
+                    "label-sm": ["Geist"],
+                    "body-md": ["Geist"],
+                    "mono-sm": ["Geist Mono"]
+            },
+            "fontSize": {
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "mono-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        button, input, select, textarea {
+            border-radius: 0.5rem;
+        }
+        body { font-family: 'Geist', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<style>
+  #app-loader{position:fixed;inset:0;z-index:9999;background:#131b2e;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .4s ease,visibility .4s ease;}
+  #app-loader.app-loader-hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  #app-loader .loader-badge{width:72px;height:72px;border-radius:50%;animation:loader-pulse 1.6s ease-in-out infinite;}
+  #app-loader .loader-name{margin-top:20px;font-family:'Geist',sans-serif;font-weight:700;font-size:22px;color:#ffffff;letter-spacing:-0.01em;}
+  #app-loader .loader-tag{margin-top:6px;font-family:'Geist',sans-serif;font-size:11px;letter-spacing:.18em;color:#fea619;text-transform:uppercase;}
+  #app-loader .loader-track{width:160px;height:3px;background:rgba(255,255,255,.15);overflow:hidden;border-radius:2px;margin-top:22px;}
+  #app-loader .loader-fill{width:40%;height:100%;background:#fea619;border-radius:2px;animation:loader-slide 1.2s ease-in-out infinite;}
+  @keyframes loader-slide{0%{transform:translateX(-100%);}50%{transform:translateX(60%);}100%{transform:translateX(220%);}}
+  @keyframes loader-pulse{0%,100%{opacity:1;}50%{opacity:.75;}}
+</style>
+<div id="app-loader">
+<img alt="Logistica" class="loader-badge" src="/static/img/logo-mark.svg"/>
+<div class="loader-name">Logistica</div>
+<div class="loader-tag">Loading</div>
+<div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-md">
+<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
+<span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
+</div>
+<div class="flex items-center gap-md">
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" id="home-link" href="#">Back to Dashboard</a>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-error" onclick="logout()">logout</button>
+</div>
+</nav>
+<main class="pt-24 px-margin pb-16 max-w-[860px] mx-auto">
+<div class="flex items-center gap-lg mb-xl">
+<div class="w-20 h-20 rounded-full bg-primary-container flex items-center justify-center text-on-primary overflow-hidden" id="avatar-wrap">
+<span class="material-symbols-outlined text-[40px]">person</span>
+</div>
+<div>
+<h1 class="text-headline-lg font-headline-lg text-primary" id="display-name">Loading…</h1>
+<p class="text-body-sm text-on-surface-variant" id="display-role">—</p>
+</div>
+</div>
+
+<div id="status-banner" class="hidden mb-lg p-md border text-body-sm"></div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-xl">
+<section class="bg-white border border-outline-variant p-xl">
+<h3 class="text-label-md font-label-md text-primary uppercase mb-lg">Account Details</h3>
+<form class="flex flex-col gap-md" id="profile-form">
+<label class="flex flex-col gap-xs">
+<span class="text-label-sm font-label-sm text-outline uppercase">First Name</span>
+<input class="border border-outline-variant px-md py-sm" id="first_name" type="text"/>
+</label>
+<label class="flex flex-col gap-xs">
+<span class="text-label-sm font-label-sm text-outline uppercase">Last Name</span>
+<input class="border border-outline-variant px-md py-sm" id="last_name" type="text"/>
+</label>
+<label class="flex flex-col gap-xs">
+<span class="text-label-sm font-label-sm text-outline uppercase">Email</span>
+<input class="border border-outline-variant px-md py-sm bg-surface-container-low text-on-surface-variant" disabled="" id="email" type="text"/>
+</label>
+<label class="flex flex-col gap-xs">
+<span class="text-label-sm font-label-sm text-outline uppercase">Phone Number</span>
+<input class="border border-outline-variant px-md py-sm" id="phone_number" type="text"/>
+</label>
+<button class="mt-sm bg-primary text-on-primary py-md text-label-md font-label-md" type="submit">Save Changes</button>
+</form>
+</section>
+
+<section class="bg-white border border-outline-variant p-xl" id="role-details">
+<h3 class="text-label-md font-label-md text-primary uppercase mb-lg">Role Details</h3>
+<div id="role-details-body" class="text-body-sm text-on-surface-variant">Loading…</div>
+</section>
+</div>
+</main>
+
+<script src="/static/js/config.js"></script>
+<script src="/static/js/api.js"></script>
+<script src="/static/js/auth.js"></script>
+<script src="/static/js/ui.js"></script>
+<script>
+    const user = requireAuth();
+    document.getElementById('home-link').href = ROLE_HOME[user.role] || '/';
+
+    function showStatus(message, kind) {
+        const el = document.getElementById('status-banner');
+        el.textContent = message;
+        el.className = `mb-lg p-md border text-body-sm ${kind === 'error' ? 'bg-error-container text-on-error-container border-error' : 'bg-secondary-container text-on-secondary-container border-secondary'}`;
+    }
+
+    function starRow(rating) {
+        const r = Math.round(parseFloat(rating || 0));
+        return Array.from({ length: 5 }, (_, i) => `<span class="material-symbols-outlined text-[16px] ${i < r ? 'text-secondary' : 'text-outline-variant'}" style="font-variation-settings: 'FILL' 1;">star</span>`).join('');
+    }
+
+    function renderRoleDetails(u) {
+        const body = document.getElementById('role-details-body');
+        if (u.role === 'driver' && u.driver_profile) {
+            const d = u.driver_profile;
+            const docs = d.documents || [];
+            body.innerHTML = `
+              <div class="flex flex-col gap-md">
+                <div class="flex justify-between"><span>Entity Type</span><span class="font-bold text-on-surface capitalize">${d.entity_type}</span></div>
+                <div class="flex justify-between"><span>Vehicle</span><span class="font-bold text-on-surface capitalize">${(d.vehicle_type || '').replace(/_/g, ' ')}</span></div>
+                <div class="flex justify-between"><span>License No.</span><span class="font-bold text-on-surface">${d.license_number || '—'}</span></div>
+                <div class="flex justify-between"><span>Verification</span>${statusBadge(d.verification_status)}</div>
+                <div class="flex justify-between"><span>Tier</span><span class="font-bold text-on-surface capitalize">${d.tier}</span></div>
+                <div class="flex justify-between items-center"><span>Rating</span><span class="flex items-center gap-xs">${starRow(d.rating)} <span class="text-on-surface font-bold ml-xs">${d.rating}</span></span></div>
+                <div class="flex justify-between"><span>Total Trips</span><span class="font-bold text-on-surface">${d.total_trips}</span></div>
+                <div class="pt-md border-t border-outline-variant">
+                  <p class="text-label-sm font-label-sm text-outline uppercase mb-sm">Documents</p>
+                  ${docs.length
+                    ? `<ul class="flex flex-col gap-xs">${docs.map((doc) => `<li><a class="text-primary hover:underline text-body-sm flex items-center gap-xs" href="${doc.file}" target="_blank"><span class="material-symbols-outlined text-[16px]">description</span>${doc.doc_type.replace(/_/g, ' ')}</a></li>`).join('')}</ul>`
+                    : '<p class="text-body-sm">No documents uploaded yet.</p>'}
+                </div>
+              </div>`;
+        } else if (u.role === 'customer' && u.customer_profile) {
+            const c = u.customer_profile;
+            body.innerHTML = `
+              <div class="flex flex-col gap-md">
+                <div class="flex justify-between"><span>Account Type</span><span class="font-bold text-on-surface capitalize">${c.account_type}</span></div>
+                <div class="flex justify-between"><span>Company</span><span class="font-bold text-on-surface">${c.company_name || '—'}</span></div>
+                <div class="flex justify-between"><span>Member Since</span><span class="font-bold text-on-surface">${dateTime(u.created_at)}</span></div>
+              </div>`;
+        } else {
+            body.innerHTML = `<p>Administrator account.</p>`;
+        }
+    }
+
+    function renderAvatar(u) {
+        const wrap = document.getElementById('avatar-wrap');
+        if (u.avatar) {
+            wrap.innerHTML = `<img src="${u.avatar}" class="w-full h-full object-cover" alt="Avatar"/>`;
+        }
+    }
+
+    async function loadProfile() {
+        const me = await API.auth.me();
+        document.getElementById('display-name').textContent = `${me.first_name} ${me.last_name}`.trim() || me.email;
+        document.getElementById('display-role').textContent = `${me.role.charAt(0).toUpperCase()}${me.role.slice(1)} Account · ${me.email}`;
+        document.getElementById('first_name').value = me.first_name || '';
+        document.getElementById('last_name').value = me.last_name || '';
+        document.getElementById('email').value = me.email || '';
+        document.getElementById('phone_number').value = me.phone_number || '';
+        renderAvatar(me);
+        renderRoleDetails(me);
+    }
+
+    document.getElementById('profile-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try {
+            await API.auth.updateMe({
+                first_name: document.getElementById('first_name').value,
+                last_name: document.getElementById('last_name').value,
+                phone_number: document.getElementById('phone_number').value,
+            });
+            showStatus('Profile updated successfully.', 'success');
+            loadProfile();
+        } catch (err) {
+            showStatus('Could not update profile: ' + (err.data && err.data.detail ? err.data.detail : err.message), 'error');
+        }
+    });
+
+    loadProfile().catch((err) => showStatus('Failed to load profile: ' + err.message, 'error'));
+</script>
+</body></html>

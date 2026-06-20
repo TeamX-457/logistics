@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LogisticsPro API Reference</title>
+<title>Logistica API Reference</title>
 <style>
 :root {
   --navy: #0F172A;
@@ -108,7 +108,7 @@ a:hover { text-decoration: underline; }
 
 <div class="topbar">
   <div class="dot"></div>
-  <div class="title">LogisticsPro</div>
+  <div class="title">Logistica</div>
   <div class="sub">API Reference</div>
   <div class="right">
     <a href="http://localhost:8000/api/docs/" target="_blank">Swagger UI &#8599;</a>
@@ -134,8 +134,8 @@ a:hover { text-decoration: underline; }
 </div>
 
 <div class="content-wrap" id="content">
-<h1 id="logisticspro-api-reference">LogisticsPro API Reference</h1>
-<p>The LogisticsPro API is organized around REST. It uses standard HTTP response codes, standard HTTP verbs, and JSON request/response bodies for everything except file uploads (<code>multipart/form-data</code>).</p>
+<h1 id="logisticspro-api-reference">Logistica API Reference</h1>
+<p>The Logistica API is organized around REST. It uses standard HTTP response codes, standard HTTP verbs, and JSON request/response bodies for everything except file uploads (<code>multipart/form-data</code>).</p>
 <p>All requests must be made over HTTP to your local backend during development:</p>
 <pre><code>http://localhost:8000/api
 </code></pre>
@@ -147,7 +147,7 @@ a:hover { text-decoration: underline; }
 <p>This document is the hand-written, narrative companion to that schema — it explains <em>why</em> each endpoint exists, what triggers it on the frontend, and what the full request/response shapes look like.</p>
 <hr>
 <h2 id="authentication">Authentication</h2>
-<p>LogisticsPro uses <strong>JSON Web Tokens</strong> (JWT) via <code>djangorestframework-simplejwt</code>. There is no session/cookie auth — every authenticated request carries a bearer token.</p>
+<p>Logistica uses <strong>JSON Web Tokens</strong> (JWT) via <code>djangorestframework-simplejwt</code>. There is no session/cookie auth — every authenticated request carries a bearer token.</p>
 <pre><code>Authorization: Bearer &lt;access_token&gt;
 </code></pre>
 <h3 id="token-lifecycle">Token lifecycle</h3>
@@ -195,7 +195,7 @@ const res = await fetch(`${BASE_URL}/auth/token/refresh/`, {
 <p>Every user has exactly one <code>role</code>: <code>customer</code>, <code>driver</code>, or <code>admin</code>. Roles are assigned at registration (customer/driver) or via <code>createsuperuser</code> / Django admin (admin). Most endpoints are gated by role at the view level — see each endpoint&#39;s <strong>Auth</strong> line below.</p>
 <hr>
 <h2 id="errors">Errors</h2>
-<p>LogisticsPro uses standard HTTP status codes:</p>
+<p>Logistica uses standard HTTP status codes:</p>
 <table>
 <thead>
 <tr>

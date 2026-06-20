@@ -3,7 +3,9 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LogisticsPro | Live Tracking Experience</title>
+<title>Logistica | Live Tracking Experience</title>
+<link href="/static/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/static/favicon.ico" rel="alternate icon"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
@@ -107,18 +109,37 @@
     </style>
 </head>
 <body class="overflow-hidden">
+<style>
+  #app-loader{position:fixed;inset:0;z-index:9999;background:#131b2e;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .4s ease,visibility .4s ease;}
+  #app-loader.app-loader-hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  #app-loader .loader-badge{width:72px;height:72px;border-radius:50%;animation:loader-pulse 1.6s ease-in-out infinite;}
+  #app-loader .loader-name{margin-top:20px;font-family:'Geist',sans-serif;font-weight:700;font-size:22px;color:#ffffff;letter-spacing:-0.01em;}
+  #app-loader .loader-tag{margin-top:6px;font-family:'Geist',sans-serif;font-size:11px;letter-spacing:.18em;color:#fea619;text-transform:uppercase;}
+  #app-loader .loader-track{width:160px;height:3px;background:rgba(255,255,255,.15);overflow:hidden;border-radius:2px;margin-top:22px;}
+  #app-loader .loader-fill{width:40%;height:100%;background:#fea619;border-radius:2px;animation:loader-slide 1.2s ease-in-out infinite;}
+  @keyframes loader-slide{0%{transform:translateX(-100%);}50%{transform:translateX(60%);}100%{transform:translateX(220%);}}
+  @keyframes loader-pulse{0%,100%{opacity:1;}50%{opacity:.75;}}
+</style>
+<div id="app-loader">
+<img alt="Logistica" class="loader-badge" src="/static/img/logo-mark.svg"/>
+<div class="loader-name">Logistica</div>
+<div class="loader-tag">Loading</div>
+<div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+
 <!-- TopNavBar -->
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
 <div class="flex items-center gap-8">
-<span class="text-headline-md font-headline-md font-bold text-primary">LogisticsPro</span>
+<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
+<span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
 <nav class="hidden md:flex items-center gap-6">
 <a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#" id="home-link">Dashboard</a>
 <a class="text-label-md font-label-md text-primary border-b-2 border-primary pb-1" href="#">Tracking</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes.html">Support</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes">Support</a>
 </nav>
 </div>
 <div class="flex items-center gap-4">
-<div class="flex items-center gap-2 px-3 py-1.5 border border-outline-variant rounded">
+<div class="flex items-center gap-2 px-3 py-1.5 border border-outline-variant rounded cursor-pointer hover:bg-surface-container-low" onclick="window.location.href='profile'">
 <span class="material-symbols-outlined text-primary">account_circle</span>
 <span class="text-label-sm font-label-sm" id="viewer-label">Loading…</span>
 </div>
@@ -236,7 +257,7 @@
 </div>
 </div>
 </div>
-<button class="mt-8 w-full border border-primary py-2 text-label-sm font-label-sm text-primary hover:bg-surface transition-colors uppercase tracking-widest" onclick="window.location.href='negotiation-chat.html?id=' + deliveryId">
+<button class="mt-8 w-full border border-primary py-2 text-label-sm font-label-sm text-primary hover:bg-surface transition-colors uppercase tracking-widest" onclick="window.location.href='negotiation-chat?id=' + deliveryId">
                     Open Negotiation Chat
                 </button>
 </div>
@@ -274,7 +295,7 @@
     <script src="/static/js/ui.js"></script>
     <script>
         const user = requireAuth();
-        document.getElementById('home-link').href = ROLE_HOME[user.role] || 'index.html';
+        document.getElementById('home-link').href = ROLE_HOME[user.role] || '/';
         document.getElementById('viewer-label').textContent = `${user.role.charAt(0).toUpperCase()}${user.role.slice(1)}`;
 
         const deliveryId = qs('id');
@@ -345,12 +366,12 @@
 
         async function advanceStatus(status) {
             let otp;
-            if (status === 'delivered') otp = prompt('Enter the delivery OTP given by the customer:');
+            if (status === 'delivered') otp = await uiPrompt('Enter the delivery OTP given by the customer.', { title: 'Confirm Delivery', placeholder: '000000' });
             try {
                 delivery = await API.deliveries.advanceStatus(deliveryId, { status, otp });
                 render();
             } catch (err) {
-                alert('Failed to update status: ' + err.message);
+                uiAlert('Failed to update status: ' + err.message, { kind: 'error' });
             }
         }
 
@@ -359,7 +380,7 @@
             const lng = parseFloat(document.getElementById('ping-lng').value);
             if (Number.isNaN(lat) || Number.isNaN(lng)) return;
             await API.deliveries.tracking.post(deliveryId, { lat, lng });
-            alert('Location posted.');
+            uiAlert('Location posted.', { title: 'Success' });
         }
 
         function render() {
@@ -380,6 +401,6 @@
             renderDriverFooter(tracking);
         }
 
-        load().catch((err) => alert('Failed to load tracking: ' + err.message));
+        load().catch((err) => uiAlert('Failed to load tracking: ' + err.message, { kind: 'error' }));
     </script>
 </body></html>

@@ -1,5 +1,5 @@
 """
-ASGI config for the LogisticsPro backend.
+ASGI config for the Logistica backend.
 
 Exposes the ASGI callable as a module-level variable named ``application``.
 """

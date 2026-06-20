@@ -3,7 +3,9 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Wallet &amp; Payments Dashboard | LogisticsPro</title>
+<title>Wallet &amp; Payments Dashboard | Logistica</title>
+<link href="/static/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/static/favicon.ico" rel="alternate icon"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
@@ -126,42 +128,55 @@
     </style>
 </head>
 <body class="bg-surface text-on-surface">
+<style>
+  #app-loader{position:fixed;inset:0;z-index:9999;background:#131b2e;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .4s ease,visibility .4s ease;}
+  #app-loader.app-loader-hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  #app-loader .loader-badge{width:72px;height:72px;border-radius:50%;animation:loader-pulse 1.6s ease-in-out infinite;}
+  #app-loader .loader-name{margin-top:20px;font-family:'Geist',sans-serif;font-weight:700;font-size:22px;color:#ffffff;letter-spacing:-0.01em;}
+  #app-loader .loader-tag{margin-top:6px;font-family:'Geist',sans-serif;font-size:11px;letter-spacing:.18em;color:#fea619;text-transform:uppercase;}
+  #app-loader .loader-track{width:160px;height:3px;background:rgba(255,255,255,.15);overflow:hidden;border-radius:2px;margin-top:22px;}
+  #app-loader .loader-fill{width:40%;height:100%;background:#fea619;border-radius:2px;animation:loader-slide 1.2s ease-in-out infinite;}
+  @keyframes loader-slide{0%{transform:translateX(-100%);}50%{transform:translateX(60%);}100%{transform:translateX(220%);}}
+  @keyframes loader-pulse{0%,100%{opacity:1;}50%{opacity:.75;}}
+</style>
+<div id="app-loader">
+<img alt="Logistica" class="loader-badge" src="/static/img/logo-mark.svg"/>
+<div class="loader-name">Logistica</div>
+<div class="loader-tag">Loading</div>
+<div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+
 <!-- Top Navigation -->
 <nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
 <div class="flex items-center gap-xl">
-<span class="text-headline-md font-headline-md font-bold text-primary">LogisticsPro</span>
+<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
+<span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
 <div class="hidden md:flex gap-lg items-center">
 <a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" id="home-link" href="#">Dashboard</a>
 <a class="text-label-md font-label-md text-primary border-b-2 border-primary pb-1" href="#">Wallet</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes.html">Support</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes">Support</a>
 </div>
 </div>
 <div class="flex items-center gap-md">
-<button class="material-symbols-outlined text-on-surface-variant" onclick="logout()">account_circle</button>
+<button class="material-symbols-outlined text-on-surface-variant" onclick="window.location.href='profile'">account_circle</button>
 </div>
 </nav>
 <!-- Sidebar Navigation -->
 <aside class="fixed left-0 top-0 h-full w-64 z-40 flex flex-col pt-20 pb-8 px-4 bg-surface-container-low border-r border-outline-variant hidden md:flex">
-<div class="mb-lg px-2">
-<div class="text-label-sm font-label-sm text-outline uppercase tracking-wider mb-xs">Account</div>
-<div class="text-body-sm font-body-sm text-on-surface-variant" id="profile-name">Loading…</div>
+<div class="mb-xl px-2">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-primary-container rounded-sm flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">person</span>
 </div>
-<div class="flex flex-col gap-xs flex-grow">
-<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors" id="home-link-2" href="#">
-<span class="material-symbols-outlined">dashboard</span>
-<span class="text-label-md font-label-md">Dashboard</span>
-</a>
-<a class="flex items-center gap-md px-4 py-3 bg-secondary-container text-on-secondary-container border-r-4 border-secondary" href="wallet.html">
-<span class="material-symbols-outlined">account_balance_wallet</span>
-<span class="text-label-md font-label-md">Wallet</span>
-</a>
-<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors" href="disputes.html">
-<span class="material-symbols-outlined">gavel</span>
-<span class="text-label-md font-label-md">Disputes</span>
-</a>
+<div>
+<p class="text-label-md font-label-md text-primary" id="profile-name">Loading…</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant" id="profile-type">Account</p>
 </div>
+</div>
+</div>
+<nav class="flex flex-col gap-xs flex-grow" id="sidebar-links"></nav>
 <div class="mt-auto border-t border-outline-variant pt-lg flex flex-col gap-xs">
-<a class="flex items-center gap-md px-4 py-2 text-on-surface-variant hover:bg-surface-container-high" href="/static/docs/index.html" target="_blank">
+<a class="flex items-center gap-md px-4 py-2 text-on-surface-variant hover:bg-surface-container-high" href="/static/docs/index" target="_blank">
 <span class="material-symbols-outlined text-[20px]">description</span>
 <span class="text-label-md">Documentation</span>
 </a>
@@ -181,7 +196,7 @@
 <p class="text-body-md font-body-md text-on-surface-variant">Manage your marketplace funds and delivery transactions.</p>
 </div>
 <div class="flex gap-md">
-<button class="bg-secondary-container text-on-secondary-container px-xl py-md text-label-md font-label-md rounded-lg hover:opacity-90 transition-opacity flex items-center gap-sm" onclick="window.location.href='create-delivery.html'">
+<button class="bg-secondary-container text-on-secondary-container px-xl py-md text-label-md font-label-md rounded-lg hover:opacity-90 transition-opacity flex items-center gap-sm" onclick="window.location.href='create-delivery'">
 <span class="material-symbols-outlined">add</span>
                         New Delivery
                     </button>
@@ -295,9 +310,33 @@
     <script src="/static/js/ui.js"></script>
     <script>
         const user = requireAuth();
-        document.getElementById('home-link').href = ROLE_HOME[user.role] || 'index.html';
-        document.getElementById('home-link-2').href = ROLE_HOME[user.role] || 'index.html';
-        document.getElementById('profile-name').textContent = user.email;
+        document.getElementById('home-link').href = ROLE_HOME[user.role] || '/';
+        document.getElementById('profile-name').textContent = `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.email;
+        document.getElementById('profile-type').textContent = user.role === 'driver' ? 'Driver Account' : 'Customer Account';
+
+        const SIDEBAR_LINKS = {
+            customer: [
+                ['customer-dashboard', 'dashboard', 'Dashboard'],
+                ['customer-dashboard#shipments', 'local_shipping', 'My Deliveries'],
+                ['wallet', 'account_balance_wallet', 'Wallet'],
+                ['disputes', 'gavel', 'Disputes'],
+            ],
+            driver: [
+                ['driver-dashboard', 'dashboard', 'Dashboard'],
+                ['driver-dashboard#available-loads', 'local_shipping', 'Deliveries'],
+                ['wallet', 'payments', 'Earnings'],
+                ['disputes', 'gavel', 'Disputes'],
+            ],
+        };
+        document.getElementById('sidebar-links').innerHTML = (SIDEBAR_LINKS[user.role] || SIDEBAR_LINKS.customer)
+            .map(([href, icon, label]) => {
+                const active = href === 'wallet';
+                const cls = active
+                    ? 'flex items-center gap-md px-4 py-3 bg-secondary-container text-on-secondary-container border-r-4 border-secondary'
+                    : 'flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors';
+                return `<a class="${cls}" href="${href}"><span class="material-symbols-outlined">${icon}</span><span class="text-label-md font-label-md">${label}</span></a>`;
+            })
+            .join('');
 
         let txnPage = 1;
         let currentRange = '1M';
@@ -336,37 +375,41 @@
         }
 
         async function addPaymentMethod() {
-            const label = prompt('Label for this method (e.g. Chase Business):');
+            const label = await uiPrompt('Give this payment method a name so you can recognize it later.', { title: 'Add Payment Method', placeholder: 'e.g. Chase Business' });
             if (!label) return;
-            const method_type = confirm('Is this a card? OK = Card, Cancel = Bank') ? 'card' : 'bank';
-            const last4 = method_type === 'card' ? (prompt('Last 4 digits:') || '') : '';
+            const isCard = await uiConfirm('Is this a card or a bank account?', { title: 'Method Type', confirmLabel: 'Card', cancelLabel: 'Bank' });
+            const method_type = isCard ? 'card' : 'bank';
+            let last4 = '';
+            if (method_type === 'card') {
+                last4 = (await uiPrompt('Enter the last 4 digits of the card.', { title: 'Card Details', placeholder: '1234' })) || '';
+            }
             await API.wallet.paymentMethods.create({ label, method_type, last4 });
             loadPaymentMethods();
         }
 
         async function withdraw() {
-            const amount = prompt('Amount to withdraw ($):');
+            const amount = await uiPrompt('How much would you like to withdraw?', { title: 'Withdraw Funds', placeholder: '0.00' });
             if (!amount) return;
             const methods = await API.wallet.paymentMethods.list();
-            if (!methods.length) return alert('Add a payment method first.');
+            if (!methods.length) return uiAlert('Add a payment method first.', { kind: 'error', title: 'No Payment Method' });
             try {
                 await API.wallet.withdraw({ amount: parseFloat(amount), payment_method: methods[0].id });
                 await Promise.all([loadWallet(), loadTransactions(1)]);
             } catch (err) {
-                alert('Withdraw failed: ' + err.message);
+                uiAlert('Withdraw failed: ' + err.message, { kind: 'error' });
             }
         }
 
         async function transfer() {
-            const amount = prompt('Amount to transfer ($):');
+            const amount = await uiPrompt('How much would you like to transfer?', { title: 'Transfer Funds', placeholder: '0.00' });
             if (!amount) return;
-            const recipient_email = prompt('Recipient email:');
+            const recipient_email = await uiPrompt('Who is this transfer for?', { title: 'Recipient', placeholder: 'name@example.com' });
             if (!recipient_email) return;
             try {
                 await API.wallet.transfer({ amount: parseFloat(amount), recipient_email });
                 await Promise.all([loadWallet(), loadTransactions(1)]);
             } catch (err) {
-                alert('Transfer failed: ' + err.message);
+                uiAlert('Transfer failed: ' + err.message, { kind: 'error' });
             }
         }
 
@@ -428,7 +471,7 @@
         document.getElementById('txn-filter').addEventListener('change', filterAndRenderTransactions);
 
         Promise.all([loadWallet(), loadPaymentMethods(), loadTransactions(1), setRange('1M')]).catch((err) =>
-            alert('Failed to load wallet: ' + err.message)
+            uiAlert('Failed to load wallet: ' + err.message, { kind: 'error' })
         );
     </script>
 </body></html>

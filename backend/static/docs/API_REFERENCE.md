@@ -1,6 +1,6 @@
-# LogisticsPro API Reference
+# Logistica API Reference
 
-The LogisticsPro API is organized around REST. It uses standard HTTP response codes, standard HTTP verbs, and JSON request/response bodies for everything except file uploads (`multipart/form-data`).
+The Logistica API is organized around REST. It uses standard HTTP response codes, standard HTTP verbs, and JSON request/response bodies for everything except file uploads (`multipart/form-data`).
 
 All requests must be made over HTTP to your local backend during development:
 
@@ -36,7 +36,7 @@ This document is the hand-written, narrative companion to that schema — it exp
 
 ## Authentication
 
-LogisticsPro uses **JSON Web Tokens** (JWT) via `djangorestframework-simplejwt`. There is no session/cookie auth — every authenticated request carries a bearer token.
+Logistica uses **JSON Web Tokens** (JWT) via `djangorestframework-simplejwt`. There is no session/cookie auth — every authenticated request carries a bearer token.
 
 ```
 Authorization: Bearer <access_token>
@@ -83,7 +83,7 @@ Every user has exactly one `role`: `customer`, `driver`, or `admin`. Roles are a
 
 ## Errors
 
-LogisticsPro uses standard HTTP status codes:
+Logistica uses standard HTTP status codes:
 
 | Code | Meaning |
 |---|---|

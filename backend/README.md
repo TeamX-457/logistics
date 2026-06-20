@@ -1,6 +1,6 @@
-# LogisticsPro Backend
+# Logistica Backend
 
-Django REST API for the LogisticsPro logistics marketplace, plus the working frontend — `templates/` (HTML/Tailwind pages) and `static/` (JS/CSS) — served by Django itself so the whole app runs on one origin/port. The UI was designed against the screens prototyped in `../frontend/design-prototypes`.
+Django REST API for the Logistica logistics marketplace, plus the working frontend — `templates/` (HTML/Tailwind pages) and `static/` (JS/CSS) — served by Django itself so the whole app runs on one origin/port. The UI was designed against the screens prototyped in `../frontend/design-prototypes`.
 
 ## Stack
 

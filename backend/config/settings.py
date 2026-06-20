@@ -1,5 +1,5 @@
 """
-Django settings for the LogisticsPro backend.
+Django settings for the Logistica backend.
 """
 
 from datetime import timedelta
@@ -134,8 +134,8 @@ SIMPLE_JWT = {
 }
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": "LogisticsPro API",
-    "DESCRIPTION": "Backend API for the LogisticsPro logistics marketplace platform.",
+    "TITLE": "Logistica API",
+    "DESCRIPTION": "Backend API for the Logistica logistics marketplace platform.",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
 }

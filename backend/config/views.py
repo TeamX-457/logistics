@@ -4,7 +4,9 @@ from django.template import TemplateDoesNotExist
 
 
 def page(request, page="index"):
-    """Serve a static frontend page from templates/ by filename, e.g. /wallet.html -> templates/wallet.html."""
+    """Serve a static frontend page from templates/ by filename, e.g. /wallet -> templates/wallet.html."""
+    if page.endswith(".html"):
+        page = page[:-5]
     try:
         return render(request, f"{page}.html")
     except TemplateDoesNotExist:

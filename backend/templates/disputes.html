@@ -2,7 +2,9 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Disputes | LogisticsPro</title>
+<title>Disputes | Logistica</title>
+<link href="/static/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/static/favicon.ico" rel="alternate icon"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
@@ -115,9 +117,27 @@
 </style>
 </head>
 <body class="bg-background text-on-surface">
+<style>
+  #app-loader{position:fixed;inset:0;z-index:9999;background:#131b2e;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .4s ease,visibility .4s ease;}
+  #app-loader.app-loader-hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  #app-loader .loader-badge{width:72px;height:72px;border-radius:50%;animation:loader-pulse 1.6s ease-in-out infinite;}
+  #app-loader .loader-name{margin-top:20px;font-family:'Geist',sans-serif;font-weight:700;font-size:22px;color:#ffffff;letter-spacing:-0.01em;}
+  #app-loader .loader-tag{margin-top:6px;font-family:'Geist',sans-serif;font-size:11px;letter-spacing:.18em;color:#fea619;text-transform:uppercase;}
+  #app-loader .loader-track{width:160px;height:3px;background:rgba(255,255,255,.15);overflow:hidden;border-radius:2px;margin-top:22px;}
+  #app-loader .loader-fill{width:40%;height:100%;background:#fea619;border-radius:2px;animation:loader-slide 1.2s ease-in-out infinite;}
+  @keyframes loader-slide{0%{transform:translateX(-100%);}50%{transform:translateX(60%);}100%{transform:translateX(220%);}}
+  @keyframes loader-pulse{0%,100%{opacity:1;}50%{opacity:.75;}}
+</style>
+<div id="app-loader">
+<img alt="Logistica" class="loader-badge" src="/static/img/logo-mark.svg"/>
+<div class="loader-name">Logistica</div>
+<div class="loader-tag">Loading</div>
+<div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+
 <aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant bg-surface-container-lowest flex flex-col py-lg px-md z-50">
 <div class="mb-xl">
-<h1 class="font-headline-md text-headline-md font-bold text-primary">Logistics Pro</h1>
+<div class="flex items-center gap-sm mb-1"><img alt="Logistica" class="w-7 h-7 rounded-full" src="/static/img/logo-mark.svg"/><h1 class="font-headline-md text-headline-md font-bold text-primary">Logistica</h1></div>
 <p class="font-body-md text-body-sm text-on-surface-variant" id="profile-name">Loading…</p>
 </div>
 <nav class="flex-1 flex flex-col gap-xs">
@@ -125,11 +145,11 @@
 <span class="material-symbols-outlined">dashboard</span>
 <span class="font-body-md text-body-md">Dashboard</span>
 </a>
-<a class="flex items-center gap-md p-sm transition-colors duration-150 cursor-pointer active:opacity-80 text-on-surface-variant hover:text-primary hover:bg-surface-container" href="wallet.html">
+<a class="flex items-center gap-md p-sm transition-colors duration-150 cursor-pointer active:opacity-80 text-on-surface-variant hover:text-primary hover:bg-surface-container" href="wallet">
 <span class="material-symbols-outlined">payments</span>
 <span class="font-body-md text-body-md">Wallet</span>
 </a>
-<a class="flex items-center gap-md p-sm transition-colors duration-150 cursor-pointer active:opacity-80 text-primary font-bold border-r-4 border-primary bg-surface-container-low" href="disputes.html">
+<a class="flex items-center gap-md p-sm transition-colors duration-150 cursor-pointer active:opacity-80 text-primary font-bold border-r-4 border-primary bg-surface-container-low" href="disputes">
 <span class="material-symbols-outlined">gavel</span>
 <span class="font-body-md text-body-md">Disputes</span>
 </a>
@@ -181,7 +201,7 @@
 <script src="/static/js/ui.js"></script>
 <script>
     const user = requireAuth();
-    document.getElementById('home-link').href = ROLE_HOME[user.role] || 'index.html';
+    document.getElementById('home-link').href = ROLE_HOME[user.role] || '/';
     document.getElementById('profile-name').textContent = user.email;
 
     async function createDispute() {
@@ -191,13 +211,13 @@
         description: el("nd_description").value,
         priority: el("nd_priority").value,
       };
-      if (!payload.delivery || !payload.title) return alert("Delivery ID and title are required.");
+      if (!payload.delivery || !payload.title) return uiAlert("Delivery ID and title are required.", { kind: 'error' });
       try {
         await API.disputes.create(payload);
         el("new-dispute-form").classList.add("hidden");
         await loadDisputes();
       } catch (err) {
-        alert("Failed to raise dispute: " + err.message);
+        uiAlert("Failed to raise dispute: " + err.message, { kind: 'error' });
       }
     }
 
@@ -209,7 +229,7 @@
         ? disputes
             .map(
               (d) => `
-        <a href="dispute-detail.html?id=${d.id}" class="block bg-surface-container-lowest border border-outline-variant p-lg hover:border-primary transition-colors">
+        <a href="dispute-detail?id=${d.id}" class="block bg-surface-container-lowest border border-outline-variant p-lg hover:border-primary transition-colors">
           <div class="flex items-center justify-between mb-xs">
             <span class="font-mono-sm text-mono-sm text-on-surface-variant">${d.case_id} &middot; delivery ${d.delivery_reference}</span>
             ${statusBadge(d.status)}
@@ -222,7 +242,7 @@
         : `<div class="text-on-surface-variant text-center py-xl">No disputes.</div>`;
     }
 
-    loadDisputes().catch((err) => alert("Failed to load disputes: " + err.message));
+    loadDisputes().catch((err) => uiAlert("Failed to load disputes: " + err.message, { kind: 'error' }));
   </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-# LogisticsPro
+# Logistica
 
 A logistics marketplace platform connecting shippers (customers), carriers (drivers), and platform admins/ops.
 

@@ -18,7 +18,7 @@ urlpatterns = [
     path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
     # Frontend — served straight from templates/ so the whole app runs on one origin/port.
     path("", views.page, name="home"),
-    path("<str:page>.html", views.page, name="page"),
+    path("<str:page>", views.page, name="page"),
 ]
 
 if settings.DEBUG:

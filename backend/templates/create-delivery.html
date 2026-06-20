@@ -119,22 +119,41 @@
     </script>
 </head>
 <body class="bg-surface text-on-surface font-body-md overflow-x-hidden">
+<style>
+  #app-loader{position:fixed;inset:0;z-index:9999;background:#131b2e;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .4s ease,visibility .4s ease;}
+  #app-loader.app-loader-hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  #app-loader .loader-badge{width:72px;height:72px;border-radius:50%;animation:loader-pulse 1.6s ease-in-out infinite;}
+  #app-loader .loader-name{margin-top:20px;font-family:'Geist',sans-serif;font-weight:700;font-size:22px;color:#ffffff;letter-spacing:-0.01em;}
+  #app-loader .loader-tag{margin-top:6px;font-family:'Geist',sans-serif;font-size:11px;letter-spacing:.18em;color:#fea619;text-transform:uppercase;}
+  #app-loader .loader-track{width:160px;height:3px;background:rgba(255,255,255,.15);overflow:hidden;border-radius:2px;margin-top:22px;}
+  #app-loader .loader-fill{width:40%;height:100%;background:#fea619;border-radius:2px;animation:loader-slide 1.2s ease-in-out infinite;}
+  @keyframes loader-slide{0%{transform:translateX(-100%);}50%{transform:translateX(60%);}100%{transform:translateX(220%);}}
+  @keyframes loader-pulse{0%,100%{opacity:1;}50%{opacity:.75;}}
+</style>
+<div id="app-loader">
+<img alt="Logistica" class="loader-badge" src="/static/img/logo-mark.svg"/>
+<div class="loader-name">Logistica</div>
+<div class="loader-tag">Loading</div>
+<div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+
 <!-- TopNavBar (Shared Component) -->
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
 <div class="flex items-center gap-xl">
-<span class="text-headline-md font-headline-md font-bold text-primary">LogisticsPro</span>
+<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
+<span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
 <nav class="hidden md:flex items-center gap-lg">
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="customer-dashboard.html">Dashboard</a>
-<a class="text-label-md font-label-md text-primary border-b-2 border-primary pb-1" href="create-delivery.html">Create Order</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="wallet.html">Wallet</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes.html">Support</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="customer-dashboard">Dashboard</a>
+<a class="text-label-md font-label-md text-primary border-b-2 border-primary pb-1" href="create-delivery">Create Order</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="wallet">Wallet</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes">Support</a>
 </nav>
 </div>
 <div class="flex items-center gap-md">
-<button class="p-2 text-on-surface-variant hover:bg-surface-container transition-colors" onclick="window.location.href='customer-dashboard.html'">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container transition-colors" onclick="window.location.href='customer-dashboard'">
 <span class="material-symbols-outlined" data-icon="notifications">notifications</span>
 </button>
-<button class="p-2 text-on-surface-variant hover:bg-surface-container transition-colors" onclick="logout()">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container transition-colors" onclick="window.location.href='profile'">
 <span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
 </button>
 </div>
@@ -288,7 +307,7 @@
 </div>
 <span class="material-symbols-outlined text-outline" data-icon="credit_card">credit_card</span>
 </label>
-<button class="w-full p-md text-primary text-label-md flex items-center justify-center gap-md hover:bg-surface-container-high transition-colors" onclick="window.location.href='wallet.html'" type="button">
+<button class="w-full p-md text-primary text-label-md flex items-center justify-center gap-md hover:bg-surface-container-high transition-colors" onclick="window.location.href='wallet'" type="button">
 <span class="material-symbols-outlined" data-icon="add">add</span>
                                 Add New Method
                             </button>
@@ -494,7 +513,7 @@
 
             try {
                 const delivery = await API.deliveries.create(payload);
-                window.location.href = `live-tracking.html?id=${delivery.id}`;
+                window.location.href = `live-tracking?id=${delivery.id}`;
             } catch (err) {
                 const msg = err.data ? Object.values(err.data).flat().join(' ') : err.message;
                 errorBox.textContent = msg || 'Could not create delivery.';

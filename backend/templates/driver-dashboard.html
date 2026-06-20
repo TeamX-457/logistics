@@ -3,7 +3,9 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LogisticsPro | Driver Dashboard</title>
+<title>Logistica | Driver Dashboard</title>
+<link href="/static/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/static/favicon.ico" rel="alternate icon"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -126,10 +128,28 @@
     </script>
 </head>
 <body class="bg-background text-on-surface">
+<style>
+  #app-loader{position:fixed;inset:0;z-index:9999;background:#131b2e;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .4s ease,visibility .4s ease;}
+  #app-loader.app-loader-hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  #app-loader .loader-badge{width:72px;height:72px;border-radius:50%;animation:loader-pulse 1.6s ease-in-out infinite;}
+  #app-loader .loader-name{margin-top:20px;font-family:'Geist',sans-serif;font-weight:700;font-size:22px;color:#ffffff;letter-spacing:-0.01em;}
+  #app-loader .loader-tag{margin-top:6px;font-family:'Geist',sans-serif;font-size:11px;letter-spacing:.18em;color:#fea619;text-transform:uppercase;}
+  #app-loader .loader-track{width:160px;height:3px;background:rgba(255,255,255,.15);overflow:hidden;border-radius:2px;margin-top:22px;}
+  #app-loader .loader-fill{width:40%;height:100%;background:#fea619;border-radius:2px;animation:loader-slide 1.2s ease-in-out infinite;}
+  @keyframes loader-slide{0%{transform:translateX(-100%);}50%{transform:translateX(60%);}100%{transform:translateX(220%);}}
+  @keyframes loader-pulse{0%,100%{opacity:1;}50%{opacity:.75;}}
+</style>
+<div id="app-loader">
+<img alt="Logistica" class="loader-badge" src="/static/img/logo-mark.svg"/>
+<div class="loader-name">Logistica</div>
+<div class="loader-tag">Loading</div>
+<div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+
 <!-- Sidebar Navigation -->
 <aside class="h-screen w-64 fixed left-0 top-0 flex flex-col h-full py-lg px-md bg-surface-container-lowest border-r border-outline-variant">
 <div class="mb-xl">
-<h1 class="font-headline-md text-headline-md font-bold text-primary">Logistics Pro</h1>
+<div class="flex items-center gap-sm mb-1"><img alt="Logistica" class="w-7 h-7 rounded-full" src="/static/img/logo-mark.svg"/><h1 class="font-headline-md text-headline-md font-bold text-primary">Logistica</h1></div>
 <div class="flex items-center gap-sm mt-md">
 <img alt="User profile" class="w-10 h-10 rounded shadow-sm border border-outline-variant object-cover" data-alt="A professional headshot of a logistics driver in a clean, high-end uniform. The lighting is crisp and cinematic, emphasizing a modern enterprise aesthetic. The background is a slightly blurred industrial logistics center with cool blue and slate tones, maintaining a serious and reliable brand presence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRVzSSbevlVSE841Y8QtdPFOjrdVjOlLDKriee-TSROz_dPF5ddNBEKbq_x58y1HqKfemoz51lWRNfS6C0Mmcj1EidEK_RDgsiZBGcrtPv8z15Ops_hmXX6EQgBSek1vbPQK9YXontP7vkXdDwbmZGMDISRgnTvFHdx_VnID4q59LFgSHEFm_rVUXLcdka8NCaMUzwxXT8YhwkJZAdyvwRJSYx2QvivvtuPAPw5DM2XuCO8bzAIBcgl-EMENF-_Ls21LJMu_a3bX4"/>
 <div class="flex flex-col">
@@ -140,7 +160,7 @@
 </div>
 <nav class="flex-1 space-y-xs">
 <!-- Active Tab: Dashboard -->
-<a class="flex items-center gap-md px-md py-sm text-primary font-bold border-r-4 border-primary bg-surface-container-low transition-colors duration-150 cursor-pointer" href="driver-dashboard.html">
+<a class="flex items-center gap-md px-md py-sm text-primary font-bold border-r-4 border-primary bg-surface-container-low transition-colors duration-150 cursor-pointer" href="driver-dashboard">
 <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
 <span class="font-body-md text-body-md">Dashboard</span>
 </a>
@@ -148,11 +168,11 @@
 <span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
 <span class="font-body-md text-body-md">Deliveries</span>
 </a>
-<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors duration-150 cursor-pointer" href="wallet.html">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors duration-150 cursor-pointer" href="wallet">
 <span class="material-symbols-outlined" data-icon="payments">payments</span>
 <span class="font-body-md text-body-md">Earnings</span>
 </a>
-<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors duration-150 cursor-pointer" href="disputes.html">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors duration-150 cursor-pointer" href="disputes">
 <span class="material-symbols-outlined" data-icon="gavel">gavel</span>
 <span class="font-body-md text-body-md">Disputes</span>
 </a>
@@ -328,9 +348,9 @@
         async function acceptLoad(id) {
             try {
                 await API.deliveries.acceptLoad(id);
-                window.location.href = `live-tracking.html?id=${id}`;
+                window.location.href = `live-tracking?id=${id}`;
             } catch (err) {
-                alert('Failed to accept load: ' + err.message);
+                uiAlert('Failed to accept load: ' + err.message, { kind: 'error' });
             }
         }
 
@@ -383,7 +403,7 @@
                 document.getElementById('active-dropoff').textContent = data.active_delivery.dropoff_address;
                 document.getElementById('active-package').textContent = `${data.active_delivery.package_type.replace(/_/g, ' ')} · ${data.active_delivery.weight_kg} kg`;
                 document.getElementById('active-reference').textContent = data.active_delivery.reference;
-                document.getElementById('active-track-btn').onclick = () => window.location.href = `live-tracking.html?id=${data.active_delivery.id}`;
+                document.getElementById('active-track-btn').onclick = () => window.location.href = `live-tracking?id=${data.active_delivery.id}`;
             } else {
                 document.getElementById('active-status').textContent = 'No load';
             }
@@ -402,7 +422,7 @@
                 : `<div class="text-on-surface-variant">No earnings recorded this week yet.</div>`;
         }
 
-        loadDashboard().catch((err) => alert('Failed to load dashboard: ' + err.message));
+        loadDashboard().catch((err) => uiAlert('Failed to load dashboard: ' + err.message, { kind: 'error' }));
         loadMarketplace().catch((err) => console.error(err));
     </script>
 </body></html>

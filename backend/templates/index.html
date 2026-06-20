@@ -3,7 +3,9 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LogisticsPro | Premium Global Freight Marketplace</title>
+<title>Logistica | Premium Global Freight Marketplace</title>
+<link href="/static/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/static/favicon.ico" rel="alternate icon"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <style>
@@ -138,9 +140,28 @@
     </script>
 </head>
 <body class="bg-surface text-on-surface selection:bg-secondary-container">
+<style>
+  #app-loader{position:fixed;inset:0;z-index:9999;background:#131b2e;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .4s ease,visibility .4s ease;}
+  #app-loader.app-loader-hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  #app-loader .loader-badge{width:72px;height:72px;border-radius:50%;animation:loader-pulse 1.6s ease-in-out infinite;}
+  #app-loader .loader-name{margin-top:20px;font-family:'Geist',sans-serif;font-weight:700;font-size:22px;color:#ffffff;letter-spacing:-0.01em;}
+  #app-loader .loader-tag{margin-top:6px;font-family:'Geist',sans-serif;font-size:11px;letter-spacing:.18em;color:#fea619;text-transform:uppercase;}
+  #app-loader .loader-track{width:160px;height:3px;background:rgba(255,255,255,.15);overflow:hidden;border-radius:2px;margin-top:22px;}
+  #app-loader .loader-fill{width:40%;height:100%;background:#fea619;border-radius:2px;animation:loader-slide 1.2s ease-in-out infinite;}
+  @keyframes loader-slide{0%{transform:translateX(-100%);}50%{transform:translateX(60%);}100%{transform:translateX(220%);}}
+  @keyframes loader-pulse{0%,100%{opacity:1;}50%{opacity:.75;}}
+</style>
+<div id="app-loader">
+<img alt="Logistica" class="loader-badge" src="/static/img/logo-mark.svg"/>
+<div class="loader-name">Logistica</div>
+<div class="loader-tag">Loading</div>
+<div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-20 bg-surface/90 backdrop-blur-md border-b border-outline-variant">
 <div class="flex items-center gap-xl">
-<span class="text-headline-md font-headline-md font-bold text-primary">LogisticsPro</span>
+<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
+<span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
 <nav class="hidden md:flex items-center gap-lg">
 <a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#features">Solutions</a>
 <a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#how-it-works">How it Works</a>
@@ -149,11 +170,11 @@
 </nav>
 </div>
 <div class="flex items-center gap-md">
-<button class="hidden lg:flex items-center gap-2 px-md py-2 border border-outline text-label-md font-label-md hover:bg-surface-container-low transition-colors" onclick="window.location.href='login.html'">
+<button class="hidden lg:flex items-center gap-2 px-md py-2 border border-outline text-label-md font-label-md hover:bg-surface-container-low transition-colors" onclick="window.location.href='login'">
 <span class="material-symbols-outlined text-[18px]">account_circle</span>
             Log In
         </button>
-<button class="px-md py-2 bg-primary text-on-primary text-label-md font-label-md transition-all active:scale-95 shadow-sm" onclick="window.location.href='login.html'">
+<button class="px-md py-2 bg-primary text-on-primary text-label-md font-label-md transition-all active:scale-95 shadow-sm" onclick="window.location.href='login'">
             Create Order
         </button>
 </div>
@@ -172,11 +193,11 @@
                     The definitive marketplace for modern logistics. Connect with a global network of vetted carriers, monitor shipments with real-time telemetry, and settle instantly with smart escrow.
                 </p>
 <div class="flex flex-wrap gap-md pt-4">
-<button class="px-xl py-lg bg-secondary-container text-on-secondary-container font-label-md text-label-md flex items-center gap-2 glow-hover transition-all" onclick="window.location.href='register-customer.html'">
+<button class="px-xl py-lg bg-secondary-container text-on-secondary-container font-label-md text-label-md flex items-center gap-2 glow-hover transition-all" onclick="window.location.href='register-customer'">
                         Ship a Package
                         <span class="material-symbols-outlined">arrow_forward</span>
 </button>
-<button class="px-xl py-lg border border-primary text-primary font-label-md text-label-md flex items-center gap-2 hover:bg-primary hover:text-on-primary transition-all" onclick="window.location.href='register-driver.html'">
+<button class="px-xl py-lg border border-primary text-primary font-label-md text-label-md flex items-center gap-2 hover:bg-primary hover:text-on-primary transition-all" onclick="window.location.href='register-driver'">
                         Become a Carrier
                         <span class="material-symbols-outlined">local_shipping</span>
 </button>
@@ -353,7 +374,7 @@
 <span class="material-symbols-outlined text-secondary text-4xl">api</span>
 <div>
 <h3 class="text-headline-md font-headline-md text-primary">Developer API</h3>
-<p class="text-body-sm font-body-sm text-on-surface-variant mt-base">Full headless logistics infrastructure. Integrate LogisticsPro directly into your ERP or WMS.</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-base">Full headless logistics infrastructure. Integrate Logistica directly into your ERP or WMS.</p>
 </div>
 </div>
 </div>
@@ -366,7 +387,7 @@
 <div class="space-y-xl">
 <h2 class="text-headline-lg font-headline-lg text-primary leading-tight">Built for Enterprise Scalability.</h2>
 <p class="text-body-lg text-on-surface-variant">
-                        Whether you're managing 10 or 10,000 shipments a day, LogisticsPro provides the technical foundation to scale your supply chain with zero friction.
+                        Whether you're managing 10 or 10,000 shipments a day, Logistica provides the technical foundation to scale your supply chain with zero friction.
                     </p>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 <div class="space-y-2">
@@ -478,8 +499,8 @@
 <h2 class="text-headline-xl font-headline-xl">Ready to Optimize Your Logistics?</h2>
 <p class="text-body-lg text-outline-variant">Join the thousands of enterprises and independent carriers already operating on the platform of the future.</p>
 <div class="flex flex-col sm:flex-row gap-md justify-center">
-<button class="px-xl py-lg bg-secondary-container text-on-secondary-container font-label-md text-label-md" onclick="window.location.href='register-customer.html'">Get Started as Shipper</button>
-<button class="px-xl py-lg border border-on-primary text-on-primary font-label-md text-label-md hover:bg-on-primary hover:text-primary transition-all" onclick="window.location.href='register-driver.html'">Partner as Carrier</button>
+<button class="px-xl py-lg bg-secondary-container text-on-secondary-container font-label-md text-label-md" onclick="window.location.href='register-customer'">Get Started as Shipper</button>
+<button class="px-xl py-lg border border-on-primary text-on-primary font-label-md text-label-md hover:bg-on-primary hover:text-primary transition-all" onclick="window.location.href='register-driver'">Partner as Carrier</button>
 </div>
 </div>
 </section>
@@ -487,7 +508,8 @@
 <footer class="bg-surface border-t border-outline-variant py-xl">
 <div class="max-w-[1440px] mx-auto px-margin grid grid-cols-12 gap-gutter">
 <div class="col-span-12 lg:col-span-4 space-y-md">
-<span class="text-headline-md font-headline-md font-bold text-primary">LogisticsPro</span>
+<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
+<span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
 <p class="text-body-sm font-body-sm text-on-surface-variant max-w-xs">Global logistics infrastructure for the modern enterprise. Built for precision, operated for reliability.</p>
 <div class="flex gap-md">
 <a class="w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-surface-container-high transition-all" href="#">
@@ -565,7 +587,7 @@
 <script>
     const loggedInUser = getCurrentUser();
     if (loggedInUser && getAccessToken()) {
-        window.location.href = ROLE_HOME[loggedInUser.role] || "login.html";
+        window.location.href = ROLE_HOME[loggedInUser.role] || "login";
     }
 </script>
 </body></html>

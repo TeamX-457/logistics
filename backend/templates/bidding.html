@@ -3,7 +3,9 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LogisticsPro | Matching & Bidding</title>
+<title>Logistica | Matching & Bidding</title>
+<link href="/static/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/static/favicon.ico" rel="alternate icon"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -127,19 +129,38 @@
     </style>
 </head>
 <body class="bg-background text-on-background">
+<style>
+  #app-loader{position:fixed;inset:0;z-index:9999;background:#131b2e;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .4s ease,visibility .4s ease;}
+  #app-loader.app-loader-hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  #app-loader .loader-badge{width:72px;height:72px;border-radius:50%;animation:loader-pulse 1.6s ease-in-out infinite;}
+  #app-loader .loader-name{margin-top:20px;font-family:'Geist',sans-serif;font-weight:700;font-size:22px;color:#ffffff;letter-spacing:-0.01em;}
+  #app-loader .loader-tag{margin-top:6px;font-family:'Geist',sans-serif;font-size:11px;letter-spacing:.18em;color:#fea619;text-transform:uppercase;}
+  #app-loader .loader-track{width:160px;height:3px;background:rgba(255,255,255,.15);overflow:hidden;border-radius:2px;margin-top:22px;}
+  #app-loader .loader-fill{width:40%;height:100%;background:#fea619;border-radius:2px;animation:loader-slide 1.2s ease-in-out infinite;}
+  @keyframes loader-slide{0%{transform:translateX(-100%);}50%{transform:translateX(60%);}100%{transform:translateX(220%);}}
+  @keyframes loader-pulse{0%,100%{opacity:1;}50%{opacity:.75;}}
+</style>
+<div id="app-loader">
+<img alt="Logistica" class="loader-badge" src="/static/img/logo-mark.svg"/>
+<div class="loader-name">Logistica</div>
+<div class="loader-tag">Loading</div>
+<div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+
 <!-- Top Navigation Bar -->
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline">
 <div class="flex items-center gap-xl">
-<span class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed">LogisticsPro</span>
+<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
+<span class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed">Logistica</span>
 <nav class="hidden md:flex gap-lg">
 <a class="text-label-md font-label-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors" href="#" id="home-link">Dashboard</a>
 <a class="text-label-md font-label-md text-primary dark:text-primary-fixed border-b-2 border-primary dark:border-primary-fixed pb-1" href="#">Bidding</a>
-<a class="text-label-md font-label-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors" href="disputes.html">Support</a>
+<a class="text-label-md font-label-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors" href="disputes">Support</a>
 </nav>
 </div>
 <div class="flex items-center gap-md">
-<button class="material-symbols-outlined p-2 text-on-surface-variant" onclick="logout()">account_circle</button>
-<button class="bg-primary text-on-primary px-4 py-2 text-label-md font-label-md rounded shadow-sm hover:opacity-80 transition-opacity" onclick="window.location.href='create-delivery.html'">Create Order</button>
+<button class="material-symbols-outlined p-2 text-on-surface-variant" onclick="window.location.href='profile'">account_circle</button>
+<button class="bg-primary text-on-primary px-4 py-2 text-label-md font-label-md rounded shadow-sm hover:opacity-80 transition-opacity" onclick="window.location.href='create-delivery'">Create Order</button>
 </div>
 </header>
 <!-- Sidebar Navigation -->
@@ -153,15 +174,15 @@
 <span class="material-symbols-outlined">dashboard</span>
 <span class="text-label-md font-label-md">Dashboard</span>
 </a>
-<a class="flex items-center gap-md px-4 py-3 bg-secondary-container text-on-secondary-container border-r-4 border-secondary transition-transform" href="bidding.html">
+<a class="flex items-center gap-md px-4 py-3 bg-secondary-container text-on-secondary-container border-r-4 border-secondary transition-transform" href="bidding">
 <span class="material-symbols-outlined">gavel</span>
 <span class="text-label-md font-label-md">This Bidding</span>
 </a>
-<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform" href="wallet.html">
+<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform" href="wallet">
 <span class="material-symbols-outlined">account_balance_wallet</span>
 <span class="text-label-md font-label-md">Wallet</span>
 </a>
-<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform" href="disputes.html">
+<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform" href="disputes">
 <span class="material-symbols-outlined">gavel</span>
 <span class="text-label-md font-label-md">Disputes</span>
 </a>
@@ -311,8 +332,8 @@
     <script src="/static/js/ui.js"></script>
     <script>
         const user = requireAuth(['customer']);
-        document.getElementById('home-link').href = 'customer-dashboard.html';
-        document.getElementById('home-link-2').href = 'customer-dashboard.html';
+        document.getElementById('home-link').href = 'customer-dashboard';
+        document.getElementById('home-link-2').href = 'customer-dashboard';
         document.getElementById('profile-name').textContent = user.email;
 
         const deliveryId = qs('id');
@@ -388,7 +409,7 @@
                     ${vsTarget !== null ? `<p class="text-label-sm font-label-sm ${vsTarget <= 0 ? 'text-green-600' : 'text-on-surface-variant'} font-bold">${vsTarget > 0 ? '+' : ''}${vsTarget}% vs Target</p>` : ''}
                   </div>
                   <div class="flex gap-sm border-l border-outline-variant pl-lg">
-                    <button class="p-3 bg-surface-container border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant flex items-center justify-center" onclick="window.location.href='negotiation-chat.html?id=${deliveryId}'">
+                    <button class="p-3 bg-surface-container border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant flex items-center justify-center" onclick="window.location.href='negotiation-chat?id=${deliveryId}'">
                       <span class="material-symbols-outlined">chat_bubble</span>
                     </button>
                     <button class="p-3 bg-error-container/10 border border-error/20 hover:bg-error-container/20 transition-colors text-error flex items-center justify-center" onclick="rejectBid(${bid.id})">
@@ -411,9 +432,9 @@
         async function acceptBid(bidId) {
             try {
                 await API.deliveries.bids.accept(deliveryId, bidId);
-                window.location.href = `live-tracking.html?id=${deliveryId}`;
+                window.location.href = `live-tracking?id=${deliveryId}`;
             } catch (err) {
-                alert('Failed to accept bid: ' + err.message);
+                uiAlert('Failed to accept bid: ' + err.message, { kind: 'error' });
             }
         }
 
@@ -433,6 +454,6 @@
             await loadOffers();
         }
 
-        load().catch((err) => alert('Failed to load bidding view: ' + err.message));
+        load().catch((err) => uiAlert('Failed to load bidding view: ' + err.message, { kind: 'error' }));
     </script>
 </body></html>

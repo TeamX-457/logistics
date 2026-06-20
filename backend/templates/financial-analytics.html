@@ -137,14 +137,33 @@
     </script>
 </head>
 <body class="bg-background text-on-background selection:bg-secondary-fixed">
+<style>
+  #app-loader{position:fixed;inset:0;z-index:9999;background:#131b2e;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .4s ease,visibility .4s ease;}
+  #app-loader.app-loader-hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  #app-loader .loader-badge{width:72px;height:72px;border-radius:50%;animation:loader-pulse 1.6s ease-in-out infinite;}
+  #app-loader .loader-name{margin-top:20px;font-family:'Geist',sans-serif;font-weight:700;font-size:22px;color:#ffffff;letter-spacing:-0.01em;}
+  #app-loader .loader-tag{margin-top:6px;font-family:'Geist',sans-serif;font-size:11px;letter-spacing:.18em;color:#fea619;text-transform:uppercase;}
+  #app-loader .loader-track{width:160px;height:3px;background:rgba(255,255,255,.15);overflow:hidden;border-radius:2px;margin-top:22px;}
+  #app-loader .loader-fill{width:40%;height:100%;background:#fea619;border-radius:2px;animation:loader-slide 1.2s ease-in-out infinite;}
+  @keyframes loader-slide{0%{transform:translateX(-100%);}50%{transform:translateX(60%);}100%{transform:translateX(220%);}}
+  @keyframes loader-pulse{0%,100%{opacity:1;}50%{opacity:.75;}}
+</style>
+<div id="app-loader">
+<img alt="Logistica" class="loader-badge" src="/static/img/logo-mark.svg"/>
+<div class="loader-name">Logistica</div>
+<div class="loader-tag">Loading</div>
+<div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+
 <!-- TopNavBar -->
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
 <div class="flex items-center gap-xl">
-<span class="text-headline-md font-headline-md font-bold text-primary">LogisticsPro</span>
+<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
+<span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
 <nav class="hidden md:flex gap-lg items-center">
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="admin-overview.html">Overview</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="fleet-verification.html">Fleet</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes.html">Disputes</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="admin-overview">Overview</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="fleet-verification">Fleet</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes">Disputes</a>
 </nav>
 </div>
 <div class="flex items-center gap-md">
@@ -165,24 +184,24 @@
 </div>
 </div>
 <nav class="flex-1 space-y-1">
-<a class="flex items-center gap-md px-3 py-2 text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="admin-overview.html">
+<a class="flex items-center gap-md px-3 py-2 text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="admin-overview">
 <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
                 Dashboard
             </a>
-<a class="flex items-center gap-md px-3 py-2 text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="fleet-verification.html">
+<a class="flex items-center gap-md px-3 py-2 text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="fleet-verification">
 <span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
                 Fleet Verification
             </a>
 <!-- Active State -->
-<a class="flex items-center gap-md px-3 py-2 text-label-md font-label-md bg-secondary-container text-on-secondary-container rounded-none border-r-4 border-secondary transition-transform" href="financial-analytics.html">
+<a class="flex items-center gap-md px-3 py-2 text-label-md font-label-md bg-secondary-container text-on-secondary-container rounded-none border-r-4 border-secondary transition-transform" href="financial-analytics">
 <span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
                 Financials
             </a>
-<a class="flex items-center gap-md px-3 py-2 text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="operations-monitoring.html">
+<a class="flex items-center gap-md px-3 py-2 text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="operations-monitoring">
 <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
                 Operations
             </a>
-<a class="flex items-center gap-md px-3 py-2 text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="disputes.html">
+<a class="flex items-center gap-md px-3 py-2 text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="disputes">
 <span class="material-symbols-outlined" data-icon="gavel">gavel</span>
                 Disputes
             </a>
@@ -367,6 +386,6 @@
                 : `<tr><td class="px-lg py-md text-on-surface-variant" colspan="5">No settlements scheduled.</td></tr>`;
         }
 
-        Promise.all([load(), loadSettlements()]).catch((err) => alert('Failed to load financial analytics: ' + err.message));
+        Promise.all([load(), loadSettlements()]).catch((err) => uiAlert('Failed to load financial analytics: ' + err.message, { kind: 'error' }));
     </script>
 </body></html>
