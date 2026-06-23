@@ -112,7 +112,7 @@
         button, input, select, textarea {
             border-radius: 0.5rem;
         }
-        [class*="border"]:not([class*="rounded"]) {
+        [class*="border"]:not([class*="rounded"]):not(header):not(nav):not(table):not(tr):not(thead):not(tbody):not(th):not(td) {
             border-radius: 0.5rem;
         }
         body { font-family: 'Geist', sans-serif; }
@@ -206,7 +206,7 @@
 <div class="px-gutter py-xl grid grid-cols-12 gap-gutter">
 <!-- Left Column: Dispute Timeline -->
 <div class="col-span-8 space-y-gutter">
-<section class="bg-surface-container-lowest border border-outline-variant p-lg">
+<section class="bg-surface-container-lowest border border-outline-variant p-lg rounded-lg">
 <h3 class="font-label-md text-label-md text-on-surface-variant uppercase mb-lg">Dispute Timeline &amp; Communications</h3>
 <div class="space-y-xl relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-surface-container" id="timeline">
 <div class="text-on-surface-variant text-body-sm pl-xl">Loading…</div>
@@ -233,7 +233,7 @@
 <!-- Right Column: Shipment Summary & Adjudication -->
 <div class="col-span-4 space-y-gutter">
 <!-- Shipment Summary -->
-<section class="bg-surface-container-lowest border border-outline-variant p-lg">
+<section class="bg-surface-container-lowest border border-outline-variant p-lg rounded-lg">
 <h3 class="font-label-md text-label-md text-on-surface-variant uppercase mb-lg">Shipment Summary</h3>
 <div class="space-y-md">
 <div class="flex flex-col gap-xs">
@@ -279,7 +279,7 @@
                             Refund Customer Full Amount
                             <span class="font-bold" id="resolve-amount-refund">—</span>
 </button>
-<button class="w-full py-md px-lg bg-surface-container-highest border border-outline text-on-surface font-label-md text-label-md flex justify-between items-center transition-all hover:translate-x-1 active:scale-[0.98]" onclick="resolve('release_driver')">
+<button class="w-full py-md px-lg bg-surface-container-highest border border-outline text-on-surface font-label-md text-label-md flex justify-between items-center transition-all hover:translate-x-1 active:scale-[0.98] rounded-lg" onclick="resolve('release_driver')">
                             Release Payment to Driver
                             <span class="font-bold" id="resolve-amount-release">—</span>
 </button>
@@ -290,7 +290,7 @@
 </div>
 </section>
 <!-- Resolution Status (non-admin / already resolved) -->
-<section class="bg-surface-container-lowest border border-outline-variant p-lg hidden" id="resolution-status-panel">
+<section class="bg-surface-container-lowest border border-outline-variant p-lg hidden rounded-lg" id="resolution-status-panel">
 <h3 class="font-label-md text-label-md text-on-surface-variant uppercase mb-lg">Resolution</h3>
 <p class="font-body-md text-body-md" id="resolution-status-text">This case is still under review.</p>
 </section>

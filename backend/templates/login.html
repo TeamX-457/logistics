@@ -14,7 +14,7 @@
         button, input, select, textarea {
             border-radius: 0.5rem;
         }
-        [class*="border"]:not([class*="rounded"]) {
+        [class*="border"]:not([class*="rounded"]):not(header):not(nav):not(table):not(tr):not(thead):not(tbody):not(th):not(td) {
             border-radius: 0.5rem;
         }
         body {
@@ -187,7 +187,7 @@
 <p class="font-body-md text-body-md text-on-surface-variant" id="sub-title">Enter your credentials to manage your shipments.</p>
 </div>
 </div>
-<div class="hidden bg-error-container text-on-error-container text-sm p-3 mb-md" id="auth-error"></div>
+<div class="hidden flex items-start gap-2 rounded-lg border-l-4 border-error bg-error-container text-on-error-container text-sm p-3 mb-md" id="auth-error"></div>
 <!-- Form Container -->
 <form class="space-y-lg" id="auth-form">
 <!-- Role Selection -->
@@ -362,8 +362,7 @@
                     window.location.href = ROLE_HOME[data.user.role] || '/';
                 }, 600);
             } catch (err) {
-                errorBox.textContent = (err.data && err.data.detail) || 'Invalid email or password.';
-                errorBox.classList.remove('hidden');
+                showFormError(errorBox, (err.data && err.data.detail) || 'Invalid email or password.');
                 btn.textContent = originalText;
                 btn.style.backgroundColor = '';
                 btn.disabled = false;

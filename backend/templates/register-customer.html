@@ -13,7 +13,7 @@
         button, input, select, textarea {
             border-radius: 0.5rem;
         }
-        [class*="border"]:not([class*="rounded"]) {
+        [class*="border"]:not([class*="rounded"]):not(header):not(nav):not(table):not(tr):not(thead):not(tbody):not(th):not(td) {
             border-radius: 0.5rem;
         }
         body {
@@ -205,7 +205,7 @@
 <h2 class="font-headline-lg text-headline-lg text-primary">Shipper Registration</h2>
 <p class="font-body-md text-body-md text-on-surface-variant">Create your account to start managing global logistics.</p>
 </div>
-<div class="hidden bg-error-container text-on-error-container text-sm p-3 mb-md" id="reg-error"></div>
+<div class="hidden flex items-start gap-2 rounded-lg border-l-4 border-error bg-error-container text-on-error-container text-sm p-3 mb-md" id="reg-error"></div>
 <!-- Registration Form -->
 <form class="space-y-md" id="registration-form">
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
@@ -337,8 +337,7 @@
             }, 600);
         } catch (err) {
             const msg = err.data ? Object.values(err.data).flat().join(' ') : err.message;
-            errorBox.textContent = msg || 'Registration failed.';
-            errorBox.classList.remove('hidden');
+            showFormError(errorBox, msg || 'Registration failed.');
             btn.textContent = originalText;
             btn.style.backgroundColor = '';
             btn.disabled = false;

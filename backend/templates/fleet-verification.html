@@ -14,7 +14,7 @@
         button, input, select, textarea {
             border-radius: 0.5rem;
         }
-        [class*="border"]:not([class*="rounded"]) {
+        [class*="border"]:not([class*="rounded"]):not(header):not(nav):not(table):not(tr):not(thead):not(tbody):not(th):not(td) {
             border-radius: 0.5rem;
         }
     .material-symbols-outlined {
@@ -217,7 +217,7 @@
 <p class="text-body-md text-on-surface-variant">Review and manage documentation for logistics providers and fleet partners.</p>
 </div>
 <!-- Tabs & Filters Bar -->
-<div class="bg-surface-container-lowest border border-outline-variant p-4 flex flex-col gap-4">
+<div class="bg-surface-container-lowest border border-outline-variant p-4 flex flex-col gap-4 rounded-lg">
 <div class="flex items-center justify-between">
 <!-- Tabbed Interface -->
 <div class="flex gap-1 bg-surface-container-low p-1 rounded-lg" id="entity-tabs">

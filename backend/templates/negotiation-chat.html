@@ -14,7 +14,7 @@
         button, input, select, textarea {
             border-radius: 0.5rem;
         }
-        [class*="border"]:not([class*="rounded"]) {
+        [class*="border"]:not([class*="rounded"]):not(header):not(nav):not(table):not(tr):not(thead):not(tbody):not(th):not(td) {
             border-radius: 0.5rem;
         }
         .material-symbols-outlined {
@@ -234,7 +234,7 @@
 <span class="material-symbols-outlined">request_quote</span>
 </button>
 <div class="flex-grow relative">
-<textarea class="w-full bg-surface border border-outline-variant p-3 pr-12 focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none transition-all resize-none text-body-sm font-body-sm min-h-[48px] max-h-32" id="message-input" placeholder="Type your message or negotiate terms..." rows="1"></textarea>
+<textarea class="w-full bg-surface border border-outline-variant p-3 pr-12 focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none transition-all resize-none text-body-sm font-body-sm min-h-[48px] max-h-32 rounded-lg" id="message-input" placeholder="Type your message or negotiate terms..." rows="1"></textarea>
 </div>
 <button class="w-12 h-12 bg-primary text-white flex items-center justify-center hover:bg-primary/90 transition-all active:scale-95 shrink-0" id="send-btn">
 <span class="material-symbols-outlined">send</span>
@@ -270,7 +270,7 @@
 </div>
 </div>
 <!-- Cargo Details Card -->
-<div class="bg-surface border border-outline-variant p-4">
+<div class="bg-surface border border-outline-variant p-4 rounded-lg">
 <div class="flex items-center gap-2 mb-4">
 <span class="material-symbols-outlined text-on-surface-variant">inventory_2</span>
 <h4 class="text-label-md font-label-md text-on-surface">Shipment Inventory</h4>
@@ -400,7 +400,7 @@
                           <p class="text-body-md font-body-md text-secondary uppercase">${p.status}</p>
                         </div>
                       </div>
-                      ${p.justification ? `<div class="p-3 bg-surface border border-outline-variant text-label-sm font-label-sm text-on-surface-variant italic">"${p.justification}"</div>` : ''}
+                      ${p.justification ? `<div class="p-3 bg-surface border border-outline-variant text-label-sm font-label-sm text-on-surface-variant italic rounded-lg">"${p.justification}"</div>` : ''}
                       ${p.status === 'pending' && p.proposed_by.id !== user.id
                 ? `<div class="flex gap-2">
                              <button class="flex-grow py-2 border border-primary text-primary text-label-md font-label-md hover:bg-surface-container-low transition-colors active:opacity-80" onclick="declineProposal(${p.id})">Decline</button>

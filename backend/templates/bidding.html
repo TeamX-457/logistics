@@ -99,7 +99,7 @@
         button, input, select, textarea {
             border-radius: 0.5rem;
         }
-        [class*="border"]:not([class*="rounded"]) {
+        [class*="border"]:not([class*="rounded"]):not(header):not(nav):not(table):not(tr):not(thead):not(tbody):not(th):not(td) {
             border-radius: 0.5rem;
         }
         .material-symbols-outlined {
@@ -215,7 +215,7 @@
 <p class="text-body-md font-body-md text-on-surface-variant max-w-xl" id="order-summary">Loading order…</p>
 </div>
 <!-- Cascade Timer -->
-<div class="bg-surface-container-highest border border-outline-variant p-lg min-w-[200px]" id="timer-card">
+<div class="bg-surface-container-highest border border-outline-variant p-lg min-w-[200px] rounded-lg" id="timer-card">
 <p class="text-label-sm font-label-sm text-outline mb-1 uppercase">Selection Window Ends</p>
 <div class="flex items-baseline gap-xs">
 <span class="text-headline-lg font-headline-lg cascade-timer text-primary" id="timer-minutes">--</span>
@@ -409,7 +409,7 @@
                     ${vsTarget !== null ? `<p class="text-label-sm font-label-sm ${vsTarget <= 0 ? 'text-green-600' : 'text-on-surface-variant'} font-bold">${vsTarget > 0 ? '+' : ''}${vsTarget}% vs Target</p>` : ''}
                   </div>
                   <div class="flex gap-sm border-l border-outline-variant pl-lg">
-                    <button class="p-3 bg-surface-container border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant flex items-center justify-center" onclick="window.location.href='negotiation-chat?id=${deliveryId}'">
+                    <button class="p-3 bg-surface-container border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant flex items-center justify-center rounded-lg" onclick="window.location.href='negotiation-chat?id=${deliveryId}'">
                       <span class="material-symbols-outlined">chat_bubble</span>
                     </button>
                     <button class="p-3 bg-error-container/10 border border-error/20 hover:bg-error-container/20 transition-colors text-error flex items-center justify-center" onclick="rejectBid(${bid.id})">

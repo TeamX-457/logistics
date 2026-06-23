@@ -106,7 +106,7 @@
         button, input, select, textarea {
             border-radius: 0.5rem;
         }
-        [class*="border"]:not([class*="rounded"]) {
+        [class*="border"]:not([class*="rounded"]):not(header):not(nav):not(table):not(tr):not(thead):not(tbody):not(th):not(td) {
             border-radius: 0.5rem;
         }
         body { font-family: 'Geist', sans-serif; }
@@ -166,7 +166,7 @@
             </button>
 </div>
 <div class="px-gutter py-xl">
-<form class="hidden bg-surface-container-lowest border border-outline-variant p-lg mb-xl grid grid-cols-2 gap-md" id="new-dispute-form">
+<form class="hidden bg-surface-container-lowest border border-outline-variant p-lg mb-xl grid grid-cols-2 gap-md rounded-lg" id="new-dispute-form">
 <div>
 <label class="block text-label-sm font-label-sm text-on-surface-variant mb-xs">DELIVERY ID</label>
 <input class="w-full border border-outline-variant p-sm text-body-sm" id="nd_delivery" type="number"/>
@@ -229,7 +229,7 @@
         ? disputes
             .map(
               (d) => `
-        <a href="dispute-detail?id=${d.id}" class="block bg-surface-container-lowest border border-outline-variant p-lg hover:border-primary transition-colors">
+        <a href="dispute-detail?id=${d.id}" class="block bg-surface-container-lowest border border-outline-variant p-lg hover:border-primary transition-colors rounded-lg">
           <div class="flex items-center justify-between mb-xs">
             <span class="font-mono-sm text-mono-sm text-on-surface-variant">${d.case_id} &middot; delivery ${d.delivery_reference}</span>
             ${statusBadge(d.status)}

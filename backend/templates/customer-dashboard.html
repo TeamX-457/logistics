@@ -112,7 +112,7 @@
         button, input, select, textarea {
             border-radius: 0.5rem;
         }
-        [class*="border"]:not([class*="rounded"]) {
+        [class*="border"]:not([class*="rounded"]):not(header):not(nav):not(table):not(tr):not(thead):not(tbody):not(th):not(td) {
             border-radius: 0.5rem;
         }
         body { font-family: 'Geist', sans-serif; }
@@ -227,7 +227,7 @@
 <!-- Summary Cards Grid -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl">
 <!-- Active Shipments Card -->
-<div class="bg-surface border border-outline-variant p-lg flex flex-col gap-md hover:border-primary transition-colors">
+<div class="bg-surface border border-outline-variant p-lg flex flex-col gap-md hover:border-primary transition-colors rounded-lg">
 <div class="flex justify-between items-start">
 <span class="material-symbols-outlined text-primary">local_shipping</span>
 </div>
@@ -237,7 +237,7 @@
 </div>
 </div>
 <!-- Recent Orders Card -->
-<div class="bg-surface border border-outline-variant p-lg flex flex-col gap-md hover:border-primary transition-colors">
+<div class="bg-surface border border-outline-variant p-lg flex flex-col gap-md hover:border-primary transition-colors rounded-lg">
 <div class="flex justify-between items-start">
 <span class="material-symbols-outlined text-primary">receipt_long</span>
 </div>
@@ -270,7 +270,7 @@
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
 <!-- Shipment Status Feed -->
 <div class="lg:col-span-8 flex flex-col gap-lg" id="shipment-table">
-<div class="bg-surface border border-outline-variant">
+<div class="bg-surface border border-outline-variant rounded-lg">
 <div class="p-md border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
 <h3 class="text-label-md font-label-md text-primary uppercase">Current Shipment Tracking</h3>
 </div>
@@ -310,7 +310,7 @@
 </div>
 <!-- Real-time Alerts Feed -->
 <div class="lg:col-span-4 flex flex-col gap-lg" id="alerts-panel">
-<div class="bg-surface border border-outline-variant flex-1">
+<div class="bg-surface border border-outline-variant flex-1 rounded-lg">
 <div class="p-md border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
 <h3 class="text-label-md font-label-md text-primary uppercase">Status Alerts</h3>
 </div>

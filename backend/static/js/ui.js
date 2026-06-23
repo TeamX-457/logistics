@@ -38,6 +38,17 @@ function el(id) {
   return document.getElementById(id);
 }
 
+function showFormError(elOrId, message) {
+  const target = typeof elOrId === "string" ? document.getElementById(elOrId) : elOrId;
+  if (!target) return;
+  target.innerHTML = `
+    <span class="material-symbols-outlined text-[20px] text-error shrink-0">error</span>
+    <span class="flex-1">${escapeHtml(message)}</span>
+  `;
+  target.classList.add("flex", "items-start", "gap-2", "rounded-lg", "border-l-4", "border-error");
+  target.classList.remove("hidden");
+}
+
 function qs(name) {
   return new URLSearchParams(window.location.search).get(name);
 }

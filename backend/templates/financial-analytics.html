@@ -11,7 +11,7 @@
         button, input, select, textarea {
             border-radius: 0.5rem;
         }
-        [class*="border"]:not([class*="rounded"]) {
+        [class*="border"]:not([class*="rounded"]):not(header):not(nav):not(table):not(tr):not(thead):not(tbody):not(th):not(td) {
             border-radius: 0.5rem;
         }
         .material-symbols-outlined {
@@ -246,7 +246,7 @@
 </div>
 <!-- Financial Ledger Small Cards -->
 <div class="col-span-12 lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-lg">
-<div class="bg-surface-container-lowest border border-outline-variant p-lg hover:border-primary transition-colors flex flex-col justify-between">
+<div class="bg-surface-container-lowest border border-outline-variant p-lg hover:border-primary transition-colors flex flex-col justify-between rounded-lg">
 <div>
 <div class="flex justify-between items-start mb-sm">
 <span class="material-symbols-outlined text-outline" data-icon="account_balance_wallet">account_balance_wallet</span>
@@ -256,7 +256,7 @@
 <p class="text-headline-md font-headline-md text-primary mt-xs" id="kpi-inflow">—</p>
 </div>
 </div>
-<div class="bg-surface-container-lowest border border-outline-variant p-lg hover:border-primary transition-colors flex flex-col justify-between">
+<div class="bg-surface-container-lowest border border-outline-variant p-lg hover:border-primary transition-colors flex flex-col justify-between rounded-lg">
 <div>
 <div class="flex justify-between items-start mb-sm">
 <span class="material-symbols-outlined text-outline" data-icon="payments">payments</span>
@@ -266,7 +266,7 @@
 <p class="text-headline-md font-headline-md text-primary mt-xs" id="kpi-outflow">—</p>
 </div>
 </div>
-<div class="bg-surface-container-lowest border border-outline-variant p-lg hover:border-primary transition-colors flex flex-col justify-between">
+<div class="bg-surface-container-lowest border border-outline-variant p-lg hover:border-primary transition-colors flex flex-col justify-between rounded-lg">
 <div>
 <div class="flex justify-between items-start mb-sm">
 <span class="material-symbols-outlined text-outline" data-icon="trending_up">trending_up</span>
@@ -280,7 +280,7 @@
 </div>
 <!-- Revenue Trend Graph Section -->
 <div class="grid grid-cols-12 gap-lg mb-lg">
-<div class="col-span-12 bg-surface-container-lowest border border-outline-variant p-lg">
+<div class="col-span-12 bg-surface-container-lowest border border-outline-variant p-lg rounded-lg">
 <div class="flex justify-between items-center mb-xl">
 <h3 class="text-headline-md font-headline-md text-primary">Revenue Trends</h3>
 <div class="flex items-center gap-md">
@@ -299,7 +299,7 @@
 </div>
 </div>
 <!-- Payout Status Table -->
-<div class="bg-surface-container-lowest border border-outline-variant overflow-hidden">
+<div class="bg-surface-container-lowest border border-outline-variant overflow-hidden rounded-lg">
 <div class="px-lg py-md border-b border-outline-variant flex justify-between items-center">
 <h3 class="text-headline-md font-headline-md text-primary">Enterprise &amp; Group Settlements</h3>
 </div>

@@ -11,7 +11,7 @@
         button, input, select, textarea {
             border-radius: 0.5rem;
         }
-        [class*="border"]:not([class*="rounded"]) {
+        [class*="border"]:not([class*="rounded"]):not(header):not(nav):not(table):not(tr):not(thead):not(tbody):not(th):not(td) {
             border-radius: 0.5rem;
         }
         .material-symbols-outlined {
@@ -237,7 +237,7 @@
 <!-- Metric Cards (Bento Style) -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
 <!-- Card 1 -->
-<div class="bg-surface-container-lowest border border-outline-variant p-md metric-card-glow transition-all">
+<div class="bg-surface-container-lowest border border-outline-variant p-md metric-card-glow transition-all rounded-lg">
 <div class="flex justify-between items-start mb-4">
 <span class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Active Deliveries</span>
 <span class="material-symbols-outlined text-primary">local_shipping</span>
@@ -247,7 +247,7 @@
 </div>
 </div>
 <!-- Card 2 -->
-<div class="bg-surface-container-lowest border border-outline-variant p-md metric-card-glow transition-all">
+<div class="bg-surface-container-lowest border border-outline-variant p-md metric-card-glow transition-all rounded-lg">
 <div class="flex justify-between items-start mb-4">
 <span class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Pending KYC Approvals</span>
 <span class="material-symbols-outlined text-secondary">verified_user</span>
@@ -258,7 +258,7 @@
 <a class="text-label-sm font-label-sm text-primary hover:underline mt-2 block" href="fleet-verification">Review now</a>
 </div>
 <!-- Card 3 -->
-<div class="bg-surface-container-lowest border border-outline-variant p-md metric-card-glow transition-all">
+<div class="bg-surface-container-lowest border border-outline-variant p-md metric-card-glow transition-all rounded-lg">
 <div class="flex justify-between items-start mb-4">
 <span class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Daily Revenue (Commission)</span>
 <span class="material-symbols-outlined text-primary">payments</span>
@@ -268,7 +268,7 @@
 </div>
 </div>
 <!-- Card 4 -->
-<div class="bg-surface-container-lowest border border-outline-variant p-md metric-card-glow transition-all">
+<div class="bg-surface-container-lowest border border-outline-variant p-md metric-card-glow transition-all rounded-lg">
 <div class="flex justify-between items-start mb-4">
 <span class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Active Disputes</span>
 <span class="material-symbols-outlined text-error">gavel</span>
@@ -282,7 +282,7 @@
 <!-- Middle Section: Active Deliveries and Chart -->
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
 <!-- Active Deliveries Widget -->
-<div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant flex flex-col h-[400px]">
+<div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant flex flex-col h-[400px] rounded-lg">
 <div class="p-md border-b border-outline-variant flex justify-between items-center">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-[20px]">hub</span>
@@ -294,7 +294,7 @@
 </div>
 </div>
 <!-- Volume Chart -->
-<div class="bg-surface-container-lowest border border-outline-variant p-md flex flex-col h-[400px]">
+<div class="bg-surface-container-lowest border border-outline-variant p-md flex flex-col h-[400px] rounded-lg">
 <div class="flex justify-between items-start mb-6">
 <div>
 <h3 class="text-label-md font-label-md text-primary">Delivery Volume</h3>
@@ -306,7 +306,7 @@
 </div>
 </div>
 <!-- Bottom Section: Critical Alerts Table -->
-<div class="bg-surface-container-lowest border border-outline-variant">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg">
 <div class="p-md border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-error">warning</span>

@@ -112,7 +112,7 @@
         button, input, select, textarea {
             border-radius: 0.5rem;
         }
-        [class*="border"]:not([class*="rounded"]) {
+        [class*="border"]:not([class*="rounded"]):not(header):not(nav):not(table):not(tr):not(thead):not(tbody):not(th):not(td) {
             border-radius: 0.5rem;
         }
         .material-symbols-outlined {
@@ -193,7 +193,7 @@
 <h2 class="text-headline-lg font-headline-lg text-primary mb-2">Driver Application</h2>
 <p class="text-body-md font-body-md text-on-surface-variant">Complete your profile to start your journey with Logistica.</p>
 </div>
-<div class="hidden bg-error-container text-on-error-container text-sm p-3 mb-2" id="reg-error"></div>
+<div class="hidden flex items-start gap-2 rounded-lg border-l-4 border-error bg-error-container text-on-error-container text-sm p-3 mb-2" id="reg-error"></div>
 <form class="space-y-6" id="driver-registration-form">
 <!-- Full Name -->
 <div class="space-y-1">
@@ -334,8 +334,7 @@
                 }, 600);
             } catch (err) {
                 const msg = err.data ? Object.values(err.data).flat().join(' ') : err.message;
-                errorBox.textContent = msg || 'Application failed.';
-                errorBox.classList.remove('hidden');
+                showFormError(errorBox, msg || 'Application failed.');
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             }
