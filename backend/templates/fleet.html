@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Find Drivers | Logistica</title>
+<link href="/static/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/static/favicon.ico" rel="alternate icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#c6c6cd",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#0b1c30",
+                    "surface-container": "#e5eeff",
+                    "on-surface-variant": "#45464d",
+                    "surface": "#f8f9ff",
+                    "secondary-container": "#fea619",
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#d3e4fe",
+                    "on-background": "#0b1c30",
+                    "surface-container-low": "#eff4ff",
+                    "error-container": "#ffdad6",
+                    "background": "#f8f9ff",
+                    "on-primary": "#ffffff",
+                    "primary": "#000000",
+                    "outline": "#76777d",
+                    "secondary": "#855300",
+                    "error": "#ba1a1a",
+                    "on-secondary-container": "#684000",
+                    "primary-container": "#131b2e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "lg": "0.75rem",
+                    "xl": "1rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "sm": "8px",
+                    "margin": "32px",
+                    "lg": "24px",
+                    "xs": "4px",
+                    "xl": "32px",
+                    "md": "16px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "body-sm": ["Geist"],
+                    "label-md": ["Geist"],
+                    "label-sm": ["Geist"],
+                    "body-md": ["Geist"],
+                    "mono-sm": ["Geist Mono"]
+            },
+            "fontSize": {
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "mono-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        button, input, select, textarea {
+            border-radius: 0.5rem;
+        }
+        body { font-family: 'Geist', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .filter-chip { padding: 6px 16px; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; border: 1px solid #c6c6cd; border-radius: 9999px; color: #45464d; background: #fff; cursor: pointer; white-space: nowrap; }
+        .filter-chip.active { background: #131b2e; color: #fff; border-color: #131b2e; }
+    </style>
+</head>
+<body class="bg-background text-on-background">
+<style>
+  #app-loader{position:fixed;inset:0;z-index:9999;background:#131b2e;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .4s ease,visibility .4s ease;}
+  #app-loader.app-loader-hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  #app-loader .loader-badge{width:72px;height:72px;border-radius:50%;animation:loader-pulse 1.6s ease-in-out infinite;}
+  #app-loader .loader-name{margin-top:20px;font-family:'Geist',sans-serif;font-weight:700;font-size:22px;color:#ffffff;letter-spacing:-0.01em;}
+  #app-loader .loader-tag{margin-top:6px;font-family:'Geist',sans-serif;font-size:11px;letter-spacing:.18em;color:#fea619;text-transform:uppercase;}
+  #app-loader .loader-track{width:160px;height:3px;background:rgba(255,255,255,.15);overflow:hidden;border-radius:2px;margin-top:22px;}
+  #app-loader .loader-fill{width:40%;height:100%;background:#fea619;border-radius:2px;animation:loader-slide 1.2s ease-in-out infinite;}
+  @keyframes loader-slide{0%{transform:translateX(-100%);}50%{transform:translateX(60%);}100%{transform:translateX(220%);}}
+  @keyframes loader-pulse{0%,100%{opacity:1;}50%{opacity:.75;}}
+</style>
+<div id="app-loader">
+<img alt="Logistica" class="loader-badge" src="/static/img/logo-mark.svg"/>
+<div class="loader-name">Logistica</div>
+<div class="loader-tag">Loading</div>
+<div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+
+<main class="pt-20 px-margin pb-xl min-h-screen">
+<div class="max-w-[1200px] mx-auto">
+<div class="flex justify-between items-end mb-md flex-wrap gap-md">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Find Drivers</h1>
+<p class="text-body-sm text-on-surface-variant mt-xs" id="subtitle">Loading nearby verified drivers…</p>
+</div>
+<button class="bg-surface border border-outline-variant text-on-surface px-lg py-sm text-label-md font-label-md flex items-center gap-xs" id="locate-btn">
+<span class="material-symbols-outlined text-[18px]">my_location</span>
+                Use My Location
+            </button>
+</div>
+
+<div class="flex items-center gap-sm mb-md px-md py-sm bg-surface-container-low border border-outline-variant rounded-lg hidden" id="location-banner">
+<span class="material-symbols-outlined text-[18px] text-secondary">info</span>
+<span class="text-body-sm text-on-surface-variant" id="location-banner-text"></span>
+</div>
+
+<div class="bg-primary-container text-white rounded-lg p-lg flex items-center justify-between flex-wrap gap-md mb-lg">
+<div>
+<p class="text-label-sm uppercase tracking-widest text-secondary-container font-bold mb-1">Need something moved?</p>
+<p class="text-body-md">Post a delivery request and let verified drivers bid for your job — no need to contact anyone directly.</p>
+</div>
+<button class="bg-secondary text-on-secondary px-lg py-sm text-label-md font-label-md shrink-0" onclick="window.location.href='create-delivery'">Post a Delivery</button>
+</div>
+
+<div class="flex justify-between items-center gap-md flex-wrap mb-lg">
+<div class="flex gap-sm overflow-x-auto pb-xs" id="vehicle-filters"></div>
+<label class="flex items-center gap-xs text-label-sm text-on-surface-variant cursor-pointer shrink-0">
+<input class="rounded" id="online-only" type="checkbox"/>
+            Online now only
+        </label>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter" id="cards-grid">
+<div class="text-on-surface-variant col-span-full text-center py-xl">Loading drivers…</div>
+</div>
+</div>
+</main>
+
+<script src="/static/js/config.js"></script>
+<script src="/static/js/api.js"></script>
+<script src="/static/js/auth.js"></script>
+<script src="/static/js/ui.js"></script>
+<script>
+    const user = requireAuth(['customer']);
+    renderAppShell('fleet', { title: 'Find Drivers' });
+
+    const VEHICLES = [
+        ['', 'All Vehicles'],
+        ['bike', 'Bike'],
+        ['motorcycle', 'Motorcycle'],
+        ['van', 'Van'],
+        ['cargo_van', 'Cargo Van'],
+        ['truck', 'Truck'],
+        ['heavy_truck', 'Heavy Truck'],
+    ];
+    const TIER_LABELS = {
+        elite: '<span class="text-[11px] font-bold uppercase px-2 py-0.5 bg-green-100 text-green-800 rounded-sm">Elite</span>',
+        repeat: '<span class="text-[11px] font-bold uppercase px-2 py-0.5 bg-surface-container text-on-surface rounded-sm">Repeat</span>',
+        carrier: '<span class="text-[11px] font-bold uppercase px-2 py-0.5 bg-primary text-on-primary rounded-sm">Carrier</span>',
+    };
+    let currentVehicle = '';
+    let coords = null;
+
+    function renderVehicleFilters() {
+        const wrap = document.getElementById('vehicle-filters');
+        wrap.innerHTML = VEHICLES.map(([key, label]) => `
+            <button class="filter-chip${key === currentVehicle ? ' active' : ''}" data-vehicle="${key}">${label}</button>
+        `).join('');
+        wrap.querySelectorAll('.filter-chip').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                currentVehicle = btn.dataset.vehicle;
+                renderVehicleFilters();
+                loadDrivers();
+            });
+        });
+    }
+
+    function setLocationBanner(text, isError) {
+        const banner = document.getElementById('location-banner');
+        const textEl = document.getElementById('location-banner-text');
+        if (!text) {
+            banner.classList.add('hidden');
+            return;
+        }
+        textEl.textContent = text;
+        banner.classList.remove('hidden');
+        const icon = banner.querySelector('.material-symbols-outlined');
+        icon.textContent = isError ? 'error' : 'info';
+        icon.classList.toggle('text-error', !!isError);
+        icon.classList.toggle('text-secondary', !isError);
+    }
+
+    function requestLocation() {
+        if (!navigator.geolocation) {
+            setLocationBanner('Your browser does not support geolocation — showing drivers without distance sorting.', true);
+            coords = null;
+            loadDrivers();
+            return;
+        }
+        setLocationBanner('Requesting your location to sort drivers by distance…', false);
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                coords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+                setLocationBanner(null);
+                loadDrivers();
+            },
+            (err) => {
+                coords = null;
+                setLocationBanner(err.code === err.PERMISSION_DENIED
+                    ? 'Location access denied — enable location permissions to see distance to each driver.'
+                    : 'Could not determine your location — showing drivers without distance sorting.', true);
+                loadDrivers();
+            },
+            { enableHighAccuracy: true, timeout: 10000 }
+        );
+    }
+
+    function renderCards(drivers) {
+        const grid = document.getElementById('cards-grid');
+        if (!drivers.length) {
+            grid.innerHTML = `<div class="text-on-surface-variant col-span-full text-center py-xl">No drivers match this filter right now.</div>`;
+            return;
+        }
+        grid.innerHTML = drivers.map((d) => {
+            const initials = (d.full_name || '?').split(' ').map((p) => p[0]).join('').slice(0, 2).toUpperCase();
+            const distance = d.distance_miles !== undefined && d.distance_miles !== null
+                ? `<span class="flex items-center gap-1 text-secondary font-bold text-label-sm"><span class="material-symbols-outlined text-[16px]">near_me</span>${parseFloat(d.distance_miles).toFixed(1)} mi away</span>`
+                : '';
+            return `
+            <div class="bg-surface border border-outline-variant rounded-lg p-lg flex flex-col gap-sm">
+              <div class="flex items-center gap-md">
+                <div class="w-12 h-12 shrink-0 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface font-bold overflow-hidden">
+                  ${d.avatar ? `<img src="${d.avatar}" class="w-full h-full object-cover" alt="${escapeHtml(d.full_name)}"/>` : initials}
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-label-md font-label-md text-on-surface truncate">${escapeHtml(d.full_name)}</p>
+                  <div class="flex items-center gap-xs mt-0.5">
+                    <span class="w-2 h-2 rounded-full ${d.is_online ? 'bg-green-500' : 'bg-outline-variant'}"></span>
+                    <span class="text-label-sm text-on-surface-variant">${d.is_online ? 'Online now' : 'Offline'}</span>
+                  </div>
+                </div>
+                ${TIER_LABELS[d.tier] || ''}
+              </div>
+              <div class="flex items-center justify-between mt-sm pt-sm border-t border-outline-variant">
+                <div class="flex items-center gap-xs">
+                  <span class="material-symbols-outlined text-[18px] text-secondary">star</span>
+                  <span class="font-bold text-on-surface">${d.rating}</span>
+                  <span class="text-outline text-label-sm">(${d.total_trips} trips)</span>
+                </div>
+                <span class="text-label-sm text-on-surface-variant uppercase">${d.vehicle_type.replace(/_/g, ' ')}</span>
+              </div>
+              ${distance ? `<div class="pt-xs">${distance}</div>` : ''}
+            </div>`;
+        }).join('');
+    }
+
+    async function loadDrivers() {
+        const params = {
+            vehicle_type: currentVehicle || undefined,
+            online_only: document.getElementById('online-only').checked ? '1' : undefined,
+        };
+        if (coords) {
+            params.lat = coords.lat;
+            params.lng = coords.lng;
+        }
+        const page = await API.drivers.available(params);
+        const results = page.results || page;
+        document.getElementById('subtitle').textContent = `${results.length} verified driver(s)${coords ? ', sorted by distance from you' : ''}.`;
+        renderCards(results);
+    }
+
+    document.getElementById('locate-btn').addEventListener('click', requestLocation);
+    document.getElementById('online-only').addEventListener('change', loadDrivers);
+
+    renderVehicleFilters();
+    requestLocation();
+</script>
+</body></html>

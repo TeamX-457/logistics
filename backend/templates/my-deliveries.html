@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Deliveries | Logistica</title>
+<link href="/static/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/static/favicon.ico" rel="alternate icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#c6c6cd",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#0b1c30",
+                    "surface-container": "#e5eeff",
+                    "on-surface-variant": "#45464d",
+                    "surface": "#f8f9ff",
+                    "secondary-container": "#fea619",
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#d3e4fe",
+                    "on-background": "#0b1c30",
+                    "surface-container-low": "#eff4ff",
+                    "error-container": "#ffdad6",
+                    "background": "#f8f9ff",
+                    "on-primary": "#ffffff",
+                    "primary": "#000000",
+                    "outline": "#76777d",
+                    "secondary": "#855300",
+                    "error": "#ba1a1a",
+                    "on-secondary-container": "#684000",
+                    "primary-container": "#131b2e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "lg": "0.75rem",
+                    "xl": "1rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "sm": "8px",
+                    "margin": "32px",
+                    "lg": "24px",
+                    "xs": "4px",
+                    "xl": "32px",
+                    "md": "16px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "body-sm": ["Geist"],
+                    "label-md": ["Geist"],
+                    "label-sm": ["Geist"],
+                    "body-md": ["Geist"],
+                    "mono-sm": ["Geist Mono"]
+            },
+            "fontSize": {
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "mono-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        button, input, select, textarea {
+            border-radius: 0.5rem;
+        }
+        body { font-family: 'Geist', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .filter-chip { padding: 6px 16px; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; border: 1px solid #c6c6cd; border-radius: 9999px; color: #45464d; background: #fff; cursor: pointer; white-space: nowrap; }
+        .filter-chip.active { background: #131b2e; color: #fff; border-color: #131b2e; }
+    </style>
+</head>
+<body class="bg-background text-on-background">
+<style>
+  #app-loader{position:fixed;inset:0;z-index:9999;background:#131b2e;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .4s ease,visibility .4s ease;}
+  #app-loader.app-loader-hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  #app-loader .loader-badge{width:72px;height:72px;border-radius:50%;animation:loader-pulse 1.6s ease-in-out infinite;}
+  #app-loader .loader-name{margin-top:20px;font-family:'Geist',sans-serif;font-weight:700;font-size:22px;color:#ffffff;letter-spacing:-0.01em;}
+  #app-loader .loader-tag{margin-top:6px;font-family:'Geist',sans-serif;font-size:11px;letter-spacing:.18em;color:#fea619;text-transform:uppercase;}
+  #app-loader .loader-track{width:160px;height:3px;background:rgba(255,255,255,.15);overflow:hidden;border-radius:2px;margin-top:22px;}
+  #app-loader .loader-fill{width:40%;height:100%;background:#fea619;border-radius:2px;animation:loader-slide 1.2s ease-in-out infinite;}
+  @keyframes loader-slide{0%{transform:translateX(-100%);}50%{transform:translateX(60%);}100%{transform:translateX(220%);}}
+  @keyframes loader-pulse{0%,100%{opacity:1;}50%{opacity:.75;}}
+</style>
+<div id="app-loader">
+<img alt="Logistica" class="loader-badge" src="/static/img/logo-mark.svg"/>
+<div class="loader-name">Logistica</div>
+<div class="loader-tag">Loading</div>
+<div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+
+<main class="pt-20 px-margin pb-xl min-h-screen">
+<div class="max-w-[1200px] mx-auto">
+<div class="flex justify-between items-end mb-lg flex-wrap gap-md">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">My Deliveries</h1>
+<p class="text-body-sm text-on-surface-variant mt-xs" id="subtitle">Loading…</p>
+</div>
+<button class="hidden bg-secondary text-on-secondary px-lg py-sm text-label-md font-label-md flex items-center gap-xs" id="create-btn" onclick="window.location.href='create-delivery'">
+<span class="material-symbols-outlined">add_circle</span>
+                New Delivery
+            </button>
+</div>
+
+<div class="flex gap-sm mb-lg overflow-x-auto pb-xs" id="status-filters"></div>
+
+<div class="bg-surface border border-outline-variant rounded-lg">
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low text-label-sm text-on-surface-variant border-b border-outline-variant">
+<th class="px-md py-sm font-medium">REFERENCE</th>
+<th class="px-md py-sm font-medium">ROUTE</th>
+<th class="px-md py-sm font-medium" id="party-col-header">DRIVER</th>
+<th class="px-md py-sm font-medium">PRICE</th>
+<th class="px-md py-sm font-medium">STATUS</th>
+<th class="px-md py-sm font-medium">CREATED</th>
+<th class="px-md py-sm font-medium">ACTION</th>
+</tr>
+</thead>
+<tbody class="text-body-sm text-on-surface divide-y divide-outline-variant/30" id="deliveries-body">
+<tr><td class="px-md py-lg text-on-surface-variant text-center" colspan="7">Loading…</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+
+<script src="/static/js/config.js"></script>
+<script src="/static/js/api.js"></script>
+<script src="/static/js/auth.js"></script>
+<script src="/static/js/ui.js"></script>
+<script>
+    const user = requireAuth(['customer', 'driver']);
+    renderAppShell('my-deliveries', { title: 'My Deliveries' });
+
+    if (user.role === 'customer') {
+        document.getElementById('create-btn').classList.remove('hidden');
+        document.getElementById('party-col-header').textContent = 'DRIVER';
+    } else {
+        document.getElementById('party-col-header').textContent = 'CUSTOMER';
+    }
+
+    const FILTERS = [
+        ['all', 'All'],
+        ['active', 'Active'],
+        ['negotiating', 'Negotiating'],
+        ['delivered', 'Delivered'],
+        ['cancelled', 'Cancelled'],
+    ];
+    const ACTIVE_STATUSES = ['accepted', 'driver_arrived', 'in_transit', 'delayed'];
+    let currentFilter = 'all';
+    let allDeliveries = [];
+
+    function statusPillClasses(status) {
+        const map = {
+            pending: 'bg-surface-container text-on-surface',
+            negotiating: 'bg-secondary-container text-on-secondary-container',
+            accepted: 'bg-blue-100 text-blue-800',
+            driver_arrived: 'bg-blue-100 text-blue-800',
+            in_transit: 'bg-blue-100 text-blue-800',
+            delayed: 'bg-secondary-container text-on-secondary-container',
+            delivered: 'bg-green-100 text-green-800',
+            disputed: 'bg-red-100 text-red-800',
+            cancelled: 'bg-outline-variant text-on-surface-variant',
+        };
+        return map[status] || 'bg-surface-container text-on-surface';
+    }
+
+    function renderFilters() {
+        const wrap = document.getElementById('status-filters');
+        wrap.innerHTML = FILTERS.map(([key, label]) => `
+            <button class="filter-chip${key === currentFilter ? ' active' : ''}" data-filter="${key}">${label}</button>
+        `).join('');
+        wrap.querySelectorAll('.filter-chip').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                currentFilter = btn.dataset.filter;
+                renderFilters();
+                renderTable();
+            });
+        });
+    }
+
+    function actionFor(d) {
+        if (['pending', 'negotiating'].includes(d.status) && user.role === 'customer') {
+            return { label: 'View Offers', href: `bidding?id=${d.id}` };
+        }
+        if (d.status === 'cancelled') {
+            return { label: 'View', href: `live-tracking?id=${d.id}` };
+        }
+        return { label: d.status === 'delivered' ? 'View' : 'Track', href: `live-tracking?id=${d.id}` };
+    }
+
+    function renderTable() {
+        const body = document.getElementById('deliveries-body');
+        let rows = allDeliveries;
+        if (currentFilter === 'active') rows = rows.filter((d) => ACTIVE_STATUSES.includes(d.status));
+        else if (currentFilter !== 'all') rows = rows.filter((d) => d.status === currentFilter);
+
+        if (!rows.length) {
+            body.innerHTML = `<tr><td class="px-md py-lg text-on-surface-variant text-center" colspan="7">No deliveries in this category.</td></tr>`;
+            return;
+        }
+
+        body.innerHTML = rows.map((d) => {
+            const otherParty = user.role === 'customer' ? d.driver : d.customer;
+            const otherName = otherParty ? (`${otherParty.first_name || ''} ${otherParty.last_name || ''}`.trim() || 'Assigned') : 'Unassigned';
+            const action = actionFor(d);
+            return `
+            <tr class="hover:bg-surface-container-lowest transition-colors">
+              <td class="px-md py-md font-mono-sm">${d.reference}</td>
+              <td class="px-md py-md">
+                <p class="text-label-sm text-on-surface-variant truncate max-w-[220px]">${escapeHtml(d.pickup_address)}</p>
+                <p class="text-label-sm font-bold truncate max-w-[220px]">${escapeHtml(d.dropoff_address)}</p>
+              </td>
+              <td class="px-md py-md">${escapeHtml(otherName)}</td>
+              <td class="px-md py-md">${money(d.final_price || d.target_price)}</td>
+              <td class="px-md py-md"><span class="${statusPillClasses(d.status)} px-sm py-xs text-[11px] font-bold rounded-[2px] uppercase">${d.status.replace(/_/g, ' ')}</span></td>
+              <td class="px-md py-md text-on-surface-variant">${dateTime(d.created_at)}</td>
+              <td class="px-md py-md"><button class="text-primary hover:underline text-label-sm font-bold" onclick="window.location.href='${action.href}'">${action.label}</button></td>
+            </tr>`;
+        }).join('');
+    }
+
+    async function load() {
+        const page = await API.deliveries.list({ page_size: 100 });
+        let results = page.results || page;
+        if (user.role === 'driver') {
+            results = results.filter((d) => d.driver && d.driver.id === user.id);
+        }
+        allDeliveries = results;
+        document.getElementById('subtitle').textContent = `${results.length} delivery request(s) on record.`;
+        renderFilters();
+        renderTable();
+    }
+
+    load().catch((err) => uiAlert('Failed to load deliveries: ' + err.message, { kind: 'error' }));
+</script>
+</body></html>

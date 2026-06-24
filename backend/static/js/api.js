@@ -121,6 +121,7 @@ const API = {
 
   drivers: {
     setStatus: (payload) => request("/drivers/me/status/", { method: "PATCH", body: payload }),
+    available: (params) => request("/drivers/available/", { params }),
   },
 
   addresses: {

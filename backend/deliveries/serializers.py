@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from rest_framework import serializers
 
-from accounts.serializers import UserSerializer
+from accounts.serializers import PublicUserSerializer
 
 from .models import Bid, DeliveryRequest, Message, PriceProposal, StatusEvent, TrackingPing
 from .services import estimate_market_price, haversine_miles
@@ -24,7 +24,7 @@ class TrackingPingSerializer(serializers.ModelSerializer):
 
 
 class BidSerializer(serializers.ModelSerializer):
-    driver = UserSerializer(read_only=True)
+    driver = PublicUserSerializer(read_only=True)
 
     class Meta:
         model = Bid
@@ -33,7 +33,7 @@ class BidSerializer(serializers.ModelSerializer):
 
 
 class MessageSerializer(serializers.ModelSerializer):
-    sender = UserSerializer(read_only=True)
+    sender = PublicUserSerializer(read_only=True)
 
     class Meta:
         model = Message
@@ -42,7 +42,7 @@ class MessageSerializer(serializers.ModelSerializer):
 
 
 class PriceProposalSerializer(serializers.ModelSerializer):
-    proposed_by = UserSerializer(read_only=True)
+    proposed_by = PublicUserSerializer(read_only=True)
 
     class Meta:
         model = PriceProposal
@@ -51,8 +51,8 @@ class PriceProposalSerializer(serializers.ModelSerializer):
 
 
 class DeliveryRequestListSerializer(serializers.ModelSerializer):
-    customer = UserSerializer(read_only=True)
-    driver = UserSerializer(read_only=True)
+    customer = PublicUserSerializer(read_only=True)
+    driver = PublicUserSerializer(read_only=True)
 
     class Meta:
         model = DeliveryRequest

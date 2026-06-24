@@ -69,6 +69,38 @@ class DeliveryRequestViewSet(viewsets.ModelViewSet):
         qs = DeliveryRequest.objects.filter(
             status=DeliveryRequest.Status.PENDING, driver__isnull=True
         ).select_related("customer")
+        package_type = request.query_params.get("package_type")
+        if package_type:
+            qs = qs.filter(package_type=package_type)
+
+        lat = request.query_params.get("lat")
+        lng = request.query_params.get("lng")
+        if lat and lng:
+            try:
+                lat, lng = float(lat), float(lng)
+            except ValueError:
+                lat = lng = None
+        else:
+            lat = lng = None
+
+        if lat is not None:
+            deliveries = list(qs)
+            for delivery in deliveries:
+                delivery.driver_distance_miles = (
+                    haversine_miles(lat, lng, delivery.pickup_lat, delivery.pickup_lng)
+                    if delivery.pickup_lat is not None and delivery.pickup_lng is not None
+                    else None
+                )
+            deliveries.sort(key=lambda d: (d.driver_distance_miles is None, d.driver_distance_miles))
+            page = self.paginate_queryset(deliveries)
+            serializer = DeliveryRequestListSerializer(page or deliveries, many=True)
+            data = serializer.data
+            for item, delivery in zip(data, page or deliveries):
+                item["distance_miles_from_driver"] = (
+                    float(delivery.driver_distance_miles) if delivery.driver_distance_miles is not None else None
+                )
+            return self.get_paginated_response(data) if page is not None else Response(data)
+
         page = self.paginate_queryset(qs)
         serializer = DeliveryRequestListSerializer(page or qs, many=True)
         return self.get_paginated_response(serializer.data) if page is not None else Response(serializer.data)

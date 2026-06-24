@@ -7,11 +7,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+from common.pagination import DefaultPagination
 from common.permissions import IsCustomer, IsDriver
+from deliveries.services import haversine_miles
 
-from .models import Address, User
+from .models import Address, DriverProfile, User
 from .serializers import (
     AddressSerializer,
+    AvailableDriverSerializer,
     CustomerRegistrationSerializer,
     CustomTokenObtainPairSerializer,
     DriverProfileSerializer,
@@ -85,6 +88,43 @@ class DriverStatusView(APIView):
                 setattr(profile, field, request.data[field])
         profile.save(update_fields=["is_online", "current_lat", "current_lng"])
         return Response(DriverProfileSerializer(profile).data)
+
+
+class AvailableDriversView(generics.ListAPIView):
+    """Customer-facing 'Find Drivers' directory — approved drivers only, no contact info."""
+
+    serializer_class = AvailableDriverSerializer
+    permission_classes = [IsCustomer]
+    pagination_class = DefaultPagination
+
+    def get_queryset(self):
+        qs = DriverProfile.objects.filter(
+            verification_status=DriverProfile.VerificationStatus.APPROVED
+        ).select_related("user")
+        vehicle_type = self.request.query_params.get("vehicle_type")
+        if vehicle_type:
+            qs = qs.filter(vehicle_type=vehicle_type)
+        online_only = self.request.query_params.get("online_only")
+        if online_only in ("1", "true", "True"):
+            qs = qs.filter(is_online=True)
+        return qs.order_by("-is_online", "-rating")
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        lat = self.request.query_params.get("lat")
+        lng = self.request.query_params.get("lng")
+        distances = {}
+        if lat and lng:
+            try:
+                lat, lng = float(lat), float(lng)
+            except ValueError:
+                lat = lng = None
+            if lat is not None:
+                for driver in self.get_queryset():
+                    if driver.current_lat is not None and driver.current_lng is not None:
+                        distances[driver.id] = haversine_miles(lat, lng, driver.current_lat, driver.current_lng)
+        context["distances"] = distances
+        return context
 
 
 class AddressViewSet(viewsets.ModelViewSet):

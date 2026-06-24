@@ -4,6 +4,7 @@ from rest_framework_simplejwt.views import TokenRefreshView
 
 from .views import (
     AddressViewSet,
+    AvailableDriversView,
     CustomerRegistrationView,
     DriverRegistrationView,
     DriverStatusView,
@@ -25,5 +26,6 @@ urlpatterns = [
     path("auth/password-reset/confirm/", PasswordResetConfirmView.as_view(), name="password-reset-confirm"),
     path("auth/me/", MeView.as_view(), name="me"),
     path("drivers/me/status/", DriverStatusView.as_view(), name="driver-status"),
+    path("drivers/available/", AvailableDriversView.as_view(), name="available-drivers"),
     path("", include(router.urls)),
 ]

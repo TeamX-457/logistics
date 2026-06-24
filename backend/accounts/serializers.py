@@ -60,6 +60,58 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_fields = ["id", "role", "is_phone_verified", "created_at"]
 
 
+class PublicDriverProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DriverProfile
+        fields = ["vehicle_type", "tier", "rating", "total_trips", "is_online"]
+
+
+class PublicCustomerProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomerProfile
+        fields = ["account_type"]
+
+
+class PublicUserSerializer(serializers.ModelSerializer):
+    """Cross-party view of a user (bids, chat, marketplace, delivery parties).
+
+    Deliberately excludes phone_number/email/license/NIN/date_of_birth — those
+    are only ever visible to the account owner or staff, never to the other
+    party in a delivery, to keep negotiation inside the platform's own chat
+    instead of letting either side contact the other directly off-platform.
+    """
+
+    driver_profile = PublicDriverProfileSerializer(read_only=True)
+    customer_profile = PublicCustomerProfileSerializer(read_only=True)
+
+    class Meta:
+        model = User
+        fields = ["id", "first_name", "last_name", "role", "avatar", "driver_profile", "customer_profile"]
+
+
+class AvailableDriverSerializer(serializers.ModelSerializer):
+    """Customer-facing 'Find Drivers' listing. Never exposes exact coordinates —
+    only a computed distance when the customer supplies their own lat/lng."""
+
+    id = serializers.IntegerField(source="user.id")
+    full_name = serializers.SerializerMethodField()
+    avatar = serializers.ImageField(source="user.avatar", read_only=True)
+    distance_miles = serializers.SerializerMethodField()
+
+    class Meta:
+        model = DriverProfile
+        fields = [
+            "id", "full_name", "avatar", "vehicle_type", "tier",
+            "rating", "total_trips", "is_online", "distance_miles",
+        ]
+
+    def get_full_name(self, obj):
+        return f"{obj.user.first_name} {obj.user.last_name}".strip() or obj.user.email
+
+    def get_distance_miles(self, obj):
+        return self.context.get("distances", {}).get(obj.id)
+
+
 class CustomerRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
     full_name = serializers.CharField(write_only=True)
