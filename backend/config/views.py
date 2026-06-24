@@ -1,4 +1,3 @@
-from django.http import Http404
 from django.shortcuts import render
 from django.template import TemplateDoesNotExist
 
@@ -10,4 +9,7 @@ def page(request, page="index"):
     try:
         return render(request, f"{page}.html")
     except TemplateDoesNotExist:
-        raise Http404(f"No such page: {page}.html")
+        # Render the branded 404 directly rather than raising Http404 — with
+        # DEBUG=True (dev default), Django swaps any raised Http404 for its
+        # own technical debug page and never even looks at 404.html.
+        return render(request, "404.html", status=404)
