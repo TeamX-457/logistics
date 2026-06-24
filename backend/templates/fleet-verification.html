@@ -148,7 +148,7 @@
 
 <!-- TopNavBar Implementation -->
 <!-- Main Content Canvas -->
-<main class="pt-16 h-screen flex overflow-hidden">
+<main class="pt-16 h-screen flex flex-col sm:flex-row overflow-hidden">
 <!-- Table & Filters Section -->
 <section class="flex-1 p-lg overflow-y-auto custom-scrollbar">
 <div class="mb-xl">
@@ -230,7 +230,7 @@
 </div>
 </section>
 <!-- Side Panel (Detail View) -->
-<aside class="w-[420px] bg-surface-container-lowest border-l border-outline-variant flex flex-col shadow-xl overflow-y-auto custom-scrollbar hidden" id="detail-panel">
+<aside class="w-full sm:w-[420px] bg-surface-container-lowest border-l border-outline-variant flex flex-col shadow-xl overflow-y-auto custom-scrollbar hidden" id="detail-panel">
 <div class="p-6 border-b border-outline-variant sticky top-0 bg-surface-container-lowest z-10">
 <div class="flex items-center justify-between mb-4">
 <span class="bg-secondary-container text-on-secondary-container px-2 py-1 rounded text-[10px] font-bold uppercase tracking-widest" id="detail-status-badge">—</span>
@@ -273,7 +273,7 @@
 </div>
 </div>
 <!-- Action Footer -->
-<div class="mt-auto p-6 bg-surface-container-low border-t border-outline-variant grid grid-cols-2 gap-4" id="detail-actions">
+<div class="mt-auto p-6 bg-surface-container-low border-t border-outline-variant grid grid-cols-1 sm:grid-cols-2 gap-4" id="detail-actions">
 <button class="py-3 border border-error text-error text-label-md font-bold rounded-lg hover:bg-error-container transition-colors" onclick="rejectDriver()">Reject Application</button>
 <button class="py-3 bg-secondary-container text-on-secondary-container text-label-md font-bold rounded-lg hover:opacity-90 transition-opacity glow-shadow" onclick="approveDriver()">Approve Entity</button>
 </div>

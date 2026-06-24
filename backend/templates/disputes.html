@@ -136,14 +136,14 @@
 </div>
 
 <main class="pt-16 min-h-screen bg-background">
-<div class="px-gutter py-xl bg-surface-container-lowest border-b border-outline-variant flex items-center justify-between">
+<div class="px-gutter py-xl bg-surface-container-lowest border-b border-outline-variant flex items-center justify-between flex-wrap gap-md">
 <h1 class="font-headline-lg text-headline-lg text-primary">Disputes</h1>
-<button class="bg-secondary-container text-on-secondary-container px-lg py-sm font-label-md text-label-md flex items-center gap-sm" onclick="document.getElementById('new-dispute-form').classList.toggle('hidden')">
+<button class="bg-secondary-container text-on-secondary-container px-lg py-sm font-label-md text-label-md flex items-center gap-sm whitespace-nowrap" onclick="document.getElementById('new-dispute-form').classList.toggle('hidden')">
 <span class="material-symbols-outlined">add</span> Raise Dispute
             </button>
 </div>
 <div class="px-gutter py-xl">
-<form class="hidden bg-surface-container-lowest border border-outline-variant p-lg mb-xl grid grid-cols-2 gap-md rounded-lg" id="new-dispute-form">
+<form class="hidden bg-surface-container-lowest border border-outline-variant p-lg mb-xl grid grid-cols-1 sm:grid-cols-2 gap-md rounded-lg" id="new-dispute-form">
 <div>
 <label class="block text-label-sm font-label-sm text-on-surface-variant mb-xs">DELIVERY ID</label>
 <input class="w-full border border-outline-variant p-sm text-body-sm" id="nd_delivery" type="number"/>
@@ -157,15 +157,15 @@
 <option value="critical">Critical</option>
 </select>
 </div>
-<div class="col-span-2">
+<div class="col-span-1 sm:col-span-2">
 <label class="block text-label-sm font-label-sm text-on-surface-variant mb-xs">TITLE</label>
 <input class="w-full border border-outline-variant p-sm text-body-sm" id="nd_title" placeholder="e.g. Cargo Damage Claim"/>
 </div>
-<div class="col-span-2">
+<div class="col-span-1 sm:col-span-2">
 <label class="block text-label-sm font-label-sm text-on-surface-variant mb-xs">DESCRIPTION</label>
 <textarea class="w-full border border-outline-variant p-sm text-body-sm h-24" id="nd_description"></textarea>
 </div>
-<button class="col-span-2 bg-primary text-on-primary py-sm font-label-md text-label-md" onclick="createDispute()" type="button">Submit</button>
+<button class="col-span-1 sm:col-span-2 bg-primary text-on-primary py-sm font-label-md text-label-md" onclick="createDispute()" type="button">Submit</button>
 </form>
 <div class="flex flex-col gap-md" id="disputes-list">
 <div class="text-on-surface-variant">Loading…</div>

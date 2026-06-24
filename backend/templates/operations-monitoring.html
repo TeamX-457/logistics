@@ -140,12 +140,12 @@
 <main class="pt-20 p-8 min-h-screen">
 <div class="max-w-[1440px] mx-auto">
 <!-- Header Section -->
-<div class="flex justify-between items-end mb-8">
+<div class="flex justify-between items-end mb-8 flex-wrap gap-md">
 <div>
 <h1 class="font-headline-lg text-headline-lg text-primary">Global Delivery Monitoring</h1>
 <p class="text-body-md text-on-surface-variant">Real-time oversight of logistics pipelines and active incident management.</p>
 </div>
-<div class="flex gap-sm">
+<div class="flex gap-sm flex-wrap">
 <div class="flex items-center gap-2 bg-surface-container px-3 py-1.5 border border-outline-variant rounded">
 <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
 <span class="text-label-sm font-label-sm uppercase" id="stat-active-deliveries">— Active Deliveries</span>
@@ -157,7 +157,7 @@
 </div>
 </div>
 <!-- Dashboard Grid -->
-<div class="grid grid-cols-12 gap-lg h-[800px]">
+<div class="grid grid-cols-12 gap-lg h-auto lg:h-[800px]">
 <!-- Left: Delivery List (Bento Column) -->
 <div class="col-span-12 lg:col-span-4 flex flex-col gap-lg h-full">
 <div class="bg-surface-container-lowest border border-outline-variant rounded-lg flex-grow flex flex-col overflow-hidden">

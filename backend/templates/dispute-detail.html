@@ -148,14 +148,14 @@
 <main class="pt-16 min-h-screen bg-background">
 <!-- Page Header -->
 <div class="px-gutter py-xl bg-surface-container-lowest border-b border-outline-variant">
-<div class="flex items-center justify-between">
+<div class="flex items-center justify-between flex-wrap gap-md">
 <div class="flex flex-col gap-xs">
 <div class="flex items-center gap-sm text-on-surface-variant">
 <span class="font-label-sm text-label-sm uppercase tracking-widest" id="case-id">Case ID: —</span>
 </div>
 <h1 class="font-headline-lg text-headline-lg text-primary" id="case-title">Loading…</h1>
 </div>
-<div class="flex items-center gap-md">
+<div class="flex items-center gap-md flex-wrap">
 <div class="flex items-center gap-xs px-sm py-xs bg-surface-variant/50 border border-outline-variant rounded">
 <span class="material-symbols-outlined text-body-sm" style="font-variation-settings: 'FILL' 1;">info</span>
 <span class="font-label-md text-label-md" id="case-status">—</span>
@@ -168,9 +168,9 @@
 </div>
 </div>
 <!-- Content Grid -->
-<div class="px-gutter py-xl grid grid-cols-12 gap-gutter">
+<div class="px-gutter py-xl grid grid-cols-1 lg:grid-cols-12 gap-gutter">
 <!-- Left Column: Dispute Timeline -->
-<div class="col-span-8 space-y-gutter">
+<div class="col-span-12 lg:col-span-8 space-y-gutter">
 <section class="bg-surface-container-lowest border border-outline-variant p-lg rounded-lg">
 <h3 class="font-label-md text-label-md text-on-surface-variant uppercase mb-lg">Dispute Timeline &amp; Communications</h3>
 <div class="space-y-xl relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-surface-container" id="timeline">
@@ -196,7 +196,7 @@
 </section>
 </div>
 <!-- Right Column: Shipment Summary & Adjudication -->
-<div class="col-span-4 space-y-gutter">
+<div class="col-span-12 lg:col-span-4 space-y-gutter">
 <!-- Shipment Summary -->
 <section class="bg-surface-container-lowest border border-outline-variant p-lg rounded-lg">
 <h3 class="font-label-md text-label-md text-on-surface-variant uppercase mb-lg">Shipment Summary</h3>
