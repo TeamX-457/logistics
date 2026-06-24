@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "disputes",
     "wallet",
     "dashboard",
+    "adminpanel",
 ]
 
 MIDDLEWARE = [

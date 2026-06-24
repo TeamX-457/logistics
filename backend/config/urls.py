@@ -14,6 +14,7 @@ urlpatterns = [
     path("api/", include("disputes.urls")),
     path("api/", include("wallet.urls")),
     path("api/", include("dashboard.urls")),
+    path("api/", include("adminpanel.urls")),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
     # Frontend — served straight from templates/ so the whole app runs on one origin/port.

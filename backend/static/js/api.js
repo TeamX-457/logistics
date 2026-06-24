@@ -212,4 +212,14 @@ const API = {
       clear: () => request("/dashboard/notifications/clear/", { method: "POST" }),
     },
   },
+
+  adminPanel: {
+    catalog: () => request("/admin-panel/resources/"),
+    schema: (resource) => request(`/admin-panel/resources/${resource}/schema/`),
+    list: (resource, params) => request(`/admin-panel/resources/${resource}/`, { params }),
+    create: (resource, payload) => request(`/admin-panel/resources/${resource}/`, { method: "POST", body: payload }),
+    get: (resource, id) => request(`/admin-panel/resources/${resource}/${id}/`),
+    update: (resource, id, payload) => request(`/admin-panel/resources/${resource}/${id}/`, { method: "PATCH", body: payload }),
+    remove: (resource, id) => request(`/admin-panel/resources/${resource}/${id}/`, { method: "DELETE" }),
+  },
 };

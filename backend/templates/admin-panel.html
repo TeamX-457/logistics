@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Panel | Logistica</title>
+<link href="/static/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/static/favicon.ico" rel="alternate icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#c6c6cd",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#0b1c30",
+                    "surface-container": "#e5eeff",
+                    "on-surface-variant": "#45464d",
+                    "surface": "#f8f9ff",
+                    "secondary-container": "#fea619",
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#d3e4fe",
+                    "on-background": "#0b1c30",
+                    "surface-container-low": "#eff4ff",
+                    "error-container": "#ffdad6",
+                    "background": "#f8f9ff",
+                    "on-primary": "#ffffff",
+                    "primary": "#000000",
+                    "outline": "#76777d",
+                    "secondary": "#855300",
+                    "error": "#ba1a1a",
+                    "on-secondary-container": "#684000",
+                    "primary-container": "#131b2e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "lg": "0.75rem",
+                    "xl": "1rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "sm": "8px",
+                    "margin": "32px",
+                    "lg": "24px",
+                    "xs": "4px",
+                    "xl": "32px",
+                    "md": "16px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "body-sm": ["Geist"],
+                    "label-md": ["Geist"],
+                    "label-sm": ["Geist"],
+                    "body-md": ["Geist"],
+                    "mono-sm": ["Geist Mono"]
+            },
+            "fontSize": {
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "mono-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        button, input, select, textarea {
+            border-radius: 0.5rem;
+        }
+        body { font-family: 'Geist', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .resource-chip { padding: 8px 16px; font-size: 13px; font-weight: 600; border-radius: 0.5rem; color: #45464d; background: #fff; border: 1px solid #c6c6cd; cursor: pointer; white-space: nowrap; text-align: left; }
+        .resource-chip.active { background: #131b2e; color: #fff; border-color: #131b2e; }
+        #admin-modal { position: fixed; inset: 0; z-index: 9000; display: flex; align-items: center; justify-content: center; padding: 24px; }
+        #admin-modal.hidden { display: none; }
+        #admin-modal .admin-modal-backdrop { position: absolute; inset: 0; background: rgba(11,28,48,.55); backdrop-filter: blur(2px); }
+        #admin-modal .admin-modal-panel { position: relative; background: #fff; border-radius: 12px; max-width: 640px; width: 100%; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(11,28,48,.35); }
+        #admin-modal .admin-modal-header { padding: 20px 24px; border-bottom: 1px solid #c6c6cd; display: flex; justify-content: space-between; align-items: center; }
+        #admin-modal .admin-modal-body { padding: 20px 24px; overflow-y: auto; flex: 1; }
+        #admin-modal .admin-modal-footer { padding: 16px 24px; border-top: 1px solid #c6c6cd; display: flex; justify-content: flex-end; gap: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-background">
+<style>
+  #app-loader{position:fixed;inset:0;z-index:9999;background:#131b2e;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .4s ease,visibility .4s ease;}
+  #app-loader.app-loader-hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  #app-loader .loader-badge{width:72px;height:72px;border-radius:50%;animation:loader-pulse 1.6s ease-in-out infinite;}
+  #app-loader .loader-name{margin-top:20px;font-family:'Geist',sans-serif;font-weight:700;font-size:22px;color:#ffffff;letter-spacing:-0.01em;}
+  #app-loader .loader-tag{margin-top:6px;font-family:'Geist',sans-serif;font-size:11px;letter-spacing:.18em;color:#fea619;text-transform:uppercase;}
+  #app-loader .loader-track{width:160px;height:3px;background:rgba(255,255,255,.15);overflow:hidden;border-radius:2px;margin-top:22px;}
+  #app-loader .loader-fill{width:40%;height:100%;background:#fea619;border-radius:2px;animation:loader-slide 1.2s ease-in-out infinite;}
+  @keyframes loader-slide{0%{transform:translateX(-100%);}50%{transform:translateX(60%);}100%{transform:translateX(220%);}}
+  @keyframes loader-pulse{0%,100%{opacity:1;}50%{opacity:.75;}}
+</style>
+<div id="app-loader">
+<img alt="Logistica" class="loader-badge" src="/static/img/logo-mark.svg"/>
+<div class="loader-name">Logistica</div>
+<div class="loader-tag">Loading</div>
+<div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+
+<main class="pt-20 px-margin pb-xl min-h-screen">
+<div class="max-w-[1400px] mx-auto">
+<div class="flex justify-between items-end mb-lg flex-wrap gap-md">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Admin Panel</h1>
+<p class="text-body-sm text-on-surface-variant mt-xs">Direct, full CRUD access over every core platform record — for operators, not customers.</p>
+</div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-gutter">
+<div class="flex md:flex-col gap-xs overflow-x-auto pb-xs" id="resource-list"></div>
+
+<div class="bg-surface border border-outline-variant rounded-lg p-lg min-w-0">
+<div class="flex justify-between items-center gap-md flex-wrap mb-md">
+<div>
+<h2 class="text-headline-md font-headline-md text-on-surface" id="resource-title">Loading…</h2>
+<p class="text-label-sm text-on-surface-variant" id="resource-count"></p>
+</div>
+<div class="flex items-center gap-sm">
+<input class="border border-outline-variant px-md py-sm text-body-sm" id="search-input" placeholder="Search… (press Enter)" type="text"/>
+<button class="bg-secondary text-on-secondary px-lg py-sm text-label-md font-label-md shrink-0" id="new-btn">+ New</button>
+</div>
+</div>
+
+<div class="overflow-x-auto" id="table-wrap">
+<div class="text-on-surface-variant text-center py-xl">Loading…</div>
+</div>
+
+<div class="flex justify-end items-center gap-sm mt-md" id="pager"></div>
+</div>
+</div>
+</div>
+</main>
+
+<div class="hidden" id="admin-modal">
+<div class="admin-modal-backdrop" id="admin-modal-backdrop"></div>
+<div class="admin-modal-panel">
+<div class="admin-modal-header">
+<p class="text-headline-md font-headline-md text-primary" id="admin-modal-title">Record</p>
+<button class="material-symbols-outlined text-on-surface-variant" id="admin-modal-close">close</button>
+</div>
+<div class="admin-modal-body" id="admin-modal-body"></div>
+<div class="admin-modal-footer">
+<button class="bg-surface-container text-on-surface px-lg py-sm text-label-md font-label-md" id="admin-modal-cancel">Cancel</button>
+<button class="bg-secondary text-on-secondary px-lg py-sm text-label-md font-label-md" id="admin-modal-save">Save</button>
+</div>
+</div>
+</div>
+
+<script src="/static/js/config.js"></script>
+<script src="/static/js/api.js"></script>
+<script src="/static/js/auth.js"></script>
+<script src="/static/js/ui.js"></script>
+<script>
+    const user = requireAuth(['admin']);
+    renderAppShell('admin-panel', { title: 'Admin Panel' });
+
+    let resources = [];
+    let currentResource = null;
+    let currentSchema = null;
+    let currentPage = 1;
+    let currentSearch = '';
+    let editingId = null;
+
+    function singularize(label) {
+        if (label.endsWith('ies')) return label.slice(0, -3) + 'y';
+        if (label.endsWith('ses')) return label.slice(0, -2);
+        if (label.endsWith('s')) return label.slice(0, -1);
+        return label;
+    }
+
+    function renderResourceList() {
+        const wrap = document.getElementById('resource-list');
+        wrap.innerHTML = resources.map((r) => `
+            <button class="resource-chip${r.key === currentResource ? ' active' : ''}" data-key="${r.key}">${escapeHtml(r.label)}</button>
+        `).join('');
+        wrap.querySelectorAll('.resource-chip').forEach((btn) => {
+            btn.addEventListener('click', () => selectResource(btn.dataset.key));
+        });
+    }
+
+    async function selectResource(key) {
+        currentResource = key;
+        currentPage = 1;
+        currentSearch = '';
+        document.getElementById('search-input').value = '';
+        renderResourceList();
+        document.getElementById('table-wrap').innerHTML = '<div class="text-on-surface-variant text-center py-xl">Loading…</div>';
+        document.getElementById('pager').innerHTML = '';
+        currentSchema = await API.adminPanel.schema(key);
+        document.getElementById('resource-title').textContent = currentSchema.label;
+        const newBtn = document.getElementById('new-btn');
+        newBtn.textContent = `+ New ${singularize(currentSchema.label)}`;
+        newBtn.classList.toggle('hidden', !currentSchema.creatable);
+        await loadList();
+    }
+
+    async function loadList() {
+        const page = await API.adminPanel.list(currentResource, {
+            page: currentPage,
+            search: currentSearch || undefined,
+        });
+        renderTable(page);
+    }
+
+    function fmtCell(row, field) {
+        const labelKey = `${field}_label`;
+        if (row[labelKey] !== undefined) {
+            return row[labelKey] === null ? '—' : escapeHtml(String(row[labelKey]));
+        }
+        const value = row[field];
+        if (value === null || value === undefined || value === '') return '—';
+        if (typeof value === 'boolean') return value ? 'Yes' : 'No';
+        if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(value)) return dateTime(value);
+        return escapeHtml(String(value));
+    }
+
+    function renderTable(page) {
+        const results = page.results || page;
+        document.getElementById('resource-count').textContent = `${page.count !== undefined ? page.count : results.length} record(s)`;
+        const wrap = document.getElementById('table-wrap');
+        if (!results.length) {
+            wrap.innerHTML = '<div class="text-on-surface-variant text-center py-xl">No records found.</div>';
+            renderPager(page);
+            return;
+        }
+        const cols = currentSchema.list_fields;
+        wrap.innerHTML = `
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="border-b border-outline-variant">
+                        ${cols.map((c) => `<th class="py-sm px-md text-label-sm text-on-surface-variant uppercase whitespace-nowrap">${c.replace(/_/g, ' ')}</th>`).join('')}
+                        <th class="py-sm px-md"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${results.map((row) => `
+                        <tr class="border-b border-outline-variant hover:bg-surface-container-low">
+                            ${cols.map((c) => `<td class="py-sm px-md text-body-sm text-on-surface whitespace-nowrap">${fmtCell(row, c)}</td>`).join('')}
+                            <td class="py-sm px-md text-right whitespace-nowrap">
+                                <button class="text-label-sm font-label-md text-primary mr-md" data-edit="${row.id}">Edit</button>
+                                <button class="text-label-sm font-label-md text-error" data-delete="${row.id}">Delete</button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+        wrap.querySelectorAll('[data-edit]').forEach((btn) => btn.addEventListener('click', () => openForm(parseInt(btn.dataset.edit, 10))));
+        wrap.querySelectorAll('[data-delete]').forEach((btn) => btn.addEventListener('click', () => deleteRow(parseInt(btn.dataset.delete, 10))));
+        renderPager(page);
+    }
+
+    function renderPager(page) {
+        const pager = document.getElementById('pager');
+        pager.innerHTML = `
+            <button class="px-md py-xs border border-outline-variant text-label-sm" id="prev-btn" ${!page.previous ? 'disabled' : ''}>Previous</button>
+            <span class="text-label-sm text-on-surface-variant px-sm">Page ${currentPage}</span>
+            <button class="px-md py-xs border border-outline-variant text-label-sm" id="next-btn" ${!page.next ? 'disabled' : ''}>Next</button>
+        `;
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            if (currentPage > 1) { currentPage -= 1; loadList(); }
+        });
+        document.getElementById('next-btn').addEventListener('click', () => {
+            currentPage += 1; loadList();
+        });
+    }
+
+    async function deleteRow(id) {
+        const ok = await uiConfirm(`Delete this ${singularize(currentSchema.label).toLowerCase()} record? This cannot be undone.`, {
+            title: 'Confirm Delete', confirmLabel: 'Delete', danger: true,
+        });
+        if (!ok) return;
+        try {
+            await API.adminPanel.remove(currentResource, id);
+            loadList();
+        } catch (err) {
+            uiAlert('Failed to delete: ' + err.message, { kind: 'error' });
+        }
+    }
+
+    function fieldInputHtml(field, value) {
+        const val = value === null || value === undefined ? '' : value;
+        if (field.readonly) {
+            const display = field.type === 'boolean' ? (val === '' ? '—' : (val ? 'Yes' : 'No')) : (val === '' ? '—' : val);
+            return `<div class="px-md py-sm bg-surface-container-low border border-outline-variant text-body-sm text-on-surface-variant">${escapeHtml(String(display))}</div>`;
+        }
+        if (field.type === 'boolean') {
+            return `<input type="checkbox" data-field="${field.name}" ${val ? 'checked' : ''} class="w-5 h-5"/>`;
+        }
+        if (field.type === 'textarea') {
+            return `<textarea data-field="${field.name}" rows="3" class="w-full border border-outline-variant px-md py-sm text-body-sm">${escapeHtml(String(val))}</textarea>`;
+        }
+        if (field.choices) {
+            return `<select data-field="${field.name}" class="w-full border border-outline-variant px-md py-sm text-body-sm">
+                ${field.choices.map((c) => `<option value="${escapeHtml(c.value)}" ${String(val) === String(c.value) ? 'selected' : ''}>${escapeHtml(c.label)}</option>`).join('')}
+            </select>`;
+        }
+        if (field.type === 'date') {
+            return `<input type="date" data-field="${field.name}" value="${escapeHtml(String(val).slice(0, 10))}" class="w-full border border-outline-variant px-md py-sm text-body-sm"/>`;
+        }
+        if (field.type === 'datetime') {
+            return `<input type="datetime-local" data-field="${field.name}" value="${escapeHtml(String(val).slice(0, 16))}" class="w-full border border-outline-variant px-md py-sm text-body-sm"/>`;
+        }
+        if (field.type === 'fk') {
+            return `<input type="number" data-field="${field.name}" value="${escapeHtml(String(val))}" placeholder="Record ID" class="w-full border border-outline-variant px-md py-sm text-body-sm"/>`;
+        }
+        const inputType = field.type === 'number' ? 'number' : field.type === 'email' ? 'email' : 'text';
+        return `<input type="${inputType}" data-field="${field.name}" value="${escapeHtml(String(val))}" class="w-full border border-outline-variant px-md py-sm text-body-sm"/>`;
+    }
+
+    async function openForm(id) {
+        editingId = id || null;
+        let record = {};
+        if (editingId) {
+            try {
+                record = await API.adminPanel.get(currentResource, editingId);
+            } catch (err) {
+                uiAlert('Failed to load record: ' + err.message, { kind: 'error' });
+                return;
+            }
+        }
+        document.getElementById('admin-modal-title').textContent = `${editingId ? 'Edit' : 'New'} ${singularize(currentSchema.label)}`;
+        document.getElementById('admin-modal-body').innerHTML = currentSchema.fields.map((f) => `
+            <div class="mb-md">
+                <label class="block text-label-sm font-label-md text-on-surface-variant mb-1">${escapeHtml(f.label)}${f.required ? ' *' : ''}</label>
+                ${fieldInputHtml(f, record[f.name])}
+            </div>
+        `).join('');
+        document.getElementById('admin-modal').classList.remove('hidden');
+    }
+
+    function closeForm() {
+        document.getElementById('admin-modal').classList.add('hidden');
+        editingId = null;
+    }
+
+    async function submitForm() {
+        const payload = {};
+        currentSchema.fields.forEach((f) => {
+            if (f.readonly) return;
+            const input = document.querySelector(`#admin-modal-body [data-field="${f.name}"]`);
+            if (!input) return;
+            if (f.type === 'boolean') {
+                payload[f.name] = input.checked;
+            } else if (f.type === 'fk') {
+                payload[f.name] = input.value === '' ? null : parseInt(input.value, 10);
+            } else {
+                payload[f.name] = input.value;
+            }
+        });
+        try {
+            if (editingId) {
+                await API.adminPanel.update(currentResource, editingId, payload);
+            } else {
+                await API.adminPanel.create(currentResource, payload);
+            }
+            closeForm();
+            loadList();
+        } catch (err) {
+            uiAlert('Failed to save: ' + err.message, { kind: 'error' });
+        }
+    }
+
+    document.getElementById('new-btn').addEventListener('click', () => openForm(null));
+    document.getElementById('admin-modal-close').addEventListener('click', closeForm);
+    document.getElementById('admin-modal-cancel').addEventListener('click', closeForm);
+    document.getElementById('admin-modal-backdrop').addEventListener('click', closeForm);
+    document.getElementById('admin-modal-save').addEventListener('click', submitForm);
+    document.getElementById('search-input').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            currentSearch = e.target.value.trim();
+            currentPage = 1;
+            loadList();
+        }
+    });
+
+    async function init() {
+        resources = await API.adminPanel.catalog();
+        renderResourceList();
+        if (resources.length) await selectResource(resources[0].key);
+    }
+
+    init().catch((err) => uiAlert('Failed to load admin panel: ' + err.message, { kind: 'error' }));
+</script>
+</body></html>
