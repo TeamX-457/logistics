@@ -29,12 +29,17 @@ class TrackingConsumer(DeliveryGroupConsumer):
     group_prefix = "tracking"
 
     @database_sync_to_async
+    def _is_assigned_driver(self, user_id):
+        return DeliveryRequest.objects.filter(id=self.delivery_id, driver_id=user_id).exists()
+
+    @database_sync_to_async
     def _save_ping(self, data):
         ping = TrackingPing.objects.create(delivery_id=self.delivery_id, **data)
         return TrackingPingSerializer(ping).data
 
     async def receive_json(self, content, **kwargs):
-        if self.scope["user"].role != "driver":
+        user = self.scope["user"]
+        if user.role != "driver" or not await self._is_assigned_driver(user.id):
             return
         payload = await self._save_ping(
             {"lat": content["lat"], "lng": content["lng"], "heading": content.get("heading")}

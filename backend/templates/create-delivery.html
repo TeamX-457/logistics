@@ -7,6 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
         button, input, select, textarea {
             border-radius: 0.5rem;
@@ -138,26 +140,6 @@
 </div>
 
 <!-- TopNavBar (Shared Component) -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
-<div class="flex items-center gap-xl">
-<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
-<span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
-<nav class="hidden md:flex items-center gap-lg">
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="customer-dashboard">Dashboard</a>
-<a class="text-label-md font-label-md text-primary border-b-2 border-primary pb-1" href="create-delivery">Create Order</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="wallet">Wallet</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes">Support</a>
-</nav>
-</div>
-<div class="flex items-center gap-md">
-<button class="p-2 text-on-surface-variant hover:bg-surface-container transition-colors" onclick="window.location.href='customer-dashboard'">
-<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
-</button>
-<button class="p-2 text-on-surface-variant hover:bg-surface-container transition-colors" onclick="window.location.href='profile'">
-<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
-</button>
-</div>
-</header>
 <!-- Main Content Canvas -->
 <main class="pt-16 min-h-screen flex flex-col md:flex-row">
 <!-- Left: Form Progress & Inputs (Standard 8-column layout simulation) -->
@@ -183,13 +165,13 @@
 <label class="block text-label-sm font-label-sm text-outline mb-xs">PICKUP ADDRESS</label>
 <div class="relative">
 <input class="w-full h-12 border border-outline px-md focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all outline-none text-body-md" id="pickup_address" placeholder="Enter origin address..." type="text"/>
-<span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-outline" data-icon="my_location">my_location</span>
+<button class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors" data-icon="my_location" id="use-my-location-btn" title="Use my current location" type="button">my_location</button>
 </div>
 <div class="mt-md grid grid-cols-2 gap-2">
 <input class="h-10 border border-outline-variant px-md text-body-sm outline-none focus:border-primary" id="pickup_lat" placeholder="Latitude (optional)" step="any" type="number"/>
 <input class="h-10 border border-outline-variant px-md text-body-sm outline-none focus:border-primary" id="pickup_lng" placeholder="Longitude (optional)" step="any" type="number"/>
 </div>
-<p class="mt-xs text-[11px] text-outline">Coordinates are optional — add them for an automatic distance &amp; price estimate.</p>
+<p class="mt-xs text-[11px] text-outline" id="geo-status">Tap the location icon above to use your current position, or add coordinates for an automatic distance &amp; price estimate.</p>
 </div>
 </div>
 <!-- Step 2: Drop-off -->
@@ -344,10 +326,8 @@
 </div>
 <!-- Right: Map/Contextual Visualization (Standard 4-column desktop layout simulation) -->
 <div class="hidden md:flex flex-1 relative bg-surface-container overflow-hidden">
-<!-- Animated Background / Map Placeholder -->
-<div class="absolute inset-0 grayscale opacity-40 z-0">
-<div class="w-full h-full bg-[url('https://maps.googleapis.com/maps/api/staticmap?center=41.8781,-87.6298&amp;zoom=4&amp;size=1000x1000&amp;scale=2&amp;maptype=roadmap')] bg-cover" data-location="United States Central" style=""></div>
-</div>
+<!-- Live Map -->
+<div class="absolute inset-0 z-0" id="route-map"></div>
 <!-- Visualization Overlay Components -->
 <div class="absolute inset-0 z-10 p-xl flex flex-col pointer-events-none">
 <!-- Trip Summary Card -->
@@ -383,13 +363,6 @@
 </div>
 </div>
 </div>
-<!-- Animated Route Pathing (SVG Layer) -->
-<svg class="absolute inset-0 w-full h-full pointer-events-none z-10" viewbox="0 0 800 600">
-<path class="opacity-0 transition-opacity duration-1000" d="M200,300 C300,250 500,350 600,300" fill="none" id="route-line" stroke="#000000" stroke-dasharray="8,4" stroke-width="2">
-<animate attributename="stroke-dashoffset" dur="5s" from="120" repeatcount="indefinite" to="0"></animate>
-</path>
-</svg>
-</div>
 </main>
 <script src="/static/js/config.js"></script>
     <script src="/static/js/api.js"></script>
@@ -397,6 +370,7 @@
     <script src="/static/js/ui.js"></script>
     <script>
         requireAuth(['customer']);
+        renderAppShell('create-delivery', { title: 'Create Delivery' });
 
         let currentStep = 1;
         const totalSteps = 5;
@@ -406,7 +380,6 @@
         const btnPrev = document.getElementById('btn-prev');
         const stepCounter = document.getElementById('step-counter');
         const stepTitle = document.getElementById('step-title');
-        const routeLine = document.getElementById('route-line');
         const summaryOrigin = document.getElementById('summary-origin');
         const summaryDest = document.getElementById('summary-dest');
 
@@ -418,6 +391,76 @@
                 dropoff_lng: parseFloat(el('dropoff_lng').value),
             };
         }
+
+        // Real map — no fake placeholder imagery, only plots coordinates the user actually provided.
+        const routeMap = L.map('route-map', { zoomControl: false, attributionControl: false }).setView([20, 0], 2);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(routeMap);
+        let pickupMarker = null;
+        let dropoffMarker = null;
+        let routeLine = null;
+
+        function updateRouteMap() {
+            const coords = readCoords();
+            const points = [];
+            if (!Number.isNaN(coords.pickup_lat) && !Number.isNaN(coords.pickup_lng)) {
+                const p = [coords.pickup_lat, coords.pickup_lng];
+                if (!pickupMarker) pickupMarker = L.circleMarker(p, { radius: 8, color: '#131b2e', fillColor: '#131b2e', fillOpacity: 1 }).addTo(routeMap);
+                else pickupMarker.setLatLng(p);
+                points.push(p);
+            } else if (pickupMarker) {
+                routeMap.removeLayer(pickupMarker);
+                pickupMarker = null;
+            }
+            if (!Number.isNaN(coords.dropoff_lat) && !Number.isNaN(coords.dropoff_lng)) {
+                const d = [coords.dropoff_lat, coords.dropoff_lng];
+                if (!dropoffMarker) dropoffMarker = L.circleMarker(d, { radius: 8, color: '#855300', fillColor: '#fea619', fillOpacity: 1 }).addTo(routeMap);
+                else dropoffMarker.setLatLng(d);
+                points.push(d);
+            } else if (dropoffMarker) {
+                routeMap.removeLayer(dropoffMarker);
+                dropoffMarker = null;
+            }
+            if (routeLine) {
+                routeMap.removeLayer(routeLine);
+                routeLine = null;
+            }
+            if (points.length === 2) {
+                routeLine = L.polyline(points, { color: '#855300', weight: 2, dashArray: '6,6' }).addTo(routeMap);
+                routeMap.fitBounds(points, { padding: [60, 60] });
+            } else if (points.length === 1) {
+                routeMap.setView(points[0], 11);
+            }
+        }
+
+        ['pickup_lat', 'pickup_lng', 'dropoff_lat', 'dropoff_lng'].forEach((id) => {
+            document.getElementById(id).addEventListener('input', updateRouteMap);
+        });
+
+        document.getElementById('use-my-location-btn').addEventListener('click', () => {
+            if (!navigator.geolocation) {
+                el('geo-status').textContent = 'Your browser does not support location access — enter coordinates manually.';
+                return;
+            }
+            el('geo-status').textContent = 'Requesting your location…';
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    el('pickup_lat').value = pos.coords.latitude.toFixed(6);
+                    el('pickup_lng').value = pos.coords.longitude.toFixed(6);
+                    if (!el('pickup_address').value) {
+                        el('pickup_address').value = `Current location (${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)})`;
+                    }
+                    el('geo-status').textContent = 'Using your current location as the pickup point.';
+                    updateRouteMap();
+                    tryEstimate();
+                },
+                (err) => {
+                    el('geo-status').textContent = err.code === err.PERMISSION_DENIED
+                        ? 'Location access denied — enter the pickup address and coordinates manually.'
+                        : 'Could not determine your location — enter coordinates manually.';
+                },
+                { enableHighAccuracy: true, timeout: 10000 }
+            );
+        });
 
         async function tryEstimate() {
             const coords = readCoords();
@@ -482,9 +525,6 @@
             if (currentStep >= 3 && el('dropoff_address').value) {
                 summaryDest.textContent = el('dropoff_address').value;
                 summaryDest.classList.add('text-primary');
-                routeLine.classList.replace('opacity-0', 'opacity-100');
-            } else if (currentStep < 3) {
-                routeLine.classList.replace('opacity-100', 'opacity-0');
             }
             if (currentStep === 4) tryEstimate();
             if (currentStep === 5) updateSummaryTotals();
@@ -541,5 +581,7 @@
         });
 
         updateUI();
+        setTimeout(() => routeMap.invalidateSize(), 100);
+        window.addEventListener('resize', () => routeMap.invalidateSize());
     </script>
 </body></html>
