@@ -135,30 +135,7 @@
 <div class="loader-track"><div class="loader-fill"></div></div>
 </div>
 
-<aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant bg-surface-container-lowest flex flex-col py-lg px-md z-50">
-<div class="mb-xl">
-<div class="flex items-center gap-sm mb-1"><img alt="Logistica" class="w-7 h-7 rounded-full" src="/static/img/logo-mark.svg"/><h1 class="font-headline-md text-headline-md font-bold text-primary">Logistica</h1></div>
-<p class="font-body-md text-body-sm text-on-surface-variant" id="profile-name">Loading…</p>
-</div>
-<nav class="flex-1 flex flex-col gap-xs">
-<a class="flex items-center gap-md p-sm transition-colors duration-150 cursor-pointer active:opacity-80 text-on-surface-variant hover:text-primary hover:bg-surface-container" id="home-link" href="#">
-<span class="material-symbols-outlined">dashboard</span>
-<span class="font-body-md text-body-md">Dashboard</span>
-</a>
-<a class="flex items-center gap-md p-sm transition-colors duration-150 cursor-pointer active:opacity-80 text-on-surface-variant hover:text-primary hover:bg-surface-container" href="wallet">
-<span class="material-symbols-outlined">payments</span>
-<span class="font-body-md text-body-md">Wallet</span>
-</a>
-<a class="flex items-center gap-md p-sm transition-colors duration-150 cursor-pointer active:opacity-80 text-primary font-bold border-r-4 border-primary bg-surface-container-low" href="disputes">
-<span class="material-symbols-outlined">gavel</span>
-<span class="font-body-md text-body-md">Disputes</span>
-</a>
-</nav>
-<a class="mt-auto bg-primary text-on-primary py-sm px-md font-label-md text-label-md flex items-center justify-center gap-sm" href="#" onclick="logout(); return false;">
-            Log Out
-        </a>
-</aside>
-<main class="ml-64 pt-16 min-h-screen bg-background">
+<main class="pt-16 min-h-screen bg-background">
 <div class="px-gutter py-xl bg-surface-container-lowest border-b border-outline-variant flex items-center justify-between">
 <h1 class="font-headline-lg text-headline-lg text-primary">Disputes</h1>
 <button class="bg-secondary-container text-on-secondary-container px-lg py-sm font-label-md text-label-md flex items-center gap-sm" onclick="document.getElementById('new-dispute-form').classList.toggle('hidden')">
@@ -201,8 +178,7 @@
 <script src="/static/js/ui.js"></script>
 <script>
     const user = requireAuth();
-    document.getElementById('home-link').href = ROLE_HOME[user.role] || '/';
-    document.getElementById('profile-name').textContent = user.email;
+    renderAppShell('disputes', { title: 'Disputes' });
 
     async function createDispute() {
       const payload = {

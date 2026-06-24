@@ -156,69 +156,8 @@
 </div>
 
 <!-- TopNavBar -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
-<div class="flex items-center gap-xl">
-<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
-<span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
-<nav class="hidden md:flex gap-lg items-center">
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="admin-overview">Overview</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="fleet-verification">Fleet</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes">Disputes</a>
-</nav>
-</div>
-<div class="flex items-center gap-md">
-<div class="flex items-center gap-sm">
-<button class="p-xs text-on-surface-variant hover:text-primary" onclick="logout()"><span class="material-symbols-outlined" data-icon="logout">logout</span></button>
-</div>
-</div>
-</header>
-<!-- SideNavBar -->
-<aside class="fixed left-0 top-0 h-full w-64 z-40 flex flex-col pt-20 pb-8 px-4 bg-surface-container-low border-r border-outline-variant">
-<div class="flex items-center gap-md mb-xl px-2">
-<div class="w-10 h-10 bg-primary rounded overflow-hidden flex items-center justify-center">
-<span class="material-symbols-outlined text-on-primary">shield</span>
-</div>
-<div>
-<p class="text-label-md font-label-md text-primary leading-tight">Admin Console</p>
-<p class="text-label-sm font-label-sm text-outline leading-tight" id="profile-name">Loading…</p>
-</div>
-</div>
-<nav class="flex-1 space-y-1">
-<a class="flex items-center gap-md px-3 py-2 text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="admin-overview">
-<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
-                Dashboard
-            </a>
-<a class="flex items-center gap-md px-3 py-2 text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="fleet-verification">
-<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
-                Fleet Verification
-            </a>
-<!-- Active State -->
-<a class="flex items-center gap-md px-3 py-2 text-label-md font-label-md bg-secondary-container text-on-secondary-container rounded-none border-r-4 border-secondary transition-transform" href="financial-analytics">
-<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
-                Financials
-            </a>
-<a class="flex items-center gap-md px-3 py-2 text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="operations-monitoring">
-<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
-                Operations
-            </a>
-<a class="flex items-center gap-md px-3 py-2 text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="disputes">
-<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
-                Disputes
-            </a>
-</nav>
-<div class="mt-auto space-y-1">
-<a class="flex items-center gap-md px-3 py-2 text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="/static/docs/index.html" target="_blank">
-<span class="material-symbols-outlined" data-icon="description">description</span>
-                Documentation
-            </a>
-<a class="flex items-center gap-md px-3 py-2 text-label-md font-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="#" onclick="logout(); return false;">
-<span class="material-symbols-outlined" data-icon="logout">logout</span>
-                Log Out
-            </a>
-</div>
-</aside>
 <!-- Main Content Canvas -->
-<main class="pl-64 pt-16 min-h-screen">
+<main class="pt-16 min-h-screen">
 <div class="p-margin max-w-[1440px] mx-auto">
 <!-- Page Header -->
 <div class="flex justify-between items-end mb-xl">
@@ -336,7 +275,7 @@
     <script src="/static/js/ui.js"></script>
     <script>
         const user = requireAuth(['admin']);
-        document.getElementById('profile-name').textContent = user.email;
+        renderAppShell('financial-analytics', { title: 'Financial Analytics' });
 
         const ENTITY_ICON = { enterprise: 'corporate_fare', group: 'groups' };
 

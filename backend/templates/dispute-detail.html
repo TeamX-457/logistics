@@ -144,43 +144,8 @@
 </div>
 
 <!-- SideNavBar Anchor -->
-<aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant bg-surface-container-lowest flex flex-col py-lg px-md z-50">
-<div class="mb-xl">
-<div class="flex items-center gap-sm mb-1"><img alt="Logistica" class="w-7 h-7 rounded-full" src="/static/img/logo-mark.svg"/><h1 class="font-headline-md text-headline-md font-bold text-primary">Logistica</h1></div>
-<p class="font-body-md text-body-sm text-on-surface-variant" id="profile-name">Loading…</p>
-</div>
-<nav class="flex-1 flex flex-col gap-xs">
-<a class="flex items-center gap-md p-sm transition-colors duration-150 cursor-pointer active:opacity-80 text-on-surface-variant hover:text-primary hover:bg-surface-container" id="home-link" href="#">
-<span class="material-symbols-outlined">dashboard</span>
-<span class="font-body-md text-body-md">Dashboard</span>
-</a>
-<a class="flex items-center gap-md p-sm transition-colors duration-150 cursor-pointer active:opacity-80 text-on-surface-variant hover:text-primary hover:bg-surface-container" href="wallet">
-<span class="material-symbols-outlined">payments</span>
-<span class="font-body-md text-body-md">Wallet</span>
-</a>
-<!-- Active State: Disputes -->
-<a class="flex items-center gap-md p-sm transition-colors duration-150 cursor-pointer active:opacity-80 text-primary font-bold border-r-4 border-primary bg-surface-container-low" href="disputes">
-<span class="material-symbols-outlined">gavel</span>
-<span class="font-body-md text-body-md">Disputes</span>
-</a>
-</nav>
-<a class="mt-auto bg-primary text-on-primary py-sm px-md font-label-md text-label-md flex items-center justify-center gap-sm" href="#" onclick="logout(); return false;">
-            Log Out
-        </a>
-</aside>
-<!-- TopNavBar Anchor -->
-<header class="fixed top-0 right-0 left-64 h-16 border-b border-outline-variant bg-surface-container-lowest flex justify-between items-center px-gutter z-40">
-<div class="flex items-center gap-xl flex-1">
-<h2 class="font-headline-md text-headline-md font-bold text-primary">Logistics Portal</h2>
-</div>
-<div class="flex items-center gap-md">
-<div class="flex gap-lg mr-lg">
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="/static/docs/index.html" target="_blank">Help Center</a>
-</div>
-</div>
-</header>
 <!-- Main Content Canvas -->
-<main class="ml-64 pt-16 min-h-screen bg-background">
+<main class="pt-16 min-h-screen bg-background">
 <!-- Page Header -->
 <div class="px-gutter py-xl bg-surface-container-lowest border-b border-outline-variant">
 <div class="flex items-center justify-between">
@@ -320,8 +285,7 @@
     <script src="/static/js/ui.js"></script>
     <script>
         const user = requireAuth();
-        document.getElementById('home-link').href = ROLE_HOME[user.role] || '/';
-        document.getElementById('profile-name').textContent = user.email;
+        renderAppShell('disputes', { title: 'Dispute Detail' });
 
         const disputeId = qs('id');
         let dispute = null;

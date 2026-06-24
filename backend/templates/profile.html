@@ -136,16 +136,6 @@
 <div class="loader-track"><div class="loader-fill"></div></div>
 </div>
 
-<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
-<div class="flex items-center gap-md">
-<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
-<span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
-</div>
-<div class="flex items-center gap-md">
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" id="home-link" href="#">Back to Dashboard</a>
-<button class="material-symbols-outlined text-on-surface-variant hover:text-error" onclick="logout()">logout</button>
-</div>
-</nav>
 <main class="pt-24 px-margin pb-16 max-w-[860px] mx-auto">
 <div class="flex items-center gap-lg mb-xl">
 <div class="w-20 h-20 rounded-full bg-primary-container flex items-center justify-center text-on-primary overflow-hidden" id="avatar-wrap">
@@ -196,7 +186,7 @@
 <script src="/static/js/ui.js"></script>
 <script>
     const user = requireAuth();
-    document.getElementById('home-link').href = ROLE_HOME[user.role] || '/';
+    renderAppShell('profile', { title: 'Profile' });
 
     function showStatus(message, kind) {
         const el = document.getElementById('status-banner');

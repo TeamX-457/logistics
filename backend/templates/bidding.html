@@ -148,58 +148,8 @@
 </div>
 
 <!-- Top Navigation Bar -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline">
-<div class="flex items-center gap-xl">
-<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
-<span class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed">Logistica</span>
-<nav class="hidden md:flex gap-lg">
-<a class="text-label-md font-label-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors" href="#" id="home-link">Dashboard</a>
-<a class="text-label-md font-label-md text-primary dark:text-primary-fixed border-b-2 border-primary dark:border-primary-fixed pb-1" href="#">Bidding</a>
-<a class="text-label-md font-label-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors" href="disputes">Support</a>
-</nav>
-</div>
-<div class="flex items-center gap-md">
-<button class="material-symbols-outlined p-2 text-on-surface-variant" onclick="window.location.href='profile'">account_circle</button>
-<button class="bg-primary text-on-primary px-4 py-2 text-label-md font-label-md rounded shadow-sm hover:opacity-80 transition-opacity" onclick="window.location.href='create-delivery'">Create Order</button>
-</div>
-</header>
-<!-- Sidebar Navigation -->
-<aside class="fixed left-0 top-0 h-full w-64 z-40 flex flex-col pt-20 pb-8 px-4 bg-surface-container-low dark:bg-inverse-surface border-r border-outline-variant dark:border-outline hidden md:flex">
-<div class="mb-lg px-4">
-<p class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Shipper Console</p>
-<p class="text-body-sm font-body-sm text-on-surface-variant" id="profile-name">Loading…</p>
-</div>
-<nav class="flex-1 flex flex-col gap-xs">
-<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform" id="home-link-2" href="#">
-<span class="material-symbols-outlined">dashboard</span>
-<span class="text-label-md font-label-md">Dashboard</span>
-</a>
-<a class="flex items-center gap-md px-4 py-3 bg-secondary-container text-on-secondary-container border-r-4 border-secondary transition-transform" href="bidding">
-<span class="material-symbols-outlined">gavel</span>
-<span class="text-label-md font-label-md">This Bidding</span>
-</a>
-<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform" href="wallet">
-<span class="material-symbols-outlined">account_balance_wallet</span>
-<span class="text-label-md font-label-md">Wallet</span>
-</a>
-<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform" href="disputes">
-<span class="material-symbols-outlined">gavel</span>
-<span class="text-label-md font-label-md">Disputes</span>
-</a>
-</nav>
-<div class="mt-auto flex flex-col gap-xs">
-<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high" href="/static/docs/index.html" target="_blank">
-<span class="material-symbols-outlined">description</span>
-<span class="text-label-md font-label-md">Documentation</span>
-</a>
-<a class="flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high" href="#" onclick="logout(); return false;">
-<span class="material-symbols-outlined">logout</span>
-<span class="text-label-md font-label-md">Log Out</span>
-</a>
-</div>
-</aside>
 <!-- Main Content Area -->
-<main class="md:ml-64 pt-16 min-h-screen">
+<main class="pt-16 min-h-screen">
 <div class="p-margin max-w-7xl mx-auto">
 <!-- Hero Header Section -->
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-lg mb-xl border-b border-outline-variant pb-xl">
@@ -332,9 +282,7 @@
     <script src="/static/js/ui.js"></script>
     <script>
         const user = requireAuth(['customer']);
-        document.getElementById('home-link').href = 'customer-dashboard';
-        document.getElementById('home-link-2').href = 'customer-dashboard';
-        document.getElementById('profile-name').textContent = user.email;
+        renderAppShell('customer-dashboard', { title: 'Bidding' });
 
         const deliveryId = qs('id');
         let delivery = null;

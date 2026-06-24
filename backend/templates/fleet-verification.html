@@ -147,69 +147,8 @@
 </div>
 
 <!-- TopNavBar Implementation -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
-<div class="flex items-center gap-8">
-<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
-<span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
-<nav class="hidden md:flex items-center gap-6">
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="admin-overview">Overview</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes">Disputes</a>
-</nav>
-</div>
-<div class="flex items-center gap-4">
-<div class="flex items-center gap-2 text-outline">
-<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors" onclick="logout()">logout</span>
-</div>
-</div>
-</header>
-<!-- SideNavBar Implementation -->
-<aside class="fixed left-0 top-0 h-full w-64 z-40 flex flex-col pt-20 pb-8 px-4 bg-surface-container-low border-r border-outline-variant">
-<div class="mb-8 px-2">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-surface-container-high border border-outline-variant flex items-center justify-center">
-<span class="material-symbols-outlined text-primary" data-icon="admin_panel_settings">admin_panel_settings</span>
-</div>
-<div>
-<p class="text-label-md font-bold text-primary">Admin Console</p>
-<p class="text-label-sm text-on-surface-variant" id="profile-name">Loading…</p>
-</div>
-</div>
-</div>
-<nav class="flex-1 space-y-1">
-<a class="flex items-center gap-3 px-3 py-3 rounded-none text-on-surface-variant hover:bg-surface-container-high transition-transform active:scale-[0.99] group" href="admin-overview">
-<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
-<span class="text-label-md">Dashboard</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-3 bg-secondary-container text-on-secondary-container rounded-none border-r-4 border-secondary transition-transform active:scale-[0.99]" href="fleet-verification">
-<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
-<span class="text-label-md">Fleet Verification</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-3 rounded-none text-on-surface-variant hover:bg-surface-container-high transition-transform active:scale-[0.99]" href="financial-analytics">
-<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
-<span class="text-label-md">Financials</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-3 rounded-none text-on-surface-variant hover:bg-surface-container-high transition-transform active:scale-[0.99]" href="operations-monitoring">
-<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
-<span class="text-label-md">Operations</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-3 rounded-none text-on-surface-variant hover:bg-surface-container-high transition-transform active:scale-[0.99]" href="disputes">
-<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
-<span class="text-label-md">Disputes</span>
-</a>
-</nav>
-<div class="mt-auto space-y-1 border-t border-outline-variant pt-4">
-<a class="flex items-center gap-3 px-3 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors" href="/static/docs/index.html" target="_blank">
-<span class="material-symbols-outlined" data-icon="description">description</span>
-<span class="text-label-md">Documentation</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-3 text-error hover:bg-error-container transition-colors" href="#" onclick="logout(); return false;">
-<span class="material-symbols-outlined" data-icon="logout">logout</span>
-<span class="text-label-md">Log Out</span>
-</a>
-</div>
-</aside>
 <!-- Main Content Canvas -->
-<main class="ml-64 pt-16 h-screen flex overflow-hidden">
+<main class="pt-16 h-screen flex overflow-hidden">
 <!-- Table & Filters Section -->
 <section class="flex-1 p-lg overflow-y-auto custom-scrollbar">
 <div class="mb-xl">
@@ -349,8 +288,7 @@
   <script src="/static/js/ui.js"></script>
   <script>
     const user = requireAuth(['admin']);
-    document.getElementById('home-link') && (document.getElementById('home-link').href = 'admin-overview');
-    document.getElementById('profile-name').textContent = user.email;
+    renderAppShell('fleet-verification', { title: 'Fleet Verification' });
 
     let currentPage = 1;
     let currentEntity = '';

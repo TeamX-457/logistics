@@ -155,52 +155,8 @@
 </div>
 
 <!-- Top Navigation -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
-<div class="flex items-center gap-8">
-<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
-<span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
-<nav class="hidden md:flex items-center gap-6">
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" id="home-link" href="#">Dashboard</a>
-<a class="text-label-md font-label-md text-primary border-b-2 border-primary pb-1" href="#">Negotiation</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes">Support</a>
-</nav>
-</div>
-<div class="flex items-center gap-4">
-<div class="flex items-center gap-2 px-3 py-1 bg-surface-container rounded-lg border border-outline-variant cursor-pointer hover:bg-surface-container-high" onclick="window.location.href='profile'">
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">account_circle</span>
-<span class="text-label-sm font-label-sm" id="viewer-label">—</span>
-</div>
-</div>
-</header>
-<!-- Sidebar -->
-<aside class="fixed left-0 top-0 h-full w-64 z-40 flex flex-col pt-20 pb-8 px-4 bg-surface-container-low border-r border-outline-variant hidden lg:flex">
-<div class="flex flex-col gap-2 flex-grow">
-<a class="px-4 py-3 bg-secondary-container text-on-secondary-container rounded-none border-r-4 border-secondary flex items-center gap-3" id="home-link-2" href="#">
-<span class="material-symbols-outlined">dashboard</span>
-<span class="text-label-md font-label-md">Dashboard</span>
-</a>
-<a class="px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors flex items-center gap-3" href="wallet">
-<span class="material-symbols-outlined">account_balance_wallet</span>
-<span class="text-label-md font-label-md">Wallet</span>
-</a>
-<a class="px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors flex items-center gap-3" href="disputes">
-<span class="material-symbols-outlined">gavel</span>
-<span class="text-label-md font-label-md">Disputes</span>
-</a>
-</div>
-<div class="pt-4 border-t border-outline-variant flex flex-col gap-2">
-<a class="px-4 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors flex items-center gap-3" href="/static/docs/index.html" target="_blank">
-<span class="material-symbols-outlined">description</span>
-<span class="text-label-md font-label-md">Documentation</span>
-</a>
-<a class="px-4 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors flex items-center gap-3" href="#" onclick="logout(); return false;">
-<span class="material-symbols-outlined text-error">logout</span>
-<span class="text-label-md font-label-md">Log Out</span>
-</a>
-</div>
-</aside>
 <!-- Main Content Grid -->
-<main class="lg:pl-64 pt-16 h-screen overflow-hidden">
+<main class="pt-16 h-screen overflow-hidden">
 <div class="flex h-full">
 <!-- Left Pane: Chat Thread -->
 <section class="flex-grow flex flex-col bg-surface border-r border-outline-variant">
@@ -326,9 +282,7 @@
     <script src="/static/js/ui.js"></script>
     <script>
         const user = requireAuth();
-        document.getElementById('home-link').href = ROLE_HOME[user.role] || '/';
-        document.getElementById('home-link-2').href = ROLE_HOME[user.role] || '/';
-        document.getElementById('viewer-label').textContent = user.email;
+        renderAppShell(user.role === 'driver' ? 'driver-dashboard' : 'customer-dashboard', { title: 'Negotiation' });
 
         const deliveryId = qs('id');
         let delivery = null;

@@ -144,72 +144,8 @@
 <div class="loader-track"><div class="loader-fill"></div></div>
 </div>
 
-<!-- TopNavBar Alignment -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
-<div class="flex items-center gap-md">
-<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
-<span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
-<div class="hidden md:flex gap-lg ml-xl">
-<a class="text-label-md font-label-md text-primary border-b-2 border-primary pb-1" href="#">Marketplace</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Active Shipments</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Support</a>
-</div>
-</div>
-<div class="flex items-center gap-md">
-<button class="bg-primary text-on-primary px-md py-xs text-label-md font-label-md rounded flex items-center gap-xs hover:opacity-80 transition-all" onclick="window.location.href='create-delivery'">
-<span class="material-symbols-outlined text-[18px]">add</span>
-                Create Order
-            </button>
-<div class="flex items-center gap-sm">
-<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary" onclick="document.getElementById('alerts-panel').scrollIntoView({behavior:'smooth'})">notifications</span>
-<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary" onclick="window.location.href='profile'">account_circle</span>
-</div>
-</div>
-</header>
-<!-- SideNavBar Alignment -->
-<aside class="fixed left-0 top-0 h-full w-64 z-40 flex flex-col pt-20 pb-8 px-4 bg-surface-container-low border-r border-outline-variant">
-<div class="mb-xl px-2">
-<div class="flex items-center gap-md">
-<div class="w-10 h-10 bg-primary-container rounded-sm flex items-center justify-center text-on-primary">
-<span class="material-symbols-outlined">person</span>
-</div>
-<div>
-<p class="text-label-md font-label-md text-primary" id="profile-name">Loading…</p>
-<p class="text-label-sm font-label-sm text-on-surface-variant" id="profile-type">Customer Account</p>
-</div>
-</div>
-</div>
-<nav class="flex-1 space-y-1">
-<a class="flex items-center gap-md px-md py-3 bg-secondary-container text-on-secondary-container border-r-4 border-secondary transition-transform active:scale-[0.99]" href="customer-dashboard">
-<span class="material-symbols-outlined">dashboard</span>
-<span class="text-label-md font-label-md">Dashboard</span>
-</a>
-<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform active:scale-[0.99]" href="#shipment-table">
-<span class="material-symbols-outlined">local_shipping</span>
-<span class="text-label-md font-label-md">My Deliveries</span>
-</a>
-<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform active:scale-[0.99]" href="wallet">
-<span class="material-symbols-outlined">account_balance_wallet</span>
-<span class="text-label-md font-label-md">Wallet</span>
-</a>
-<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform active:scale-[0.99]" href="disputes">
-<span class="material-symbols-outlined">gavel</span>
-<span class="text-label-md font-label-md">Disputes</span>
-</a>
-</nav>
-<div class="mt-auto pt-8 border-t border-outline-variant space-y-1">
-<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high" href="/static/docs/index.html" target="_blank">
-<span class="material-symbols-outlined">description</span>
-<span class="text-label-md font-label-md">Documentation</span>
-</a>
-<a class="flex items-center gap-md px-md py-3 text-error hover:bg-error-container" href="#" onclick="logout(); return false;">
-<span class="material-symbols-outlined">logout</span>
-<span class="text-label-md font-label-md">Log Out</span>
-</a>
-</div>
-</aside>
 <!-- Main Content Area -->
-<main class="ml-64 pt-20 px-margin h-screen overflow-y-auto custom-scrollbar">
+<main class="pt-20 px-margin h-screen overflow-y-auto custom-scrollbar">
 <div class="max-w-[1200px] mx-auto pb-xl">
 <!-- Header Section -->
 <div class="flex justify-between items-end mb-xl">
@@ -345,6 +281,7 @@
     <script src="/static/js/ui.js"></script>
     <script>
         const user = requireAuth(['customer']);
+        renderAppShell('customer-dashboard', { title: 'Dashboard' });
 
         function statusPillClasses(status) {
             const map = {
@@ -387,11 +324,6 @@
         }
 
         async function loadDashboard() {
-            document.getElementById('profile-name').textContent = `${user.first_name} ${user.last_name}`.trim() || user.email;
-            document.getElementById('profile-type').textContent = (user.customer_profile && user.customer_profile.account_type)
-                ? `${user.customer_profile.account_type} Account`
-                : 'Customer Account';
-
             const data = await API.dashboard.customer();
             document.getElementById('welcome-text').textContent = `Welcome back. You have ${data.active_shipments_count} active shipment(s).`;
             document.getElementById('active-count').textContent = data.active_shipments_count;

@@ -146,63 +146,8 @@
 <div class="loader-track"><div class="loader-fill"></div></div>
 </div>
 
-<!-- Sidebar Navigation -->
-<aside class="h-screen w-64 fixed left-0 top-0 flex flex-col h-full py-lg px-md bg-surface-container-lowest border-r border-outline-variant">
-<div class="mb-xl">
-<div class="flex items-center gap-sm mb-1"><img alt="Logistica" class="w-7 h-7 rounded-full" src="/static/img/logo-mark.svg"/><h1 class="font-headline-md text-headline-md font-bold text-primary">Logistica</h1></div>
-<div class="flex items-center gap-sm mt-md">
-<img alt="User profile" class="w-10 h-10 rounded shadow-sm border border-outline-variant object-cover" data-alt="A professional headshot of a logistics driver in a clean, high-end uniform. The lighting is crisp and cinematic, emphasizing a modern enterprise aesthetic. The background is a slightly blurred industrial logistics center with cool blue and slate tones, maintaining a serious and reliable brand presence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRVzSSbevlVSE841Y8QtdPFOjrdVjOlLDKriee-TSROz_dPF5ddNBEKbq_x58y1HqKfemoz51lWRNfS6C0Mmcj1EidEK_RDgsiZBGcrtPv8z15Ops_hmXX6EQgBSek1vbPQK9YXontP7vkXdDwbmZGMDISRgnTvFHdx_VnID4q59LFgSHEFm_rVUXLcdka8NCaMUzwxXT8YhwkJZAdyvwRJSYx2QvivvtuPAPw5DM2XuCO8bzAIBcgl-EMENF-_Ls21LJMu_a3bX4"/>
-<div class="flex flex-col">
-<span class="font-label-md text-label-md text-on-surface" id="profile-name">Loading…</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant" id="profile-id">Driver</span>
-</div>
-</div>
-</div>
-<nav class="flex-1 space-y-xs">
-<!-- Active Tab: Dashboard -->
-<a class="flex items-center gap-md px-md py-sm text-primary font-bold border-r-4 border-primary bg-surface-container-low transition-colors duration-150 cursor-pointer" href="driver-dashboard">
-<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
-<span class="font-body-md text-body-md">Dashboard</span>
-</a>
-<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors duration-150 cursor-pointer" href="#available-loads">
-<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
-<span class="font-body-md text-body-md">Deliveries</span>
-</a>
-<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors duration-150 cursor-pointer" href="wallet">
-<span class="material-symbols-outlined" data-icon="payments">payments</span>
-<span class="font-body-md text-body-md">Earnings</span>
-</a>
-<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors duration-150 cursor-pointer" href="disputes">
-<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
-<span class="font-body-md text-body-md">Disputes</span>
-</a>
-</nav>
-<button class="mt-auto w-full py-md bg-primary text-on-primary font-label-md text-label-md flex items-center justify-center gap-sm cursor-pointer active:opacity-80" onclick="logout()">
-<span class="material-symbols-outlined" data-icon="logout">logout</span>
-            Log Out
-        </button>
-</aside>
-<!-- Top Navigation Bar -->
-<header class="fixed top-0 right-0 left-64 h-16 bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center px-gutter z-10">
-<div class="flex items-center gap-xl">
-<div class="relative flex items-center w-64 group ring-glow">
-<span class="absolute left-3 text-on-surface-variant material-symbols-outlined" data-icon="search">search</span>
-<input class="w-full pl-10 pr-4 py-2 border border-outline-variant rounded bg-surface-bright font-body-sm text-body-sm focus:outline-none focus:border-primary" placeholder="Search orders..." type="text"/>
-</div>
-<nav class="flex items-center gap-lg">
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="/static/docs/index.html" target="_blank">Help Center</a>
-</nav>
-</div>
-<div class="flex items-center gap-md">
-<!-- Status Toggle -->
-<div class="flex items-center bg-surface-container p-1 rounded gap-1 mr-md">
-<button class="px-md py-1.5 rounded bg-secondary-container text-on-secondary-fixed font-label-md text-label-md transition-all shadow-sm" id="status-btn" onclick="toggleStatus(true)">Online</button>
-<button class="px-md py-1.5 rounded text-on-surface-variant font-label-md text-label-md" id="offline-btn" onclick="toggleStatus(false)">Go Offline</button>
-</div>
-</div>
-</header>
 <!-- Main Content Area -->
-<main class="ml-64 mt-16 p-gutter min-h-screen">
+<main class="mt-16 p-gutter min-h-screen">
 <div class="max-w-7xl mx-auto space-y-gutter">
 <!-- Summary Bento Grid -->
 <section class="grid grid-cols-1 md:grid-cols-3 gap-md">
@@ -319,6 +264,15 @@
     <script src="/static/js/ui.js"></script>
     <script>
         const user = requireAuth(['driver']);
+        renderAppShell('driver-dashboard', {
+            title: 'Dashboard',
+            actions: `
+                <div class="flex items-center bg-surface-container p-1 rounded gap-1">
+                    <button class="px-md py-1.5 rounded font-label-md text-label-md transition-all text-on-surface-variant" id="status-btn" onclick="toggleStatus(true)">Online</button>
+                    <button class="px-md py-1.5 rounded font-label-md text-label-md transition-all text-on-surface-variant" id="offline-btn" onclick="toggleStatus(false)">Go Offline</button>
+                </div>
+            `,
+        });
         let isOnline = false;
 
         function renderStatusButtons() {
@@ -383,9 +337,6 @@
         }
 
         async function loadDashboard() {
-            document.getElementById('profile-name').textContent = `${user.first_name} ${user.last_name}`.trim() || user.email;
-            document.getElementById('profile-id').textContent = `Driver #${user.id}`;
-
             const data = await API.dashboard.driver();
             isOnline = data.is_online;
             renderStatusButtons();

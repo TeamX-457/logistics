@@ -136,69 +136,8 @@
 </div>
 
 <!-- TopNavBar (Fixed) -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
-<div class="flex items-center gap-xl">
-<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
-<span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
-<nav class="hidden md:flex gap-lg items-center">
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="admin-overview">Overview</a>
-<a class="text-label-md font-label-md text-primary border-b-2 border-primary pb-1" href="operations-monitoring">Operations</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes">Disputes</a>
-</nav>
-</div>
-<div class="flex items-center gap-md">
-<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" onclick="logout()">logout</button>
-</div>
-</header>
-<!-- SideNavBar (Fixed) -->
-<aside class="fixed left-0 top-0 h-full w-64 z-40 flex flex-col pt-20 pb-8 px-4 bg-surface-container-low border-r border-outline-variant">
-<div class="mb-8 px-2">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center text-on-primary">
-<span class="material-symbols-outlined">admin_panel_settings</span>
-</div>
-<div>
-<p class="text-label-md font-label-md text-primary">Admin Console</p>
-<p class="text-label-sm font-label-sm text-outline" id="profile-name">Loading…</p>
-</div>
-</div>
-</div>
-<nav class="flex-grow space-y-1">
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="admin-overview">
-<span class="material-symbols-outlined text-[20px]">dashboard</span>
-<span class="text-label-md font-label-md">Dashboard</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="fleet-verification">
-<span class="material-symbols-outlined text-[20px]">local_shipping</span>
-<span class="text-label-md font-label-md">Fleet Verification</span>
-</a>
-<!-- Active State -->
-<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container border-r-4 border-secondary transition-all" href="operations-monitoring">
-<span class="material-symbols-outlined text-[20px]">map</span>
-<span class="text-label-md font-label-md">Operations</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="financial-analytics">
-<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
-<span class="text-label-md font-label-md">Financials</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="disputes">
-<span class="material-symbols-outlined text-[20px]">gavel</span>
-<span class="text-label-md font-label-md">Disputes</span>
-</a>
-</nav>
-<div class="mt-auto space-y-1">
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="/static/docs/index.html" target="_blank">
-<span class="material-symbols-outlined text-[20px]">description</span>
-<span class="text-label-md font-label-md">Documentation</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded" href="#" onclick="logout(); return false;">
-<span class="material-symbols-outlined text-[20px]">logout</span>
-<span class="text-label-md font-label-md">Log Out</span>
-</a>
-</div>
-</aside>
 <!-- Main Content Canvas -->
-<main class="ml-64 pt-20 p-8 min-h-screen">
+<main class="pt-20 p-8 min-h-screen">
 <div class="max-w-[1440px] mx-auto">
 <!-- Header Section -->
 <div class="flex justify-between items-end mb-8">
@@ -252,7 +191,7 @@
     <script src="/static/js/ui.js"></script>
     <script>
         const user = requireAuth(['admin']);
-        document.getElementById('profile-name').textContent = user.email;
+        renderAppShell('operations-monitoring', { title: 'Operations' });
 
         async function loadActiveDeliveries() {
             const page = await API.deliveries.list({ ordering: '-created_at' });

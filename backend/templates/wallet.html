@@ -146,48 +146,8 @@
 <div class="loader-track"><div class="loader-fill"></div></div>
 </div>
 
-<!-- Top Navigation -->
-<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
-<div class="flex items-center gap-xl">
-<img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
-<span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
-<div class="hidden md:flex gap-lg items-center">
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" id="home-link" href="#">Dashboard</a>
-<a class="text-label-md font-label-md text-primary border-b-2 border-primary pb-1" href="#">Wallet</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="disputes">Support</a>
-</div>
-</div>
-<div class="flex items-center gap-md">
-<button class="material-symbols-outlined text-on-surface-variant" onclick="window.location.href='profile'">account_circle</button>
-</div>
-</nav>
-<!-- Sidebar Navigation -->
-<aside class="fixed left-0 top-0 h-full w-64 z-40 flex flex-col pt-20 pb-8 px-4 bg-surface-container-low border-r border-outline-variant hidden md:flex">
-<div class="mb-xl px-2">
-<div class="flex items-center gap-md">
-<div class="w-10 h-10 bg-primary-container rounded-sm flex items-center justify-center text-on-primary">
-<span class="material-symbols-outlined">person</span>
-</div>
-<div>
-<p class="text-label-md font-label-md text-primary" id="profile-name">Loading…</p>
-<p class="text-label-sm font-label-sm text-on-surface-variant" id="profile-type">Account</p>
-</div>
-</div>
-</div>
-<nav class="flex flex-col gap-xs flex-grow" id="sidebar-links"></nav>
-<div class="mt-auto border-t border-outline-variant pt-lg flex flex-col gap-xs">
-<a class="flex items-center gap-md px-4 py-2 text-on-surface-variant hover:bg-surface-container-high" href="/static/docs/index" target="_blank">
-<span class="material-symbols-outlined text-[20px]">description</span>
-<span class="text-label-md">Documentation</span>
-</a>
-<a class="flex items-center gap-md px-4 py-2 text-on-surface-variant hover:bg-surface-container-high" href="#" onclick="logout(); return false;">
-<span class="material-symbols-outlined text-[20px]">logout</span>
-<span class="text-label-md">Log Out</span>
-</a>
-</div>
-</aside>
 <!-- Main Content -->
-<main class="md:ml-64 pt-24 px-margin pb-12 bg-surface">
+<main class="pt-24 px-margin pb-12 bg-surface">
 <div class="max-w-[1440px] mx-auto">
 <!-- Header Section -->
 <div class="flex flex-col md:flex-row md:items-end justify-between mb-xl gap-lg">
@@ -310,33 +270,7 @@
     <script src="/static/js/ui.js"></script>
     <script>
         const user = requireAuth();
-        document.getElementById('home-link').href = ROLE_HOME[user.role] || '/';
-        document.getElementById('profile-name').textContent = `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.email;
-        document.getElementById('profile-type').textContent = user.role === 'driver' ? 'Driver Account' : 'Customer Account';
-
-        const SIDEBAR_LINKS = {
-            customer: [
-                ['customer-dashboard', 'dashboard', 'Dashboard'],
-                ['customer-dashboard#shipments', 'local_shipping', 'My Deliveries'],
-                ['wallet', 'account_balance_wallet', 'Wallet'],
-                ['disputes', 'gavel', 'Disputes'],
-            ],
-            driver: [
-                ['driver-dashboard', 'dashboard', 'Dashboard'],
-                ['driver-dashboard#available-loads', 'local_shipping', 'Deliveries'],
-                ['wallet', 'payments', 'Earnings'],
-                ['disputes', 'gavel', 'Disputes'],
-            ],
-        };
-        document.getElementById('sidebar-links').innerHTML = (SIDEBAR_LINKS[user.role] || SIDEBAR_LINKS.customer)
-            .map(([href, icon, label]) => {
-                const active = href === 'wallet';
-                const cls = active
-                    ? 'flex items-center gap-md px-4 py-3 bg-secondary-container text-on-secondary-container border-r-4 border-secondary'
-                    : 'flex items-center gap-md px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors';
-                return `<a class="${cls}" href="${href}"><span class="material-symbols-outlined">${icon}</span><span class="text-label-md font-label-md">${label}</span></a>`;
-            })
-            .join('');
+        renderAppShell('wallet', { title: user.role === 'driver' ? 'Earnings' : 'Wallet' });
 
         let txnPage = 1;
         let currentRange = '1M';
