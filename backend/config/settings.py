@@ -14,9 +14,17 @@ env = environ.Env(
 )
 environ.Env.read_env(BASE_DIR / ".env")
 
+# Vercel sets VERCEL=1 in both the build and runtime environments.
+ON_VERCEL = env.bool("VERCEL", default=False)
+
 SECRET_KEY = env("SECRET_KEY", default="django-insecure-change-me-in-production")
-DEBUG = env("DEBUG")
+DEBUG = env.bool("DEBUG", default=not ON_VERCEL)
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
+if ON_VERCEL:
+    # Accept the project's *.vercel.app deployment URLs without extra config.
+    ALLOWED_HOSTS += [".vercel.app"]
+    CSRF_TRUSTED_ORIGINS += ["https://*.vercel.app"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -108,7 +116,14 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# On Vercel the collected assets are served from the CDN build output, so the
+# Python lambda (which ships without a staticfiles/ dir) must not depend on the
+# hashed manifest at render time.
+STATICFILES_STORAGE = (
+    "whitenoise.storage.CompressedStaticFilesStorage"
+    if ON_VERCEL
+    else "whitenoise.storage.CompressedManifestStaticFilesStorage"
+)
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
