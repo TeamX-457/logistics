@@ -21,18 +21,10 @@
   ::-webkit-scrollbar-track{background:#f1f1f1}
   ::-webkit-scrollbar-thumb{background:#888;border-radius:3px}
   .section-padding{padding-top:120px;padding-bottom:120px}
-  @keyframes livePulse{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
-  .live-pulse{animation:livePulse 3s ease-in-out infinite}
-  @keyframes progressFill{from{width:0}to{width:78%}}
-  .progress-fill{animation:progressFill 3s ease-out .5s both}
-  @keyframes blip{0%,90%,100%{opacity:0;transform:scale(.6)}45%{opacity:1;transform:scale(1)}}
-  .signal-blip{animation:blip 2.5s ease-in-out infinite}
-  .signal-blip-2{animation:blip 2.5s ease-in-out .8s infinite}
-  .signal-blip-3{animation:blip 2.5s ease-in-out 1.6s infinite}
   #app-loader{position:fixed;inset:0;z-index:9999;background:#131b2e;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .4s ease,visibility .4s ease}
   #app-loader.app-loader-hidden{opacity:0;visibility:hidden;pointer-events:none}
   #app-loader .loader-badge{width:72px;height:72px;border-radius:50%;animation:loader-pulse 1.6s ease-in-out infinite}
-  #app-loader .loader-name{margin-top:20px;font-family:'Geist',sans-serif;font-weight:700;font-size:22px;color:#ffffff;letter-spacing:-.01em}
+  #app-loader .loader-name{margin-top:20px;font-family:'Geist',sans-serif;font-weight:700;font-size:22px;color:#fff;letter-spacing:-.01em}
   #app-loader .loader-tag{margin-top:6px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.18em;color:#fea619;text-transform:uppercase}
   #app-loader .loader-track{width:160px;height:3px;background:rgba(255,255,255,.15);overflow:hidden;border-radius:2px;margin-top:22px}
   #app-loader .loader-fill{width:40%;height:100%;background:#fea619;border-radius:2px;animation:loader-slide 1.2s ease-in-out infinite}
@@ -45,7 +37,6 @@ tailwind.config={darkMode:"class",theme:{extend:{"colors":{"outline-variant":"#c
 </head>
 <body class="bg-surface text-on-surface selection:bg-secondary-container">
 
-<!-- Loading screen -->
 <div id="app-loader">
   <img alt="Logistica" class="loader-badge" src="/static/img/logo-mark.svg"/>
   <div class="loader-name">Logistica</div>
@@ -61,10 +52,10 @@ tailwind.config={darkMode:"class",theme:{extend:{"colors":{"outline-variant":"#c
       <span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
     </a>
     <nav class="hidden md:flex items-center gap-lg">
-      <a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#how-it-works">How It Works</a>
+      <a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#how-it-works">How it Works</a>
       <a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#platform">Platform</a>
       <a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#services">Services</a>
-      <a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#trust">Safety</a>
+      <a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#safety">Safety</a>
     </nav>
   </div>
   <div class="flex items-center gap-md">
@@ -78,230 +69,152 @@ tailwind.config={darkMode:"class",theme:{extend:{"colors":{"outline-variant":"#c
   </div>
 </header>
 
+<main>
+
 <!-- Hero -->
-<section class="relative min-h-screen flex items-center pt-20 overflow-hidden bg-primary-container">
-  <div class="absolute inset-0 opacity-[0.06]" style="background-image:radial-gradient(circle at 1px 1px,#bec6e0 1px,transparent 0);background-size:32px 32px;"></div>
-  <div class="absolute right-0 top-0 w-1/2 h-full" style="background:radial-gradient(ellipse at 80% 40%,rgba(254,166,25,.18) 0%,transparent 70%);"></div>
-
-  <div class="relative max-w-7xl mx-auto px-margin w-full grid grid-cols-12 gap-6 items-center py-20">
-    <!-- Left -->
-    <div class="col-span-12 lg:col-span-6 space-y-8 fade-in">
-      <div class="inline-flex items-center gap-2 border border-secondary-container/40 bg-secondary-container/10 px-3 py-1.5 rounded-sm">
-        <span class="w-1.5 h-1.5 rounded-full bg-secondary-container live-pulse inline-block"></span>
-        <span class="mono text-label-sm uppercase tracking-widest text-secondary-container">Live Freight Marketplace</span>
+<section class="relative min-h-screen flex items-center bg-surface-container-lowest overflow-hidden pt-20">
+  <div class="max-w-[1440px] mx-auto grid grid-cols-12 px-margin items-center gap-gutter w-full">
+    <div class="col-span-12 lg:col-span-6 space-y-xl fade-in">
+      <div class="inline-flex items-center gap-2 bg-secondary-container/10 px-3 py-1 rounded-[2px] border border-secondary/20">
+        <span class="flex h-2 w-2 rounded-full bg-secondary"></span>
+        <span class="text-label-sm font-label-sm uppercase tracking-widest text-secondary">Live Freight Marketplace</span>
       </div>
-
-      <h1 class="text-headline-xl font-headline-xl text-on-primary leading-[1.1]">
-        Your freight,<br/>
-        <span class="text-secondary-container">exactly on time.</span><br/>
-        Every time.
+      <h1 class="font-headline-xl text-headline-xl text-primary leading-tight">
+        Your freight,<br/><span class="text-outline">exactly on time.</span>
       </h1>
-
-      <p class="text-body-lg text-on-primary/70 max-w-lg leading-relaxed">
+      <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
         Logistica connects businesses with verified drivers in real time — competitive bids, live GPS tracking, and secure escrow payments built in from day one.
       </p>
-
-      <div class="flex flex-wrap gap-md pt-2">
-        <button class="px-xl py-3 bg-secondary-container text-on-secondary-container text-label-md font-bold flex items-center gap-2 hover:opacity-90 transition-all active:scale-95" onclick="window.location.href='register-customer'">
+      <div class="flex flex-wrap gap-md pt-4">
+        <button class="px-xl py-lg bg-secondary-container text-on-secondary-container font-label-md text-label-md flex items-center gap-2 glow-hover transition-all" onclick="window.location.href='register-customer'">
           Book a Delivery
-          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+          <span class="material-symbols-outlined">arrow_forward</span>
         </button>
-        <button class="px-xl py-3 border border-on-primary/30 text-on-primary text-label-md font-label-md flex items-center gap-2 hover:border-on-primary hover:bg-on-primary/5 transition-all" onclick="window.location.href='register-driver'">
-          <span class="material-symbols-outlined text-[18px]">local_shipping</span>
+        <button class="px-xl py-lg border border-primary text-primary font-label-md text-label-md flex items-center gap-2 hover:bg-primary hover:text-on-primary transition-all" onclick="window.location.href='register-driver'">
           Join as a Driver
+          <span class="material-symbols-outlined">local_shipping</span>
         </button>
       </div>
-
-      <div class="flex items-center gap-xl pt-4 border-t border-on-primary/10">
-        <div class="flex items-center gap-2 text-on-primary/50">
-          <span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings:'FILL' 1,'wght' 400">verified</span>
-          <span class="mono text-label-sm">Verified Drivers</span>
+      <div class="flex items-center gap-xl pt-2 border-t border-outline-variant">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[16px] text-secondary" style="font-variation-settings:'FILL' 1,'wght' 400">verified</span>
+          <span class="text-label-sm text-on-surface-variant">Verified Drivers</span>
         </div>
-        <div class="flex items-center gap-2 text-on-primary/50">
-          <span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings:'FILL' 1,'wght' 400">verified</span>
-          <span class="mono text-label-sm">Escrow Payments</span>
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[16px] text-secondary" style="font-variation-settings:'FILL' 1,'wght' 400">verified</span>
+          <span class="text-label-sm text-on-surface-variant">Escrow Payments</span>
         </div>
-        <div class="flex items-center gap-2 text-on-primary/50">
-          <span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings:'FILL' 1,'wght' 400">verified</span>
-          <span class="mono text-label-sm">Live GPS Tracking</span>
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[16px] text-secondary" style="font-variation-settings:'FILL' 1,'wght' 400">verified</span>
+          <span class="text-label-sm text-on-surface-variant">Live GPS</span>
         </div>
       </div>
     </div>
 
-    <!-- Right: Live Delivery Tracker -->
-    <div class="col-span-12 lg:col-span-6 flex justify-center lg:justify-end">
-      <div class="w-full max-w-[460px] bg-inverse-surface border border-on-primary/20 shadow-2xl rounded-lg overflow-hidden">
-        <div class="flex items-center justify-between px-5 py-3 border-b border-on-primary/10">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-secondary-container"></span>
-            <span class="mono text-label-sm text-on-primary/50 uppercase tracking-widest">LIVE DELIVERY TRACKER</span>
-          </div>
-          <span class="mono text-label-sm text-on-primary/30">LGS-2024-0392</span>
+    <!-- Hero image with floating card -->
+    <div class="col-span-12 lg:col-span-6 relative h-[500px] lg:h-[680px] fade-in" style="animation-delay:.2s">
+      <div class="absolute inset-0 border border-outline-variant bg-surface-container-low p-3">
+        <img alt="Modern logistics warehouse" class="w-full h-full object-cover grayscale-[0.15] hover:grayscale-0 transition-all duration-1000"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjSq2liw5ManVGYrZJ0wI7T-W-__g5P33wF4HhVwpUYLNg3gIJM-NDSX0SXAvGF5Sy4RlgsMElMqDx-QE_Y8xhErCzWw8PoBSIe7X9nrXFg1AjMlqwZ2dY1Ig6tUuhw7zlSzAoKj5an6fbnyaOL1UlsENUs9qSDJ3Ziqw4Sm1HO5w704hIWMmJ1y_5HTzvK9Ou6oc0VwTUvEgjAtV0iJOTh_NFsDvpj_8Arl2rp2JgBGjHKXfyyOIpck4Z3apRMAcYnKZS-x6IIh8"/>
+      </div>
+      <!-- Floating tracking card -->
+      <div class="absolute -bottom-8 -left-8 bg-surface border border-primary p-lg hidden xl:block w-80 shadow-2xl">
+        <div class="flex justify-between items-start mb-md">
+          <span class="text-label-sm font-label-sm text-outline mono">TX: LGS-2024-0392</span>
+          <span class="text-label-sm font-label-sm text-secondary bg-secondary-container/20 px-2 py-0.5">EN ROUTE</span>
         </div>
-
-        <div class="px-5 py-5 grid grid-cols-2 gap-4 border-b border-on-primary/10">
-          <div>
-            <p class="mono text-label-sm text-on-primary/40 uppercase tracking-widest mb-1">Shipment Status</p>
-            <p class="text-[24px] font-bold text-secondary-container leading-none">IN TRANSIT</p>
-            <p class="mono text-label-sm text-secondary-container/70 mt-2">↑ 78% to destination</p>
+        <div class="space-y-base">
+          <div class="flex justify-between text-label-sm">
+            <span class="text-outline">Lagos → Abuja</span>
+            <span class="text-primary font-bold">78%</span>
           </div>
-          <div class="space-y-3">
-            <div>
-              <p class="mono text-label-sm text-on-primary/40 uppercase tracking-widest mb-1">ETA Remaining</p>
-              <p class="text-[22px] font-bold text-on-primary">3h<span class="text-[14px] text-on-primary/50"> 47m</span></p>
-            </div>
-            <div class="inline-flex items-center gap-1.5 bg-secondary-container/20 border border-secondary-container/40 px-2 py-0.5 rounded-sm">
-              <span class="w-1.5 h-1.5 rounded-full bg-secondary-container live-pulse"></span>
-              <span class="mono text-label-sm text-secondary-container">ON SCHEDULE</span>
-            </div>
+          <div class="h-1.5 bg-surface-container-high w-full overflow-hidden rounded-full">
+            <div class="h-full bg-secondary rounded-full" style="width:78%"></div>
           </div>
-        </div>
-
-        <div class="px-5 py-4 border-b border-on-primary/10">
-          <p class="mono text-label-sm text-on-primary/40 uppercase tracking-widest mb-3">Delivery Progress</p>
-          <div class="w-full h-2 bg-on-primary/10 rounded-full overflow-hidden">
-            <div class="progress-fill h-full bg-secondary-container rounded-full"></div>
-          </div>
-          <div class="flex justify-between mt-2">
-            <span class="mono text-[10px] text-on-primary/30">PICKUP</span>
-            <span class="mono text-[10px] text-secondary-container">● NOW</span>
-            <span class="mono text-[10px] text-on-primary/30">DELIVERY</span>
-          </div>
-        </div>
-
-        <div class="px-5 py-4 border-b border-on-primary/10">
-          <p class="mono text-label-sm text-on-primary/40 uppercase tracking-widest mb-3">GPS Signal Stream</p>
-          <div class="grid grid-cols-6 gap-2">
-            <div class="h-2 bg-secondary-container/30 rounded-sm signal-blip"></div>
-            <div class="h-2 bg-secondary-container/50 rounded-sm signal-blip-2"></div>
-            <div class="h-2 bg-secondary-container/80 rounded-sm signal-blip-3"></div>
-            <div class="h-2 bg-secondary-container/40 rounded-sm signal-blip"></div>
-            <div class="h-2 bg-secondary-container rounded-sm signal-blip-2"></div>
-            <div class="h-2 bg-secondary-container/60 rounded-sm signal-blip-3"></div>
-            <div class="h-2 bg-secondary-container/70 rounded-sm signal-blip-2"></div>
-            <div class="h-2 bg-secondary-container/30 rounded-sm signal-blip-3"></div>
-            <div class="h-2 bg-secondary-container/50 rounded-sm signal-blip"></div>
-            <div class="h-2 bg-secondary-container/90 rounded-sm signal-blip-2"></div>
-            <div class="h-2 bg-secondary-container/40 rounded-sm signal-blip-3"></div>
-            <div class="h-2 bg-secondary-container/60 rounded-sm signal-blip"></div>
-          </div>
-          <p class="mono text-[10px] text-on-primary/25 mt-3">LIVE GPS TELEMETRY — 30s updates</p>
-        </div>
-
-        <div class="px-5 py-4 grid grid-cols-3 gap-3">
-          <div>
-            <p class="mono text-[10px] text-on-primary/30 uppercase mb-1">Origin</p>
-            <p class="text-[13px] font-medium text-on-primary">Lagos</p>
-            <p class="mono text-[10px] text-on-primary/40">LOS</p>
-          </div>
-          <div class="flex flex-col items-center justify-center">
-            <div class="w-full h-px bg-on-primary/10 relative">
-              <span class="absolute -top-2 left-1/2 -translate-x-1/2 text-secondary-container text-[14px]">›</span>
-            </div>
-            <p class="mono text-[9px] text-on-primary/30 mt-2">ETA 3h 47m</p>
-          </div>
-          <div class="text-right">
-            <p class="mono text-[10px] text-on-primary/30 uppercase mb-1">Destination</p>
-            <p class="text-[13px] font-medium text-on-primary">Abuja</p>
-            <p class="mono text-[10px] text-on-primary/40">ABJ</p>
-          </div>
+          <p class="text-label-md font-label-md text-primary">ETA: 3h 47m remaining</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Stats bar -->
-<section class="bg-primary text-on-primary py-8">
-  <div class="max-w-7xl mx-auto px-margin">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-x divide-on-primary/20">
-      <div class="space-y-1 px-4">
-        <p class="text-[36px] font-bold leading-none">18,400+</p>
-        <p class="mono text-label-sm text-on-primary/50 uppercase tracking-widest">Orders Completed</p>
+<!-- Stats Bar -->
+<section class="bg-primary text-on-primary py-xl border-y border-outline">
+  <div class="max-w-[1440px] mx-auto px-margin">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter text-center">
+      <div class="space-y-xs">
+        <span class="text-headline-lg font-headline-lg block">18,400+</span>
+        <span class="text-label-sm font-label-sm text-outline-variant uppercase tracking-widest">Orders Completed</span>
       </div>
-      <div class="space-y-1 px-4">
-        <p class="text-[36px] font-bold leading-none">850+</p>
-        <p class="mono text-label-sm text-on-primary/50 uppercase tracking-widest">Verified Drivers</p>
+      <div class="space-y-xs">
+        <span class="text-headline-lg font-headline-lg block">850+</span>
+        <span class="text-label-sm font-label-sm text-outline-variant uppercase tracking-widest">Verified Drivers</span>
       </div>
-      <div class="space-y-1 px-4">
-        <p class="text-[36px] font-bold leading-none">98.7%</p>
-        <p class="mono text-label-sm text-on-primary/50 uppercase tracking-widest">On-Time Rate</p>
+      <div class="space-y-xs">
+        <span class="text-headline-lg font-headline-lg block">98.7%</span>
+        <span class="text-label-sm font-label-sm text-outline-variant uppercase tracking-widest">On-Time Rate</span>
       </div>
-      <div class="space-y-1 px-4">
-        <p class="text-[36px] font-bold leading-none">24 Cities</p>
-        <p class="mono text-label-sm text-on-primary/50 uppercase tracking-widest">Service Coverage</p>
+      <div class="space-y-xs">
+        <span class="text-headline-lg font-headline-lg block">24 Cities</span>
+        <span class="text-label-sm font-label-sm text-outline-variant uppercase tracking-widest">Coverage</span>
       </div>
     </div>
   </div>
 </section>
 
 <!-- How It Works -->
-<section class="section-padding border-b border-outline-variant" id="how-it-works">
-  <div class="max-w-7xl mx-auto px-margin">
+<section class="section-padding bg-surface border-b border-outline-variant" id="how-it-works">
+  <div class="max-w-[1440px] mx-auto px-margin">
     <div class="mb-16">
-      <p class="mono text-label-sm uppercase tracking-widest text-secondary mb-3">Process</p>
-      <h2 class="text-headline-lg font-headline-lg text-on-surface max-w-xl">From booking to delivery — fast, transparent, secure.</h2>
+      <h2 class="text-headline-lg font-headline-lg text-primary">How It Works</h2>
+      <p class="text-body-md text-on-surface-variant mt-base max-w-2xl">One platform, two distinct experiences — built for shippers and carriers alike.</p>
     </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
-      <!-- For Cargo Owners -->
-      <div>
-        <div class="flex items-center gap-3 mb-8">
-          <span class="material-symbols-outlined text-secondary text-[28px]" style="font-variation-settings:'FILL' 1,'wght' 400">category</span>
-          <h3 class="text-headline-md font-headline-md text-on-surface">For Cargo Owners</h3>
-        </div>
-        <div class="space-y-0">
-          <div class="flex gap-5 pb-8 relative before:absolute before:left-4 before:top-10 before:bottom-0 before:w-px before:bg-outline-variant">
-            <div class="w-8 h-8 flex-shrink-0 bg-primary text-on-primary flex items-center justify-center mono text-[13px] font-bold z-10 rounded-sm">A</div>
-            <div class="pt-1">
-              <h4 class="text-body-lg font-bold text-on-surface mb-1">Post Your Delivery</h4>
-              <p class="text-body-sm text-on-surface-variant leading-relaxed">Describe your pickup location, destination, cargo type, and weight. Our system instantly matches you with available verified drivers in your area.</p>
-            </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
+      <!-- For Shippers -->
+      <div class="space-y-lg">
+        <h3 class="text-headline-md font-bold flex items-center gap-3">
+          <span class="material-symbols-outlined text-secondary">inventory_2</span>
+          For Cargo Owners
+        </h3>
+        <div class="space-y-8 relative before:absolute before:left-4 before:top-2 before:bottom-2 before:w-px before:bg-outline-variant">
+          <div class="relative pl-12">
+            <span class="absolute left-0 top-0 w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center text-label-md font-bold z-10">A</span>
+            <h4 class="text-label-md font-bold uppercase text-primary">Post Your Delivery</h4>
+            <p class="text-body-sm text-on-surface-variant mt-1">Describe pickup, destination, cargo type and weight. Our system matches you with available verified drivers instantly.</p>
           </div>
-          <div class="flex gap-5 pb-8 relative before:absolute before:left-4 before:top-10 before:bottom-0 before:w-px before:bg-outline-variant">
-            <div class="w-8 h-8 flex-shrink-0 bg-primary text-on-primary flex items-center justify-center mono text-[13px] font-bold z-10 rounded-sm">B</div>
-            <div class="pt-1">
-              <h4 class="text-body-lg font-bold text-on-surface mb-1">Review & Accept Bids</h4>
-              <p class="text-body-sm text-on-surface-variant leading-relaxed">Receive competitive offers from verified drivers. Compare rates, ratings, and ETAs — then accept the best bid for your shipment with one tap.</p>
-            </div>
+          <div class="relative pl-12">
+            <span class="absolute left-0 top-0 w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center text-label-md font-bold z-10">B</span>
+            <h4 class="text-label-md font-bold uppercase text-primary">Review & Accept Bids</h4>
+            <p class="text-body-sm text-on-surface-variant mt-1">Receive competitive offers from verified drivers. Compare rates, ratings, and ETAs before accepting.</p>
           </div>
-          <div class="flex gap-5">
-            <div class="w-8 h-8 flex-shrink-0 bg-primary text-on-primary flex items-center justify-center mono text-[13px] font-bold z-10 rounded-sm">C</div>
-            <div class="pt-1">
-              <h4 class="text-body-lg font-bold text-on-surface mb-1">Track & Pay Securely</h4>
-              <p class="text-body-sm text-on-surface-variant leading-relaxed">Monitor your shipment live on GPS. Payment is held in escrow and releases automatically upon confirmed delivery. No disputes, no delays.</p>
-            </div>
+          <div class="relative pl-12">
+            <span class="absolute left-0 top-0 w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center text-label-md font-bold z-10">C</span>
+            <h4 class="text-label-md font-bold uppercase text-primary">Track & Pay Securely</h4>
+            <p class="text-body-sm text-on-surface-variant mt-1">Monitor live on GPS. Payment is held in escrow and released automatically on confirmed delivery.</p>
           </div>
         </div>
       </div>
-
       <!-- For Drivers -->
-      <div>
-        <div class="flex items-center gap-3 mb-8">
-          <span class="material-symbols-outlined text-primary text-[28px]" style="font-variation-settings:'FILL' 1,'wght' 400">local_shipping</span>
-          <h3 class="text-headline-md font-headline-md text-on-surface">For Drivers</h3>
-        </div>
-        <div class="space-y-0">
-          <div class="flex gap-5 pb-8 relative before:absolute before:left-4 before:top-10 before:bottom-0 before:w-px before:bg-outline-variant">
-            <div class="w-8 h-8 flex-shrink-0 bg-surface-container-highest text-on-surface flex items-center justify-center mono text-[13px] font-bold z-10 rounded-sm">1</div>
-            <div class="pt-1">
-              <h4 class="text-body-lg font-bold text-on-surface mb-1">Register & Verify Fleet</h4>
-              <p class="text-body-sm text-on-surface-variant leading-relaxed">Submit your vehicle details, license, and insurance documents. Verification is completed within 24 hours — then you are live on the marketplace.</p>
-            </div>
+      <div class="space-y-lg">
+        <h3 class="text-headline-md font-bold flex items-center gap-3">
+          <span class="material-symbols-outlined text-secondary">local_shipping</span>
+          For Drivers
+        </h3>
+        <div class="space-y-8 relative before:absolute before:left-4 before:top-2 before:bottom-2 before:w-px before:bg-outline-variant">
+          <div class="relative pl-12">
+            <span class="absolute left-0 top-0 w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center text-label-md font-bold z-10">1</span>
+            <h4 class="text-label-md font-bold uppercase text-primary">Register & Verify Fleet</h4>
+            <p class="text-body-sm text-on-surface-variant mt-1">Submit vehicle details, license, and insurance. Verification is completed within 24 hours.</p>
           </div>
-          <div class="flex gap-5 pb-8 relative before:absolute before:left-4 before:top-10 before:bottom-0 before:w-px before:bg-outline-variant">
-            <div class="w-8 h-8 flex-shrink-0 bg-surface-container-highest text-on-surface flex items-center justify-center mono text-[13px] font-bold z-10 rounded-sm">2</div>
-            <div class="pt-1">
-              <h4 class="text-body-lg font-bold text-on-surface mb-1">Browse & Bid on Orders</h4>
-              <p class="text-body-sm text-on-surface-variant leading-relaxed">See available deliveries near you in real time. Place competitive bids and win jobs that match your route and vehicle capacity.</p>
-            </div>
+          <div class="relative pl-12">
+            <span class="absolute left-0 top-0 w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center text-label-md font-bold z-10">2</span>
+            <h4 class="text-label-md font-bold uppercase text-primary">Browse & Bid on Orders</h4>
+            <p class="text-body-sm text-on-surface-variant mt-1">See available deliveries near you in real time. Set your own rates or accept fixed-price contracts.</p>
           </div>
-          <div class="flex gap-5">
-            <div class="w-8 h-8 flex-shrink-0 bg-surface-container-highest text-on-surface flex items-center justify-center mono text-[13px] font-bold z-10 rounded-sm">3</div>
-            <div class="pt-1">
-              <h4 class="text-body-lg font-bold text-on-surface mb-1">Deliver & Get Paid Fast</h4>
-              <p class="text-body-sm text-on-surface-variant leading-relaxed">Complete the delivery and confirm via the app. Payment releases instantly to your wallet — no invoice disputes, no 30-day waits.</p>
-            </div>
+          <div class="relative pl-12">
+            <span class="absolute left-0 top-0 w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center text-label-md font-bold z-10">3</span>
+            <h4 class="text-label-md font-bold uppercase text-primary">Deliver & Get Paid Fast</h4>
+            <p class="text-body-sm text-on-surface-variant mt-1">Complete delivery and confirm via the app. Payment releases to your wallet instantly — no 30-day waits.</p>
           </div>
         </div>
       </div>
@@ -309,236 +222,193 @@ tailwind.config={darkMode:"class",theme:{extend:{"colors":{"outline-variant":"#c
   </div>
 </section>
 
-<!-- Platform Capabilities -->
-<section class="section-padding bg-surface-container-low" id="platform">
-  <div class="max-w-7xl mx-auto px-margin">
-    <div class="mb-16 flex flex-col md:flex-row justify-between items-end gap-6">
+<!-- Platform Bento Grid -->
+<section class="section-padding bg-surface-container-lowest" id="platform">
+  <div class="max-w-[1440px] mx-auto px-margin">
+    <div class="mb-xl flex flex-col md:flex-row justify-between items-end gap-lg">
       <div>
-        <p class="mono text-label-sm uppercase tracking-widest text-secondary mb-3">Platform Capabilities</p>
-        <h2 class="text-headline-lg font-headline-lg text-on-surface">Infrastructure built for freight that cannot miss.</h2>
+        <h2 class="text-headline-lg font-headline-lg text-primary">Marketplace Infrastructure</h2>
+        <p class="text-body-md font-body-md text-on-surface-variant mt-base max-w-2xl">Industrial-grade tools designed for operators who demand real performance over rhetoric.</p>
       </div>
-      <button class="flex items-center gap-2 text-secondary font-medium text-label-md hover:underline whitespace-nowrap" onclick="window.location.href='register-customer'">
-        Start for free <span class="material-symbols-outlined text-[18px]">open_in_new</span>
+      <button class="text-label-md font-bold text-primary flex items-center gap-2 hover:underline" onclick="window.location.href='register-customer'">
+        Start for free <span class="material-symbols-outlined">east</span>
       </button>
     </div>
-
-    <div class="grid grid-cols-12 gap-5">
-      <!-- Wide: Real-Time GPS -->
-      <div class="col-span-12 md:col-span-7 bg-primary-container text-on-primary p-8 flex flex-col justify-between min-h-[380px] rounded-xl border border-transparent hover:border-secondary-container transition-colors">
-        <div>
-          <span class="material-symbols-outlined text-secondary-container text-[40px] mb-4">my_location</span>
-          <h3 class="text-headline-md font-headline-md mb-3">Real-Time GPS Tracking</h3>
-          <p class="text-on-primary/70 text-body-sm leading-relaxed max-w-lg">Every shipment is tracked live. Cargo owners see their driver's exact position updated every 30 seconds, with automatic ETA recalculations and route deviation alerts.</p>
+    <div class="grid grid-cols-12 gap-gutter">
+      <!-- Real-time Tracking — wide -->
+      <div class="col-span-12 md:col-span-8 bg-surface-container-low border border-outline-variant p-xl flex flex-col justify-between min-h-[400px] group hover:border-primary transition-all rounded-lg">
+        <div class="space-y-base">
+          <span class="material-symbols-outlined text-secondary text-4xl">my_location</span>
+          <h3 class="text-headline-md font-headline-md text-primary">Real-Time GPS Tracking</h3>
+          <p class="text-body-sm font-body-sm text-on-surface-variant max-w-md">Every shipment tracked live with driver position updated every 30 seconds. Automatic ETA recalculation and route deviation alerts keep everyone informed.</p>
         </div>
-        <div class="mt-6 grid grid-cols-6 gap-2">
-          <div class="h-2 bg-secondary-container/30 rounded-sm signal-blip"></div>
-          <div class="h-2 bg-secondary-container/50 rounded-sm signal-blip-2"></div>
-          <div class="h-2 bg-secondary-container/80 rounded-sm signal-blip-3"></div>
-          <div class="h-2 bg-secondary-container/40 rounded-sm signal-blip"></div>
-          <div class="h-2 bg-secondary-container rounded-sm signal-blip-2"></div>
-          <div class="h-2 bg-secondary-container/60 rounded-sm signal-blip-3"></div>
-          <div class="h-2 bg-secondary-container/70 rounded-sm signal-blip-2"></div>
-          <div class="h-2 bg-secondary-container/30 rounded-sm signal-blip-3"></div>
-          <div class="h-2 bg-secondary-container/50 rounded-sm signal-blip"></div>
-          <div class="h-2 bg-secondary-container/90 rounded-sm signal-blip-2"></div>
-          <div class="h-2 bg-secondary-container/40 rounded-sm signal-blip-3"></div>
-          <div class="h-2 bg-secondary-container/60 rounded-sm signal-blip"></div>
+        <div class="mt-xl h-24 border border-outline-variant bg-surface flex items-end gap-1 p-2 overflow-hidden rounded-md">
+          <div class="flex-1 bg-secondary-container/30 h-1/2 rounded-sm"></div>
+          <div class="flex-1 bg-secondary-container/50 h-3/4 rounded-sm"></div>
+          <div class="flex-1 bg-secondary-container h-1/2 rounded-sm"></div>
+          <div class="flex-1 bg-secondary h-full rounded-sm"></div>
+          <div class="flex-1 bg-secondary-container/80 h-2/3 rounded-sm"></div>
+          <div class="flex-1 bg-secondary-container/40 h-1/3 rounded-sm"></div>
+          <div class="flex-1 bg-secondary-container/60 h-1/2 rounded-sm"></div>
+          <div class="flex-1 bg-secondary h-3/4 rounded-sm"></div>
+          <div class="flex-1 bg-secondary-container/70 h-2/5 rounded-sm"></div>
         </div>
-        <p class="mono text-label-sm text-on-primary/25 mt-3">LIVE GPS TELEMETRY — 30s intervals</p>
       </div>
-
-      <!-- Narrow: Bidding Engine -->
-      <div class="col-span-12 md:col-span-5 bg-secondary-container/10 border border-secondary-container/30 p-8 flex flex-col justify-between min-h-[380px] rounded-xl hover:border-secondary-container transition-colors">
-        <div>
-          <span class="material-symbols-outlined text-secondary text-[40px] mb-4" style="font-variation-settings:'FILL' 1,'wght' 400">gavel</span>
-          <h3 class="text-headline-md font-headline-md text-on-surface mb-3">Competitive Bidding Engine</h3>
-          <p class="text-on-surface-variant text-body-sm leading-relaxed">Multiple verified drivers compete for every order in real time. Average 3–5 bids within 90 seconds of posting — you always get the best market rate.</p>
+      <!-- Smart Escrow — tall narrow -->
+      <div class="col-span-12 md:col-span-4 bg-primary text-on-primary p-xl flex flex-col justify-between min-h-[400px] shadow-xl rounded-lg">
+        <div class="space-y-base">
+          <span class="material-symbols-outlined text-secondary-container text-4xl">account_balance_wallet</span>
+          <h3 class="text-headline-md font-headline-md">Smart Escrow</h3>
+          <p class="text-body-sm font-body-sm text-outline-variant">Funds are captured at order creation and held securely. Automated release on proof-of-delivery — zero risk for both parties.</p>
         </div>
-        <div class="bg-surface border border-secondary-container/30 p-4 mt-4 rounded-lg">
-          <div class="flex items-start gap-3">
-            <span class="material-symbols-outlined text-secondary text-[20px] mt-0.5" style="font-variation-settings:'FILL' 1,'wght' 400">local_offer</span>
-            <div>
-              <p class="mono text-label-sm text-secondary font-bold uppercase">New Bids — LGS-2024-0392</p>
-              <p class="text-body-sm text-on-surface-variant mt-1">4 drivers placed bids. Lowest offer is 12% below market average.</p>
-              <p class="mono text-[10px] text-on-surface-variant/50 mt-2">Just now · Auto-matched to top-rated driver</p>
-            </div>
+        <div class="flex items-center gap-4 p-md bg-white/10 rounded-lg">
+          <span class="material-symbols-outlined text-secondary-container" style="font-variation-settings:'FILL' 1,'wght' 400">verified</span>
+          <div>
+            <p class="text-label-sm font-bold uppercase">100% Protected</p>
+            <p class="text-body-sm text-outline-variant">All transactions escrowed</p>
           </div>
         </div>
       </div>
-
-      <!-- Small cards -->
-      <div class="col-span-12 md:col-span-4 bg-surface border border-outline-variant p-6 rounded-xl hover:border-secondary transition-colors">
-        <span class="material-symbols-outlined text-primary text-[32px] mb-4">route</span>
-        <h3 class="text-body-lg font-bold text-on-surface mb-2">Smart Route Intelligence</h3>
-        <p class="text-body-sm text-on-surface-variant leading-relaxed">When delays occur, our system automatically recalculates the optimal route and notifies all parties in real time.</p>
+      <!-- Three small feature cards -->
+      <div class="col-span-12 md:col-span-4 bg-surface border border-outline-variant p-xl flex flex-col gap-lg hover:border-primary transition-all rounded-lg">
+        <span class="material-symbols-outlined text-secondary text-4xl">gavel</span>
+        <div>
+          <h3 class="text-headline-md font-headline-md text-primary">Competitive Bidding</h3>
+          <p class="text-body-sm font-body-sm text-on-surface-variant mt-base">True market discovery. Multiple verified drivers bid on every order — average first bid within 90 seconds.</p>
+        </div>
       </div>
-
-      <div class="col-span-12 md:col-span-4 bg-surface border border-outline-variant p-6 rounded-xl hover:border-secondary transition-colors">
-        <span class="material-symbols-outlined text-primary text-[32px] mb-4">description</span>
-        <h3 class="text-body-lg font-bold text-on-surface mb-2">Digital Documentation</h3>
-        <p class="text-body-sm text-on-surface-variant leading-relaxed">Waybills, delivery receipts, and proof-of-delivery documents generated and signed digitally at every handoff point.</p>
+      <div class="col-span-12 md:col-span-4 bg-surface border border-outline-variant p-xl flex flex-col gap-lg hover:border-primary transition-all rounded-lg">
+        <span class="material-symbols-outlined text-secondary text-4xl">description</span>
+        <div>
+          <h3 class="text-headline-md font-headline-md text-primary">Digital Documentation</h3>
+          <p class="text-body-sm font-body-sm text-on-surface-variant mt-base">Waybills, delivery receipts, and proof-of-delivery generated and signed digitally at every handoff.</p>
+        </div>
       </div>
-
-      <div class="col-span-12 md:col-span-4 bg-surface border border-outline-variant p-6 rounded-xl hover:border-secondary transition-colors">
-        <span class="material-symbols-outlined text-primary text-[32px] mb-4">account_balance_wallet</span>
-        <h3 class="text-body-lg font-bold text-on-surface mb-2">Escrow Wallet System</h3>
-        <p class="text-body-sm text-on-surface-variant leading-relaxed">Payments held securely in escrow and released instantly upon delivery confirmation. Drivers get paid fast, cargo owners are always protected.</p>
+      <div class="col-span-12 md:col-span-4 bg-surface border border-outline-variant p-xl flex flex-col gap-lg hover:border-primary transition-all rounded-lg">
+        <span class="material-symbols-outlined text-secondary text-4xl">route</span>
+        <div>
+          <h3 class="text-headline-md font-headline-md text-primary">Smart Route Intelligence</h3>
+          <p class="text-body-sm font-body-sm text-on-surface-variant mt-base">When delays occur, the system automatically recalculates and notifies all parties in real time.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Service Categories -->
-<section class="section-padding border-t border-outline-variant" id="services">
-  <div class="max-w-7xl mx-auto px-margin">
+<!-- Services -->
+<section class="section-padding bg-surface border-t border-outline-variant" id="services">
+  <div class="max-w-[1440px] mx-auto px-margin">
     <div class="text-center mb-16">
-      <p class="mono text-label-sm uppercase tracking-widest text-secondary mb-3">What We Move</p>
-      <h2 class="text-headline-lg font-headline-lg text-on-surface">Every cargo type. Every route.</h2>
-      <p class="text-body-lg text-on-surface-variant mt-3 max-w-2xl mx-auto">Logistica is built for every category of freight, with verified drivers and vehicle types to match every shipment requirement.</p>
+      <h2 class="text-headline-lg font-headline-lg text-primary">Every Cargo Type. Every Route.</h2>
+      <p class="text-body-lg text-on-surface-variant mt-base max-w-2xl mx-auto">Built for every category of freight, with verified drivers and vehicle types to match every requirement.</p>
     </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
       <div class="border border-outline-variant bg-surface p-7 rounded-xl hover:border-secondary transition-all hover:-translate-y-0.5 group">
         <div class="w-12 h-12 bg-surface-container flex items-center justify-center mb-5 rounded-lg group-hover:bg-surface-container-high transition-colors">
           <span class="material-symbols-outlined text-primary text-[26px]" style="font-variation-settings:'FILL' 1,'wght' 400">bolt</span>
         </div>
         <h3 class="text-body-lg font-bold text-on-surface mb-2">Express Urban Delivery</h3>
-        <p class="text-body-sm text-on-surface-variant leading-relaxed mb-4">Same-day and next-day delivery within cities. Perfect for e-commerce, retail restocking, and urgent business documents.</p>
-        <div class="flex items-center gap-2">
-          <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-          <span class="mono text-label-sm text-secondary">Avg. delivery under 4 hours</span>
-        </div>
+        <p class="text-body-sm text-on-surface-variant leading-relaxed mb-4">Same-day and next-day delivery within cities. Ideal for e-commerce, retail restocking, and urgent documents.</p>
+        <span class="mono text-label-sm text-secondary">Avg. delivery under 4 hours</span>
       </div>
-
       <div class="border border-outline-variant bg-surface p-7 rounded-xl hover:border-secondary transition-all hover:-translate-y-0.5 group">
         <div class="w-12 h-12 bg-surface-container flex items-center justify-center mb-5 rounded-lg group-hover:bg-surface-container-high transition-colors">
           <span class="material-symbols-outlined text-primary text-[26px]" style="font-variation-settings:'FILL' 1,'wght' 400">local_shipping</span>
         </div>
         <h3 class="text-body-lg font-bold text-on-surface mb-2">Long-Haul Freight</h3>
-        <p class="text-body-sm text-on-surface-variant leading-relaxed mb-4">Interstate and cross-border freight moved by verified long-haul drivers with full cargo insurance and GPS monitoring throughout.</p>
-        <div class="flex items-center gap-2">
-          <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-          <span class="mono text-label-sm text-secondary">24/7 tracking · Insured cargo</span>
-        </div>
+        <p class="text-body-sm text-on-surface-variant leading-relaxed mb-4">Interstate and cross-border freight with verified long-haul drivers, full cargo insurance, and live GPS tracking.</p>
+        <span class="mono text-label-sm text-secondary">24/7 tracking · Insured cargo</span>
       </div>
-
       <div class="border border-outline-variant bg-surface p-7 rounded-xl hover:border-secondary transition-all hover:-translate-y-0.5 group">
         <div class="w-12 h-12 bg-surface-container flex items-center justify-center mb-5 rounded-lg group-hover:bg-surface-container-high transition-colors">
           <span class="material-symbols-outlined text-primary text-[26px]" style="font-variation-settings:'FILL' 1,'wght' 400">ac_unit</span>
         </div>
         <h3 class="text-body-lg font-bold text-on-surface mb-2">Temperature-Sensitive Cargo</h3>
-        <p class="text-body-sm text-on-surface-variant leading-relaxed mb-4">Pharmaceuticals, perishable foods, and sensitive materials moved by cold-chain certified drivers with refrigerated vehicles.</p>
-        <div class="flex items-center gap-2">
-          <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-          <span class="mono text-label-sm text-secondary">HACCP-aligned · Temp logged</span>
-        </div>
+        <p class="text-body-sm text-on-surface-variant leading-relaxed mb-4">Pharmaceuticals, perishables, and sensitive materials with cold-chain certified drivers and refrigerated vehicles.</p>
+        <span class="mono text-label-sm text-secondary">HACCP-aligned · Temp logged</span>
       </div>
-
       <div class="border border-outline-variant bg-surface p-7 rounded-xl hover:border-secondary transition-all hover:-translate-y-0.5 group">
         <div class="w-12 h-12 bg-surface-container flex items-center justify-center mb-5 rounded-lg group-hover:bg-surface-container-high transition-colors">
           <span class="material-symbols-outlined text-primary text-[26px]" style="font-variation-settings:'FILL' 1,'wght' 400">storefront</span>
         </div>
         <h3 class="text-body-lg font-bold text-on-surface mb-2">Marketplace & E-Commerce</h3>
-        <p class="text-body-sm text-on-surface-variant leading-relaxed mb-4">Bulk fulfilment for online sellers. API integrations available for automated order dispatch and real-time tracking updates to your customers.</p>
-        <div class="flex items-center gap-2">
-          <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-          <span class="mono text-label-sm text-secondary">API-ready · Bulk rates</span>
-        </div>
+        <p class="text-body-sm text-on-surface-variant leading-relaxed mb-4">Bulk fulfilment for online sellers. API integrations available for automated dispatch and tracking updates.</p>
+        <span class="mono text-label-sm text-secondary">API-ready · Bulk rates</span>
       </div>
-
       <div class="border border-outline-variant bg-surface p-7 rounded-xl hover:border-secondary transition-all hover:-translate-y-0.5 group">
         <div class="w-12 h-12 bg-surface-container flex items-center justify-center mb-5 rounded-lg group-hover:bg-surface-container-high transition-colors">
           <span class="material-symbols-outlined text-primary text-[26px]" style="font-variation-settings:'FILL' 1,'wght' 400">construction</span>
         </div>
         <h3 class="text-body-lg font-bold text-on-surface mb-2">Heavy Equipment & Materials</h3>
-        <p class="text-body-sm text-on-surface-variant leading-relaxed mb-4">Construction materials, machinery, and oversized cargo handled by flatbed and heavy-lift certified drivers with specialized vehicles.</p>
-        <div class="flex items-center gap-2">
-          <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-          <span class="mono text-label-sm text-secondary">Up to 30 tonnes · Escort available</span>
-        </div>
+        <p class="text-body-sm text-on-surface-variant leading-relaxed mb-4">Construction materials and oversized cargo with flatbed and heavy-lift certified drivers.</p>
+        <span class="mono text-label-sm text-secondary">Up to 30 tonnes · Escort available</span>
       </div>
-
       <div class="border border-outline-variant bg-surface p-7 rounded-xl hover:border-secondary transition-all hover:-translate-y-0.5 group">
         <div class="w-12 h-12 bg-surface-container flex items-center justify-center mb-5 rounded-lg group-hover:bg-surface-container-high transition-colors">
           <span class="material-symbols-outlined text-primary text-[26px]" style="font-variation-settings:'FILL' 1,'wght' 400">agriculture</span>
         </div>
         <h3 class="text-body-lg font-bold text-on-surface mb-2">Agriculture & Food Produce</h3>
-        <p class="text-body-sm text-on-surface-variant leading-relaxed mb-4">Farm-to-market logistics for fresh produce, grains, and livestock with priority routing and minimal dwell time at transfer points.</p>
-        <div class="flex items-center gap-2">
-          <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-          <span class="mono text-label-sm text-secondary">Priority routing · Freshness assured</span>
-        </div>
+        <p class="text-body-sm text-on-surface-variant leading-relaxed mb-4">Farm-to-market logistics for fresh produce, grains, and livestock with priority routing and minimal transit time.</p>
+        <span class="mono text-label-sm text-secondary">Priority routing · Freshness assured</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Trust & Safety -->
-<section class="section-padding bg-primary-container text-on-primary" id="trust">
-  <div class="max-w-7xl mx-auto px-margin">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-      <div class="space-y-8">
-        <div class="inline-flex items-center gap-2 border border-secondary-container/40 bg-secondary-container/10 px-3 py-1.5 rounded-sm">
-          <span class="material-symbols-outlined text-secondary-container text-[16px]" style="font-variation-settings:'FILL' 1,'wght' 400">security</span>
-          <span class="mono text-label-sm uppercase tracking-widest text-secondary-container">Platform Safety</span>
+<!-- Safety -->
+<section class="section-padding bg-surface-container-low border-y border-outline-variant" id="safety">
+  <div class="max-w-[1440px] mx-auto px-margin">
+    <div class="grid grid-cols-12 gap-gutter items-center">
+      <div class="col-span-12 lg:col-span-5 space-y-xl">
+        <div class="inline-flex items-center gap-2 bg-primary text-on-primary px-3 py-1 rounded-full">
+          <span class="material-symbols-outlined text-[16px]">shield</span>
+          <span class="text-label-sm uppercase tracking-widest font-bold">Platform Safety</span>
         </div>
-        <h2 class="text-headline-lg font-headline-lg leading-tight">Safety isn't a feature.<br/>It's our foundation.</h2>
-        <p class="text-on-primary/70 text-body-lg leading-relaxed">Logistica was built around trust from day one. Every driver, every payment, and every delivery is verified, protected, and fully traceable.</p>
-        <ul class="space-y-5">
-          <li class="flex items-start gap-4">
-            <span class="material-symbols-outlined text-secondary-container mt-0.5" style="font-variation-settings:'FILL' 1,'wght' 400">check_circle</span>
+        <h2 class="text-headline-lg font-headline-lg text-primary">Safety isn't a feature.<br/>It's our foundation.</h2>
+        <p class="text-body-lg text-on-surface-variant">Every driver, every payment, and every delivery is verified, protected, and fully traceable — built in from day one, not bolted on.</p>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-secondary mt-1" style="font-variation-settings:'FILL' 1,'wght' 400">check_circle</span>
             <div>
-              <h4 class="font-bold text-body-lg mb-1">Driver Background & Fleet Verification</h4>
-              <p class="text-on-primary/60 text-body-sm">Every driver is vetted before activation — license checks, insurance verification, and vehicle inspection. Credentials re-verified on a 30-day rolling cycle.</p>
+              <h4 class="text-label-md font-bold">Driver Background & Fleet Verification</h4>
+              <p class="text-body-sm text-on-surface-variant">Every driver is vetted before activation — license, insurance, and vehicle inspection on file and re-verified on a 30-day cycle.</p>
             </div>
           </li>
-          <li class="flex items-start gap-4">
-            <span class="material-symbols-outlined text-secondary-container mt-0.5" style="font-variation-settings:'FILL' 1,'wght' 400">check_circle</span>
+          <li class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-secondary mt-1" style="font-variation-settings:'FILL' 1,'wght' 400">check_circle</span>
             <div>
-              <h4 class="font-bold text-body-lg mb-1">Escrow Payment Protection</h4>
-              <p class="text-on-primary/60 text-body-sm">All payments are held in our secure escrow wallet and only released upon confirmed delivery. Cargo owners are never at risk of paying for undelivered shipments.</p>
+              <h4 class="text-label-md font-bold">Escrow Payment Protection</h4>
+              <p class="text-body-sm text-on-surface-variant">All payments held in secure escrow and released only on confirmed delivery. Cargo owners are never at risk of paying for undelivered shipments.</p>
             </div>
           </li>
-          <li class="flex items-start gap-4">
-            <span class="material-symbols-outlined text-secondary-container mt-0.5" style="font-variation-settings:'FILL' 1,'wght' 400">check_circle</span>
+          <li class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-secondary mt-1" style="font-variation-settings:'FILL' 1,'wght' 400">check_circle</span>
             <div>
-              <h4 class="font-bold text-body-lg mb-1">24/7 Dispute Resolution</h4>
-              <p class="text-on-primary/60 text-body-sm">Our team reviews every claim with full GPS and delivery logs as evidence. Average resolution under 48 hours, with fair outcomes for both parties.</p>
+              <h4 class="text-label-md font-bold">24/7 Dispute Resolution</h4>
+              <p class="text-body-sm text-on-surface-variant">Every claim reviewed with full GPS and delivery logs as evidence. Average resolution under 48 hours, fair outcomes for both parties.</p>
             </div>
           </li>
         </ul>
       </div>
-
-      <!-- Stats panel -->
-      <div class="bg-inverse-surface border border-on-primary/10 p-8 space-y-6 rounded-xl">
-        <div class="flex items-center gap-3 pb-5 border-b border-on-primary/10">
-          <span class="mono text-label-sm uppercase tracking-widest text-on-primary/40">Logistica Live Dashboard</span>
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="bg-primary-container border border-secondary-container/20 p-5 rounded-lg">
-            <p class="mono text-label-sm text-on-primary/40 uppercase tracking-widest mb-2">Active Routes</p>
-            <p class="text-[34px] font-bold text-secondary-container">312</p>
-            <p class="mono text-[11px] text-on-primary/30 mt-1">Live right now</p>
+      <div class="col-span-12 lg:col-span-7">
+        <div class="grid grid-cols-2 gap-gutter">
+          <img alt="Verified fleet on the road" class="w-full aspect-square object-cover grayscale border border-outline-variant rounded-lg"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMuOTr7vKKi32lz9H634syiQldn58pYF-kFgKu_ETCKMNGyPpHQNZHXsBIY-bITUEWDK3SQv4FTcSNxU8Oe_8qBpkVi_VBKH0znkvtcDu7pBs6DDp0lOuQAnElWeQ5VIPBbjZgopnW-LDTRgpCxjKUHmSc9v_NGdMT8RqnhwBOZhdJiOtL-z-pyiNtadthdW81m1gSkUMIoC1VaTXlPK5Ikgrtw6qIJPmUlv3Ggjt7Mo7NSfysK7OoYrk1KSafXQyVclEgOw4N_OA"/>
+          <div class="bg-surface-container-high border border-outline-variant p-xl flex flex-col justify-center rounded-lg space-y-md">
+            <span class="text-headline-xl font-bold text-primary">100%</span>
+            <p class="text-label-md font-bold uppercase">Carrier Compliance</p>
+            <p class="text-body-sm text-on-surface-variant">Every driver maintains up-to-date insurance and license certifications, verified on a rolling basis by our automated compliance engine.</p>
+            <div class="grid grid-cols-2 gap-3 pt-2 border-t border-outline-variant">
+              <div>
+                <p class="text-label-sm text-outline uppercase">Avg Bid</p>
+                <p class="text-headline-md font-bold">90sec</p>
+              </div>
+              <div>
+                <p class="text-label-sm text-outline uppercase">On-Time</p>
+                <p class="text-headline-md font-bold text-secondary">98.7%</p>
+              </div>
+            </div>
           </div>
-          <div class="bg-primary-container border border-secondary-container/20 p-5 rounded-lg">
-            <p class="mono text-label-sm text-on-primary/40 uppercase tracking-widest mb-2">On-Time Rate</p>
-            <p class="text-[34px] font-bold text-secondary-container">98.7<span class="text-[18px]">%</span></p>
-            <p class="mono text-[11px] text-on-primary/30 mt-1">Industry avg: 82%</p>
-          </div>
-          <div class="bg-primary-container border border-on-primary/10 p-5 rounded-lg">
-            <p class="mono text-label-sm text-on-primary/40 uppercase tracking-widest mb-2">Avg Bid Response</p>
-            <p class="text-[34px] font-bold text-on-primary">90<span class="text-[18px] text-on-primary/50">sec</span></p>
-            <p class="mono text-[11px] text-on-primary/30 mt-1">First bid received</p>
-          </div>
-          <div class="bg-primary-container border border-on-primary/10 p-5 rounded-lg">
-            <p class="mono text-label-sm text-on-primary/40 uppercase tracking-widest mb-2">Escrow Protected</p>
-            <p class="text-[34px] font-bold text-on-primary">100<span class="text-[18px] text-on-primary/50">%</span></p>
-            <p class="mono text-[11px] text-on-primary/30 mt-1">All transactions</p>
-          </div>
-        </div>
-        <div class="bg-secondary-container/10 border border-secondary-container/30 p-4 flex items-center gap-3 rounded-lg">
-          <span class="material-symbols-outlined text-secondary-container" style="font-variation-settings:'FILL' 1,'wght' 400">verified_user</span>
-          <p class="mono text-label-sm text-secondary-container">Platform security reviewed · Zero unresolved payment disputes</p>
         </div>
       </div>
     </div>
@@ -546,95 +416,84 @@ tailwind.config={darkMode:"class",theme:{extend:{"colors":{"outline-variant":"#c
 </section>
 
 <!-- CTA -->
-<section class="section-padding bg-secondary-container text-on-secondary-container text-center">
-  <div class="max-w-2xl mx-auto px-margin space-y-8">
-    <p class="mono text-label-sm uppercase tracking-widest text-on-secondary-container/60">Get Started</p>
-    <h2 class="text-headline-xl font-headline-xl leading-tight tracking-tight">Your delivery<br/>starts here.</h2>
-    <p class="text-body-lg text-on-secondary-container/70 leading-relaxed">Join 1,200+ businesses and 850+ verified drivers already moving smarter with Logistica.</p>
-    <div class="flex flex-col sm:flex-row gap-3 justify-center pt-2">
-      <button class="px-xl py-4 bg-primary text-on-primary text-label-md font-bold hover:opacity-90 transition-all active:scale-95" onclick="window.location.href='register-customer'">
-        Book Your First Delivery
-      </button>
-      <button class="px-xl py-4 border-2 border-on-secondary-container text-on-secondary-container text-label-md font-label-md hover:bg-on-secondary-container/10 transition-all" onclick="window.location.href='register-driver'">
-        Join as a Driver
-      </button>
+<section class="section-padding bg-primary text-on-primary text-center">
+  <div class="max-w-3xl mx-auto px-margin space-y-xl">
+    <h2 class="text-headline-xl font-headline-xl">Ready to move smarter?</h2>
+    <p class="text-body-lg text-outline-variant">Join 1,200+ businesses and 850+ verified drivers already operating on Logistica.</p>
+    <div class="flex flex-col sm:flex-row gap-md justify-center">
+      <button class="px-xl py-lg bg-secondary-container text-on-secondary-container font-label-md text-label-md glow-hover" onclick="window.location.href='register-customer'">Book Your First Delivery</button>
+      <button class="px-xl py-lg border border-on-primary text-on-primary font-label-md text-label-md hover:bg-on-primary hover:text-primary transition-all" onclick="window.location.href='register-driver'">Partner as a Driver</button>
     </div>
   </div>
 </section>
 
+</main>
+
 <!-- Footer -->
-<footer class="bg-primary-container text-on-primary py-16 border-t border-on-primary/10">
-  <div class="max-w-7xl mx-auto px-margin">
-    <div class="grid grid-cols-12 gap-8 mb-12">
-      <div class="col-span-12 lg:col-span-4 space-y-4">
-        <a href="/" class="flex items-center gap-2">
-          <img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
-          <span class="text-headline-md font-bold text-on-primary">Logistica</span>
+<footer class="bg-surface border-t border-outline-variant py-xl">
+  <div class="max-w-[1440px] mx-auto px-margin grid grid-cols-12 gap-gutter">
+    <div class="col-span-12 lg:col-span-4 space-y-md">
+      <div class="flex items-center gap-2">
+        <img alt="Logistica" class="w-8 h-8 rounded-full" src="/static/img/logo-mark.svg"/>
+        <span class="text-headline-md font-headline-md font-bold text-primary">Logistica</span>
+      </div>
+      <p class="text-body-sm font-body-sm text-on-surface-variant max-w-xs">Premium freight marketplace connecting cargo owners with verified drivers across Africa and beyond.</p>
+      <div class="flex gap-md">
+        <a class="w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-surface-container-high transition-all rounded-lg" href="#">
+          <span class="material-symbols-outlined text-[20px]">public</span>
         </a>
-        <p class="text-body-sm text-on-primary/50 leading-relaxed max-w-xs">Premium freight marketplace connecting cargo owners with verified drivers across Africa and beyond.</p>
-        <div class="flex gap-3">
-          <a href="#" class="w-9 h-9 border border-on-primary/20 flex items-center justify-center hover:border-secondary-container transition-colors rounded-lg">
-            <span class="material-symbols-outlined text-[18px] text-on-primary/50">language</span>
-          </a>
-          <a href="#" class="w-9 h-9 border border-on-primary/20 flex items-center justify-center hover:border-secondary-container transition-colors rounded-lg">
-            <span class="material-symbols-outlined text-[18px] text-on-primary/50">mail</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-span-6 lg:col-span-2 space-y-3">
-        <h5 class="mono text-label-sm uppercase tracking-widest text-on-primary/40">Services</h5>
-        <nav class="flex flex-col gap-2 text-body-sm text-on-primary/60">
-          <a href="#" class="hover:text-secondary-container transition-colors">Express Delivery</a>
-          <a href="#" class="hover:text-secondary-container transition-colors">Long-Haul Freight</a>
-          <a href="#" class="hover:text-secondary-container transition-colors">Cold Chain</a>
-          <a href="#" class="hover:text-secondary-container transition-colors">Heavy Equipment</a>
-        </nav>
-      </div>
-
-      <div class="col-span-6 lg:col-span-2 space-y-3">
-        <h5 class="mono text-label-sm uppercase tracking-widest text-on-primary/40">Platform</h5>
-        <nav class="flex flex-col gap-2 text-body-sm text-on-primary/60">
-          <a href="#" class="hover:text-secondary-container transition-colors">Live Tracking</a>
-          <a href="#" class="hover:text-secondary-container transition-colors">Bidding Engine</a>
-          <a href="#" class="hover:text-secondary-container transition-colors">Escrow Wallet</a>
-          <a href="#" class="hover:text-secondary-container transition-colors">Driver App</a>
-        </nav>
-      </div>
-
-      <div class="col-span-6 lg:col-span-2 space-y-3">
-        <h5 class="mono text-label-sm uppercase tracking-widest text-on-primary/40">Company</h5>
-        <nav class="flex flex-col gap-2 text-body-sm text-on-primary/60">
-          <a href="#" class="hover:text-secondary-container transition-colors">About Logistica</a>
-          <a href="#" class="hover:text-secondary-container transition-colors">Safety Standards</a>
-          <a href="#" class="hover:text-secondary-container transition-colors">Driver Partners</a>
-          <a href="#" class="hover:text-secondary-container transition-colors">Careers</a>
-        </nav>
-      </div>
-
-      <div class="col-span-6 lg:col-span-2 space-y-3">
-        <h5 class="mono text-label-sm uppercase tracking-widest text-on-primary/40">Legal</h5>
-        <nav class="flex flex-col gap-2 text-body-sm text-on-primary/60">
-          <a href="#" class="hover:text-secondary-container transition-colors">Privacy Policy</a>
-          <a href="#" class="hover:text-secondary-container transition-colors">Terms of Service</a>
-          <a href="#" class="hover:text-secondary-container transition-colors">Liability Terms</a>
-          <a href="#" class="hover:text-secondary-container transition-colors">Security</a>
-        </nav>
+        <a class="w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-surface-container-high transition-all rounded-lg" href="#">
+          <span class="material-symbols-outlined text-[20px]">mail</span>
+        </a>
       </div>
     </div>
-
-    <div class="border-t border-on-primary/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-      <span class="mono text-label-sm text-on-primary/30">© 2024 LOGISTICA. ALL RIGHTS RESERVED.</span>
-      <div class="flex gap-6 mono text-label-sm text-on-primary/30 uppercase tracking-wider">
-        <span>Freight Marketplace Platform</span>
-        <span>v1.0.0</span>
-      </div>
+    <div class="col-span-6 lg:col-span-2 space-y-base">
+      <h5 class="text-label-md font-bold text-primary uppercase tracking-wider">Services</h5>
+      <nav class="flex flex-col gap-xs text-body-sm text-on-surface-variant">
+        <a class="hover:text-primary" href="#">Express Delivery</a>
+        <a class="hover:text-primary" href="#">Long-Haul Freight</a>
+        <a class="hover:text-primary" href="#">Cold Chain</a>
+        <a class="hover:text-primary" href="#">Heavy Equipment</a>
+      </nav>
+    </div>
+    <div class="col-span-6 lg:col-span-2 space-y-base">
+      <h5 class="text-label-md font-bold text-primary uppercase tracking-wider">Platform</h5>
+      <nav class="flex flex-col gap-xs text-body-sm text-on-surface-variant">
+        <a class="hover:text-primary" href="#">Live Tracking</a>
+        <a class="hover:text-primary" href="#">Bidding Engine</a>
+        <a class="hover:text-primary" href="#">Escrow Wallet</a>
+        <a class="hover:text-primary" href="#">Driver App</a>
+      </nav>
+    </div>
+    <div class="col-span-6 lg:col-span-2 space-y-base">
+      <h5 class="text-label-md font-bold text-primary uppercase tracking-wider">Company</h5>
+      <nav class="flex flex-col gap-xs text-body-sm text-on-surface-variant">
+        <a class="hover:text-primary" href="#">About Logistica</a>
+        <a class="hover:text-primary" href="#">Safety Standards</a>
+        <a class="hover:text-primary" href="#">Driver Partners</a>
+        <a class="hover:text-primary" href="#">Careers</a>
+      </nav>
+    </div>
+    <div class="col-span-6 lg:col-span-2 space-y-base">
+      <h5 class="text-label-md font-bold text-primary uppercase tracking-wider">Legal</h5>
+      <nav class="flex flex-col gap-xs text-body-sm text-on-surface-variant">
+        <a class="hover:text-primary" href="#">Privacy Policy</a>
+        <a class="hover:text-primary" href="#">Terms of Service</a>
+        <a class="hover:text-primary" href="#">Liability Terms</a>
+        <a class="hover:text-primary" href="#">Security Policy</a>
+      </nav>
+    </div>
+  </div>
+  <div class="max-w-[1440px] mx-auto px-margin mt-xl pt-lg border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-md">
+    <span class="text-label-sm font-label-sm text-outline">© 2024 LOGISTICA. ALL RIGHTS RESERVED.</span>
+    <div class="flex gap-lg text-label-sm font-label-sm text-outline uppercase tracking-wider">
+      <span>Freight Marketplace Platform</span>
+      <span>v1.0.0</span>
     </div>
   </div>
 </footer>
 
 <script>
-  // App loader
   (function hideAppLoader() {
     const loader = document.getElementById("app-loader");
     if (!loader) return;
@@ -643,46 +502,39 @@ tailwind.config={darkMode:"class",theme:{extend:{"colors":{"outline-variant":"#c
       if (document.readyState === "complete") resolve();
       else window.addEventListener("load", resolve);
     });
-    const fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+    const fontsReady = document.fonts?.ready || Promise.resolve();
     Promise.all([pageLoaded, fontsReady]).then(() => setTimeout(hide, 250));
     setTimeout(hide, 4000);
   })();
 
-  // Scroll reveals
-  const revealObserver = new IntersectionObserver((entries) => {
+  const observerOptions = { threshold: 0.1 };
+  const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.style.opacity = '1';
         entry.target.style.transform = 'translateY(0)';
-        revealObserver.unobserve(entry.target);
+        observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1 });
+  }, observerOptions);
   document.querySelectorAll('section').forEach(section => {
     if (!section.querySelector('h1')) {
       section.style.opacity = '0';
       section.style.transform = 'translateY(24px)';
       section.style.transition = 'opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1)';
-      revealObserver.observe(section);
+      observer.observe(section);
     }
   });
-
-  // Nav highlight
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('nav a[href^="#"]');
-  const navObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(link => {
-          link.classList.remove('text-primary');
-          if (link.getAttribute('href') === '#' + entry.target.id) {
-            link.classList.add('text-primary');
-          }
-        });
-      }
-    });
-  }, { threshold: 0.5 });
-  sections.forEach(s => navObserver.observe(s));
+</script>
+<script src="/static/js/config.js"></script>
+<script src="/static/js/api.js"></script>
+<script src="/static/js/auth.js"></script>
+<script src="/static/js/ui.js"></script>
+<script>
+  const loggedInUser = getCurrentUser();
+  if (loggedInUser && getAccessToken()) {
+    window.location.href = ROLE_HOME[loggedInUser.role] || "login";
+  }
 </script>
 </body>
 </html>
