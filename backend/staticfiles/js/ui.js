@@ -161,6 +161,26 @@ function uiPrompt(message, opts = {}) {
   });
 }
 
+// ── Dark mode ────────────────────────────────────────────────────────────────
+(function applyStoredTheme() {
+  const stored = localStorage.getItem("theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const useDark = stored ? stored === "dark" : prefersDark;
+  document.documentElement.classList.toggle("dark", useDark);
+  document.documentElement.classList.toggle("light", !useDark);
+})();
+
+function toggleDarkMode() {
+  const isDark = document.documentElement.classList.contains("dark");
+  document.documentElement.classList.toggle("dark", !isDark);
+  document.documentElement.classList.toggle("light", isDark);
+  localStorage.setItem("theme", isDark ? "light" : "dark");
+  // Update all toggle button icons on the page
+  document.querySelectorAll(".dark-toggle-icon").forEach(icon => {
+    icon.textContent = isDark ? "dark_mode" : "light_mode";
+  });
+}
+
 (function hideAppLoader() {
   const loader = document.getElementById("app-loader");
   if (!loader) return;

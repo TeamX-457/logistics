@@ -8,6 +8,10 @@
 <link href="/static/favicon.ico" rel="alternate icon"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="/static/css/styles.css" rel="stylesheet"/>
+<script>
+  (function(){const s=localStorage.getItem("theme"),d=window.matchMedia("(prefers-color-scheme: dark)").matches;const dark=s?s==="dark":d;document.documentElement.classList.toggle("dark",dark);document.documentElement.classList.toggle("light",!dark);})();
+</script>
 <style>
   button,input,select,textarea{border-radius:.5rem}
   [class*="border"]:not([class*="rounded"]):not(header):not(nav):not(table):not(tr):not(thead):not(tbody):not(th):not(td){border-radius:.5rem}
@@ -59,6 +63,9 @@ tailwind.config={darkMode:"class",theme:{extend:{"colors":{"outline-variant":"#c
     </nav>
   </div>
   <div class="flex items-center gap-md">
+    <button class="dark-toggle" onclick="toggleDarkMode()" title="Toggle dark mode">
+      <span class="material-symbols-outlined text-[20px] dark-toggle-icon">dark_mode</span>
+    </button>
     <button class="hidden lg:flex items-center gap-2 px-md py-2 border border-outline text-label-md font-label-md hover:bg-surface-container-low transition-colors" onclick="window.location.href='login'">
       <span class="material-symbols-outlined text-[18px]">account_circle</span>
       Log In
@@ -535,6 +542,10 @@ tailwind.config={darkMode:"class",theme:{extend:{"colors":{"outline-variant":"#c
   if (loggedInUser && getAccessToken()) {
     window.location.href = ROLE_HOME[loggedInUser.role] || "login";
   }
+  // Sync toggle icon to current theme
+  document.querySelectorAll(".dark-toggle-icon").forEach(icon => {
+    icon.textContent = document.documentElement.classList.contains("dark") ? "light_mode" : "dark_mode";
+  });
 </script>
 </body>
 </html>
