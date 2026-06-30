@@ -33,7 +33,6 @@ __pycache__/
 *.sqlite3
 backend/db.sqlite3
 backend/media/
-backend/staticfiles/
 backend/server.log
 .env
 .venv/
