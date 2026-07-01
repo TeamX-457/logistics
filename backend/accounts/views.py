@@ -19,6 +19,7 @@ from .serializers import (
     CustomTokenObtainPairSerializer,
     DriverProfileSerializer,
     DriverRegistrationSerializer,
+    GoogleAuthSerializer,
     PasswordResetConfirmSerializer,
     PasswordResetRequestSerializer,
     UserSerializer,
@@ -65,6 +66,26 @@ class DriverRegistrationView(generics.CreateAPIView):
                 "user": UserSerializer(user).data,
             },
             status=status.HTTP_201_CREATED,
+        )
+
+
+class GoogleAuthView(generics.GenericAPIView):
+    """Sign in with Google — creates a customer account on first use, logs in on repeat visits."""
+
+    serializer_class = GoogleAuthSerializer
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        tokens = CustomTokenObtainPairSerializer.get_token(user)
+        return Response(
+            {
+                "access": str(tokens.access_token),
+                "refresh": str(tokens),
+                "user": UserSerializer(user).data,
+            }
         )
 
 

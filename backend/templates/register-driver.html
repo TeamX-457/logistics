@@ -333,8 +333,7 @@
                     window.location.href = 'driver-dashboard';
                 }, 600);
             } catch (err) {
-                const msg = err.data ? Object.values(err.data).flat().join(' ') : err.message;
-                showFormError(errorBox, msg || 'Application failed.');
+                showFormError(errorBox, formatApiError(err, 'Application failed.'));
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             }

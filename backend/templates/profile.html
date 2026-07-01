@@ -263,7 +263,7 @@
             showStatus('Profile updated successfully.', 'success');
             loadProfile();
         } catch (err) {
-            showStatus('Could not update profile: ' + (err.data && err.data.detail ? err.data.detail : err.message), 'error');
+            showStatus('Could not update profile: ' + formatApiError(err), 'error');
         }
     });
 

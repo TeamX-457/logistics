@@ -1,5 +1,8 @@
+from django.conf import settings
 from django.contrib.auth import authenticate
 from django.db import transaction
+from google.auth.transport import requests as google_requests
+from google.oauth2 import id_token as google_id_token
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
@@ -187,6 +190,47 @@ class DriverRegistrationSerializer(serializers.ModelSerializer):
             license_number=license_number,
             nin_number=nin_number,
         )
+        return user
+
+
+class GoogleAuthSerializer(serializers.Serializer):
+    """Sign in (or sign up as a customer) using a Google ID token.
+
+    The frontend obtains this token via Google Identity Services
+    (accounts.google.com/gsi/client), which only requires the public client
+    ID — the client secret is never needed for this flow and never reaches
+    the browser. We just verify the token was issued for our client and
+    signed by Google before trusting the email it carries.
+    """
+
+    credential = serializers.CharField(write_only=True)
+
+    def validate_credential(self, value):
+        try:
+            payload = google_id_token.verify_oauth2_token(
+                value, google_requests.Request(), settings.GOOGLE_CLIENT_ID
+            )
+        except ValueError as exc:
+            raise serializers.ValidationError("Invalid or expired Google credential.") from exc
+        if not payload.get("email_verified"):
+            raise serializers.ValidationError("Google account email is not verified.")
+        return payload
+
+    @transaction.atomic
+    def save(self):
+        payload = self.validated_data["credential"]
+        user = User.objects.filter(email__iexact=payload["email"]).first()
+        if user is None:
+            # Google never signs up drivers — vehicle/license/NIN have no
+            # Google-provided equivalent, so this always creates a customer.
+            user = User.objects.create_user(
+                email=payload["email"],
+                password=None,
+                first_name=payload.get("given_name", ""),
+                last_name=payload.get("family_name", ""),
+                role=User.Role.CUSTOMER,
+            )
+            CustomerProfile.objects.create(user=user)
         return user
 
 

@@ -14,6 +14,22 @@ class ApiError extends Error {
   }
 }
 
+/**
+ * Turns an ApiError into a user-facing message.
+ * DRF validation errors arrive as { field: [msg, ...] } and get flattened.
+ * Anything else (e.g. a 500's HTML error page, which arrives as a plain
+ * string since it isn't JSON) falls back to a generic message instead of
+ * being rendered as-is.
+ */
+function formatApiError(err, fallback = "Something went wrong. Please try again.") {
+  const data = err && err.data;
+  if (data && typeof data === "object") {
+    const msg = Object.values(data).flat().join(" ");
+    if (msg) return msg;
+  }
+  return fallback;
+}
+
 function getAccessToken() {
   return localStorage.getItem("access_token");
 }
@@ -111,6 +127,8 @@ const API = {
       request("/auth/register/driver/", { method: "POST", body: payload, auth: false }),
     login: (email, password) =>
       request("/auth/login/", { method: "POST", body: { email, password }, auth: false }),
+    google: (credential) =>
+      request("/auth/google/", { method: "POST", body: { credential }, auth: false }),
     me: () => request("/auth/me/"),
     updateMe: (payload) => request("/auth/me/", { method: "PATCH", body: payload }),
     requestPasswordReset: (email) =>

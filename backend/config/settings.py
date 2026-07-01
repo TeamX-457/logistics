@@ -18,6 +18,13 @@ environ.Env.read_env(BASE_DIR / ".env")
 ON_VERCEL = env.bool("VERCEL", default=False)
 
 SECRET_KEY = env("SECRET_KEY", default="django-insecure-change-me-in-production")
+
+# Used to verify Google ID tokens from "Sign in with Google" (accounts.google.com/gsi).
+# Safe to expose to the frontend — it's the audience of the token, not a credential.
+GOOGLE_CLIENT_ID = env("GOOGLE_CLIENT_ID", default="")
+# Unused by the ID-token flow above; kept only in case a server-side OAuth
+# code exchange is added later. Never expose this one to the frontend.
+GOOGLE_CLIENT_SECRET = env("GOOGLE_CLIENT_SECRET", default="")
 DEBUG = env.bool("DEBUG", default=not ON_VERCEL)
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
@@ -75,6 +82,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "config.context_processors.google_client_id",
             ],
         },
     },

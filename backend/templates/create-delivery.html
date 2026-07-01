@@ -559,8 +559,7 @@
                 const delivery = await API.deliveries.create(payload);
                 window.location.href = `live-tracking?id=${delivery.id}`;
             } catch (err) {
-                const msg = err.data ? Object.values(err.data).flat().join(' ') : err.message;
-                showFormError(errorBox, msg || 'Could not create delivery.');
+                showFormError(errorBox, formatApiError(err, 'Could not create delivery.'));
             }
         }
 

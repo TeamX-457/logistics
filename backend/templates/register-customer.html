@@ -270,9 +270,7 @@
 <span class="relative bg-surface px-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">or sign up with</span>
 </div>
 <div class="grid grid-cols-2 gap-sm">
-<button class="flex items-center justify-center h-11 border border-outline-variant bg-white font-label-md text-label-md hover:border-primary transition-all" type="button">
-<img alt="Google" class="w-4 h-4 mr-sm grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi36Ul4ULi461Sx5qHdPDybhmR1Gg2y1CbNgzrJL8e-AqyzyHv6aMJ3SGBsk719wkXiN9JhzVx2FHHo6AdfVaknBb_VpgDa1nBDkc-gIxlSC8sHgMELaswTptRJLrvDvvHp6tMeBpu27pUV_0S-ICMey5_cIg6vzbA-lCWAoaFz9_yRX4nlF5wy_zt68ZqVAWocWd-zp7SRu1kp2U3qoMQgAZMCTqilYcJjV7do2yBCzNp2zsa_A3FtAQoSiwFoxi1Ky3xK9SEKD4"/> Google
-</button>
+<div class="h-11 flex items-center justify-center overflow-hidden" id="google-signin-container"></div>
 <button class="flex items-center justify-center h-11 border border-outline-variant bg-white font-label-md text-label-md hover:border-primary transition-all" type="button">
 <span class="material-symbols-outlined text-[20px] mr-sm">apps</span> Apple
 </button>
@@ -336,13 +334,43 @@
                 window.location.href = 'customer-dashboard';
             }, 600);
         } catch (err) {
-            const msg = err.data ? Object.values(err.data).flat().join(' ') : err.message;
-            showFormError(errorBox, msg || 'Registration failed.');
+            showFormError(errorBox, formatApiError(err, 'Registration failed.'));
             btn.textContent = originalText;
             btn.style.backgroundColor = '';
             btn.disabled = false;
         }
     });
+
+    // Sign up with Google — verifies the ID token server-side and creates
+    // a shipper account on first use (or logs the user in on repeat visits).
+    async function handleGoogleCredentialResponse(response) {
+        const errorBox = document.getElementById('reg-error');
+        errorBox.classList.add('hidden');
+        try {
+            const data = await API.auth.google(response.credential);
+            setSession(data);
+            window.location.href = 'customer-dashboard';
+        } catch (err) {
+            showFormError(errorBox, formatApiError(err, 'Google sign-up failed.'));
+        }
+    }
+</script>
+<script src="https://accounts.google.com/gsi/client"></script>
+<script>
+    const googleClientId = '{{ GOOGLE_CLIENT_ID|escapejs }}';
+    if (googleClientId) {
+        google.accounts.id.initialize({
+            client_id: googleClientId,
+            callback: handleGoogleCredentialResponse,
+        });
+        google.accounts.id.renderButton(
+            document.getElementById('google-signin-container'),
+            { theme: 'outline', size: 'large', shape: 'rectangular', text: 'signup_with', width: 220 }
+        );
+    } else {
+        document.getElementById('google-signin-container').closest('.grid').classList.replace('grid-cols-2', 'grid-cols-1');
+        document.getElementById('google-signin-container').remove();
+    }
 </script>
 <script src="/static/js/config.js"></script>
 <script src="/static/js/api.js"></script>
