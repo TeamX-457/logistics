@@ -116,6 +116,21 @@ SIMPLE_JWT = {
     "USER_ID_CLAIM": "user_id",
 }
 
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Logistica Tracking API",
+    "DESCRIPTION": (
+        "Real-time delivery tracking API. Covers authentication, delivery "
+        "lifecycle, driver GPS ingestion, trip history and admin dispatch.\n\n"
+        "Live events (job offers, location updates, delivery confirmation) are "
+        "delivered over WebSockets, not polled — see the WebSocket section of "
+        "the developer guide."
+    ),
+    "VERSION": "1.0.0",
+    # Keep the schema endpoint itself out of the generated schema.
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SORT_OPERATIONS": False,
+}
+
 # --- Domain-specific tuning knobs --------------------------------------
 # Window during which two drivers accepting the same job are treated as a
 # simultaneous conflict requiring admin resolution, rather than a clean

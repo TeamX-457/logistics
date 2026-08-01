@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logistica Tracking API — Reference</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="sidebar">
+  <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+</button>
+
+<div class="layout">
+
+  <!-- ─── sidebar ─────────────────────────────────────────────── -->
+  <nav id="sidebar" class="sidebar" aria-label="Documentation navigation">
+    <div class="brand">
+      <span class="brand-mark">L</span>
+      <span class="brand-text">Logistica<span class="brand-dim"> Tracking</span></span>
+    </div>
+
+    <div class="search-wrap">
+      <input id="search" type="search" placeholder="Search endpoints…" aria-label="Search endpoints" autocomplete="off">
+      <kbd class="search-kbd">/</kbd>
+    </div>
+
+    <div class="nav-scroll">
+      <div class="nav-group">
+        <p class="nav-title">Getting started</p>
+        <a href="#introduction">Introduction</a>
+        <a href="#base-url">Base URL</a>
+        <a href="#authentication">Authentication</a>
+        <a href="#roles">Roles &amp; permissions</a>
+        <a href="#errors">Errors</a>
+        <a href="#pagination">Pagination</a>
+        <a href="#lifecycle">Delivery lifecycle</a>
+      </div>
+
+      <div class="nav-group">
+        <p class="nav-title">Authentication</p>
+        <a href="#register-driver"><span class="m post">POST</span>Register driver</a>
+        <a href="#register-client"><span class="m post">POST</span>Register client</a>
+        <a href="#login"><span class="m post">POST</span>Log in</a>
+        <a href="#admin-login"><span class="m post">POST</span>Admin log in</a>
+        <a href="#availability"><span class="m post">POST</span>Set availability</a>
+      </div>
+
+      <div class="nav-group">
+        <p class="nav-title">Deliveries</p>
+        <a href="#list-deliveries"><span class="m get">GET</span>List deliveries</a>
+        <a href="#create-delivery"><span class="m post">POST</span>Create delivery</a>
+        <a href="#accept-delivery"><span class="m post">POST</span>Accept delivery</a>
+        <a href="#confirm-delivery"><span class="m post">POST</span>Confirm delivery</a>
+      </div>
+
+      <div class="nav-group">
+        <p class="nav-title">Tracking</p>
+        <a href="#location-update"><span class="m post">POST</span>Push GPS ping</a>
+        <a href="#latest-location"><span class="m get">GET</span>Latest location</a>
+      </div>
+
+      <div class="nav-group">
+        <p class="nav-title">Trips</p>
+        <a href="#trip-summary"><span class="m get">GET</span>Client trip summary</a>
+        <a href="#driver-trip-summary"><span class="m get">GET</span>Driver trip summary</a>
+      </div>
+
+      <div class="nav-group">
+        <p class="nav-title">Admin</p>
+        <a href="#admin-deliveries"><span class="m get">GET</span>All deliveries</a>
+        <a href="#admin-users"><span class="m get">GET</span>All users</a>
+        <a href="#deactivate-user"><span class="m patch">PATCH</span>Deactivate user</a>
+        <a href="#activate-user"><span class="m patch">PATCH</span>Activate user</a>
+        <a href="#priority-list"><span class="m get">GET</span>Priority list</a>
+        <a href="#priority-add"><span class="m post">POST</span>Add priority driver</a>
+        <a href="#priority-remove"><span class="m del">DEL</span>Remove priority driver</a>
+        <a href="#notify-priority"><span class="m post">POST</span>Notify priority drivers</a>
+        <a href="#notify-everyone"><span class="m post">POST</span>Notify all drivers</a>
+        <a href="#notify-one"><span class="m post">POST</span>Notify one driver</a>
+        <a href="#resolve-conflict"><span class="m post">POST</span>Resolve conflict</a>
+        <a href="#cancel-delivery"><span class="m post">POST</span>Cancel delivery</a>
+        <a href="#admin-trip-summary"><span class="m get">GET</span>Any trip summary</a>
+      </div>
+
+      <div class="nav-group">
+        <p class="nav-title">WebSockets</p>
+        <a href="#ws-overview">Overview</a>
+        <a href="#ws-driver">Driver channel</a>
+        <a href="#ws-tracking">Tracking channel</a>
+        <a href="#ws-admin">Admin channel</a>
+      </div>
+
+      <div class="nav-group">
+        <p class="nav-title">Reference</p>
+        <a href="#models">Object reference</a>
+        <a href="#react-native">React Native setup</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="scrim" id="scrim" hidden></div>
+
+  <!-- ─── main ────────────────────────────────────────────────── -->
+  <main id="main" class="content">
+        <header>
+      <h1 id="introduction">Logistica Tracking API</h1>
+      <p class="lede">
+        REST + WebSocket API for real-time delivery dispatch and GPS tracking.
+        This reference covers every endpoint the mobile client consumes, the
+        live event channels, and the object shapes returned by each call.
+      </p>
+    </header>
+
+    <p>
+      The API is organised around three roles — <strong>client</strong> (books
+      deliveries), <strong>driver</strong> (accepts jobs and streams GPS), and
+      <strong>admin</strong> (dispatches and resolves conflicts). Every endpoint
+      is scoped to one or more of these roles.
+    </p>
+
+    <p>
+      Two transports work together, and both are required for a functioning app:
+      <strong>HTTP</strong> for commands and queries, and <strong>WebSockets</strong>
+      for anything live. Job offers, location updates, and delivery confirmations
+      are pushed — <em>never poll for them.</em>
+    </p>
+
+    <div class="note">
+      <strong>Interactive schema</strong>
+      <p>
+        A machine-readable OpenAPI 3.0 document is served at
+        <code>/api/schema/</code>, and a Swagger UI console at
+        <code>/api/docs/</code>. Point your codegen tool at the former to
+        generate a typed client.
+      </p>
+    </div>
+
+    <h2 id="base-url">Base URL</h2>
+
+    <p>All paths in this reference are relative to the deployment host.</p>
+
+<pre><code>https://&lt;your-host&gt;/api/</code></pre>
+
+    <p>
+      During local development the server runs on
+      <code>http://127.0.0.1:8000/</code>. On a device or emulator,
+      <code>localhost</code> refers to the device itself — see
+      <a href="#react-native">React Native setup</a> for the host address to use
+      instead.
+    </p>
+
+    <h2 id="authentication">Authentication</h2>
+
+    <p>
+      The API uses <strong>JWT bearer tokens</strong>. Registration and login
+      both return an <code>access</code> / <code>refresh</code> pair; send the
+      access token on every subsequent request.
+    </p>
+
+<pre><code>Authorization: Bearer &lt;access_token&gt;</code></pre>
+
+    <table>
+      <thead><tr><th>Token</th><th>Lifetime</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>access</code></td><td>8 hours</td>
+          <td>Sent on every request and on the WebSocket handshake.</td>
+        </tr>
+        <tr>
+          <td><code>refresh</code></td><td>7 days</td>
+          <td>Store securely; used to obtain a new access token.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note warn">
+      <strong>Registration logs the user in</strong>
+      <p>
+        Both register endpoints return a full token pair on success, so there is
+        no need to call login afterwards. Persist the tokens directly from the
+        registration response.
+      </p>
+    </div>
+
+    <p>
+      Requests without a valid token receive <span class="sc sc-4">401</span>.
+      A valid token belonging to the wrong role receives
+      <span class="sc sc-4">403</span> — see below.
+    </p>
+
+    <h2 id="roles">Roles &amp; permissions</h2>
+
+    <p>
+      A user's role is fixed at registration and returned on the
+      <a href="#user-object">user object</a>. Role is enforced server-side on
+      every request; a client token cannot reach an admin endpoint regardless of
+      what the UI allows.
+    </p>
+
+    <table>
+      <thead><tr><th>Role</th><th>Can do</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>client</code></td>
+          <td>View own deliveries, confirm delivery on arrival, watch live tracking.</td>
+        </tr>
+        <tr>
+          <td><code>driver</code></td>
+          <td>Set availability, accept job offers, push GPS pings, view own trips.</td>
+        </tr>
+        <tr>
+          <td><code>admin</code></td>
+          <td>Create deliveries, dispatch to drivers, resolve accept conflicts, cancel jobs, manage users.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      Ownership is checked in addition to role: a driver may only push GPS for a
+      delivery assigned to them, and a client may only confirm their own
+      delivery. Admin bypasses ownership checks but not role checks.
+    </p>
+
+    <h2 id="errors">Errors</h2>
+
+    <p>
+      Errors return the appropriate HTTP status with a JSON body. Endpoint-level
+      failures use a <code>detail</code> string:
+    </p>
+
+<pre><code>{
+  "detail": "Job already taken."
+}</code></pre>
+
+    <p>Validation failures instead return per-field arrays:</p>
+
+<pre><code>{
+  "username": ["A user with that username already exists."],
+  "password": ["Ensure this field has at least 8 characters."]
+}</code></pre>
+
+    <div class="note">
+      <strong>Handle both shapes</strong>
+      <p>
+        A single error handler should check for <code>detail</code> first, then
+        fall back to treating the body as a field-error map. Both are returned
+        by the same endpoints depending on failure mode.
+      </p>
+    </div>
+
+    <table>
+      <thead><tr><th>Status</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><span class="sc sc-4">400</span></td><td>Validation failed, or the action is invalid for the resource's current state.</td></tr>
+        <tr><td><span class="sc sc-4">401</span></td><td>Missing, malformed, or expired token.</td></tr>
+        <tr><td><span class="sc sc-4">403</span></td><td>Authenticated, but the wrong role or not the owner of the resource.</td></tr>
+        <tr><td><span class="sc sc-4">404</span></td><td>Resource does not exist, or is not visible to this user.</td></tr>
+        <tr><td><span class="sc sc-4">409</span></td><td>Conflict — the resource was modified by someone else first.</td></tr>
+        <tr><td><span class="sc sc-4">429</span></td><td>Throttled. Registration is capped at 5/hour and login at 10/hour per IP.</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="pagination">Pagination</h2>
+
+    <p>
+      List endpoints are paginated at <strong>20 items per page</strong>. Pass
+      <code>?page=</code> to advance. Responses are wrapped:
+    </p>
+
+<pre><code>{
+  "count": 47,
+  "next": "https://&lt;host&gt;/api/deliveries/?page=2",
+  "previous": null,
+  "results": [ /* … */ ]
+}</code></pre>
+
+    <p>
+      When <code>next</code> is <code>null</code> you have reached the last page.
+      Build "load more" from <code>next</code> rather than incrementing
+      <code>page</code> and testing for an empty array.
+    </p>
+
+    <h2 id="lifecycle">Delivery lifecycle</h2>
+
+    <p>
+      A delivery moves through five states. Most endpoints are only valid in
+      specific states, and calling them elsewhere returns
+      <span class="sc sc-4">400</span>.
+    </p>
+
+    <table>
+      <thead><tr><th>Status</th><th>Set by</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>pending</code></td><td>Admin creates delivery</td><td>Awaiting a driver.</td></tr>
+        <tr><td><code>accepted</code></td><td>Driver accepted, conflict window elapsed</td><td>Driver assigned, not yet moving.</td></tr>
+        <tr><td><code>in_transit</code></td><td>Driver's first GPS ping</td><td>En route. Set automatically — there is no explicit "start trip" call.</td></tr>
+        <tr><td><code>delivered</code></td><td>Client confirms</td><td>Complete. Trip summary generated.</td></tr>
+        <tr><td><code>cancelled</code></td><td>Admin cancels</td><td>Terminal. Only reachable from <code>pending</code> or <code>accepted</code>.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="accept-conflicts">How job acceptance resolves</h3>
+
+    <p>
+      Acceptance is <strong>not</strong> first-write-wins. When a driver accepts,
+      the server records the attempt and returns
+      <span class="sc sc-2">202 Accepted</span> immediately, then waits a short
+      conflict window (1 second by default) for other drivers to tap the same
+      job.
+    </p>
+
+    <ul>
+      <li><strong>One driver accepted</strong> — assigned; that driver receives <code>job_accepted</code>.</li>
+      <li><strong>Two or more accepted</strong> — nobody is assigned. Admin receives <code>conflict_alert</code> and resolves it manually.</li>
+    </ul>
+
+    <div class="note danger">
+      <strong>202 is not confirmation</strong>
+      <p>
+        A <span class="sc sc-2">202</span> from the accept endpoint means
+        <em>"your attempt was recorded"</em> — not that the driver got the job.
+        The real outcome always arrives over the driver's WebSocket channel as
+        <code>job_accepted</code> or <code>job_taken</code>. In a conflict,
+        <strong>no event is sent at all</strong> until an admin resolves it, so
+        the driver UI must show a pending state that a timeout can clear rather
+        than waiting indefinitely.
+      </p>
+    </div>
+
+    <!-- ════════════════ AUTHENTICATION ════════════════ -->
+    <h2 id="auth-section">Authentication endpoints</h2>
+
+    <div class="endpoint" id="register-driver">
+      <div class="endpoint-head">
+        <span class="m post">POST</span>
+        <span class="endpoint-path">/api/auth/register/driver/</span>
+        <span class="role">Public</span>
+      </div>
+      <div class="endpoint-body">
+        <p>Creates a driver account and returns a token pair immediately.</p>
+
+        <h4>Body</h4>
+        <table>
+          <thead><tr><th>Field</th><th>Type</th><th></th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><code>username</code></td><td class="type">string</td><td><span class="req">required</span></td><td>Must be unique.</td></tr>
+            <tr><td><code>password</code></td><td class="type">string</td><td><span class="req">required</span></td><td>Minimum 8 characters.</td></tr>
+            <tr><td><code>email</code></td><td class="type">string</td><td><span class="opt">optional</span></td><td></td></tr>
+            <tr><td><code>phone_number</code></td><td class="type">string</td><td><span class="opt">optional</span></td><td>Max 20 characters.</td></tr>
+          </tbody>
+        </table>
+
+        <h4>Request</h4>
+<pre><code>POST /api/auth/register/driver/
+Content-Type: application/json
+
+{
+  "username": "james_d",
+  "password": "correct-horse-battery",
+  "email": "james@example.com",
+  "phone_number": "08012345678"
+}</code></pre>
+
+        <h4>Response <span class="sc sc-2">201</span></h4>
+<pre><code>{
+  "user": {
+    "id": 7,
+    "username": "james_d",
+    "email": "james@example.com",
+    "role": "driver",
+    "phone_number": "08012345678",
+    "is_active": true,
+    "is_available": false
+  },
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…",
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…"
+}</code></pre>
+
+        <p>
+          New drivers start with <code>is_available: false</code> and must call
+          <a href="#availability">set availability</a> to go on duty.
+        </p>
+
+        <h4>Errors</h4>
+        <table>
+          <tbody>
+            <tr><td><span class="sc sc-4">400</span></td><td>Username taken, or password shorter than 8 characters.</td></tr>
+            <tr><td><span class="sc sc-4">429</span></td><td>More than 5 registrations from this IP in an hour.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="endpoint" id="register-client">
+      <div class="endpoint-head">
+        <span class="m post">POST</span>
+        <span class="endpoint-path">/api/auth/register/client/</span>
+        <span class="role">Public</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          Creates a client account. Identical body and response to the driver
+          endpoint, except <code>role</code> is <code>"client"</code>.
+        </p>
+<pre><code>POST /api/auth/register/client/
+Content-Type: application/json
+
+{
+  "username": "ada_c",
+  "password": "correct-horse-battery",
+  "phone_number": "08087654321"
+}</code></pre>
+        <p>Returns <span class="sc sc-2">201</span> with the same envelope.</p>
+      </div>
+    </div>
+
+    <div class="endpoint" id="login">
+      <div class="endpoint-head">
+        <span class="m post">POST</span>
+        <span class="endpoint-path">/api/auth/login/</span>
+        <span class="role">Public</span>
+      </div>
+      <div class="endpoint-body">
+        <p>Logs in a client or driver.</p>
+
+        <h4>Body</h4>
+        <table>
+          <thead><tr><th>Field</th><th>Type</th><th></th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><code>username</code></td><td class="type">string</td><td><span class="req">required</span></td><td></td></tr>
+            <tr><td><code>password</code></td><td class="type">string</td><td><span class="req">required</span></td><td></td></tr>
+            <tr><td><code>role</code></td><td class="type">enum</td><td><span class="req">required</span></td><td><code>client</code> or <code>driver</code> — must match the account.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note warn">
+          <strong>Role must be sent and must match</strong>
+          <p>
+            Correct credentials with the wrong <code>role</code> return
+            <span class="sc sc-4">403</span>, not a successful login. If your app
+            has separate driver and client sign-in screens, send the role for
+            that screen. Admins cannot log in here — use
+            <a href="#admin-login">admin login</a>.
+          </p>
+        </div>
+
+<pre><code>POST /api/auth/login/
+Content-Type: application/json
+
+{
+  "username": "james_d",
+  "password": "correct-horse-battery",
+  "role": "driver"
+}</code></pre>
+
+        <p>Returns <span class="sc sc-2">200</span> with the same envelope as registration.</p>
+
+        <h4>Errors</h4>
+        <table>
+          <tbody>
+            <tr><td><span class="sc sc-4">400</span></td><td>Invalid username or password.</td></tr>
+            <tr><td><span class="sc sc-4">403</span></td><td>Credentials valid, but the account is not registered under that role.</td></tr>
+            <tr><td><span class="sc sc-4">429</span></td><td>More than 10 login attempts from this IP in an hour.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="endpoint" id="admin-login">
+      <div class="endpoint-head">
+        <span class="m post">POST</span>
+        <span class="endpoint-path">/api/auth/admin/login/</span>
+        <span class="role">Public</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          Logs in an admin account. Takes <code>username</code> and
+          <code>password</code> only — no <code>role</code> field. Non-admin
+          accounts are rejected with <span class="sc sc-4">403</span>.
+        </p>
+<pre><code>POST /api/auth/admin/login/
+Content-Type: application/json
+
+{
+  "username": "dispatch_admin",
+  "password": "…"
+}</code></pre>
+      </div>
+    </div>
+
+    <div class="endpoint" id="availability">
+      <div class="endpoint-head">
+        <span class="m post">POST</span>
+        <span class="endpoint-path">/api/auth/driver/availability/</span>
+        <span class="role">Driver</span>
+      </div>
+      <div class="endpoint-body">
+        <p>Sets whether the calling driver is on duty.</p>
+
+<pre><code>POST /api/auth/driver/availability/
+Authorization: Bearer &lt;access&gt;
+
+{ "is_available": true }</code></pre>
+
+        <p>Returns <span class="sc sc-2">200</span> with the updated user object.</p>
+
+        <div class="note">
+          <strong>Advisory only</strong>
+          <p>
+            This flag is visible to admin but does <em>not</em> currently filter
+            who receives job offers — the notify endpoints reach all drivers (or
+            all priority drivers) regardless of availability. Treat it as a
+            status indicator, not a mute switch.
+          </p>
+        </div>
+
+        <p>
+          The value must be a JSON boolean. Sending a string such as
+          <code>"true"</code> returns <span class="sc sc-4">400</span>.
+        </p>
+      </div>
+    </div>
+
+    <!-- ════════════════ DELIVERIES ════════════════ -->
+    <h2 id="deliveries-section">Deliveries</h2>
+
+    <div class="endpoint" id="list-deliveries">
+      <div class="endpoint-head">
+        <span class="m get">GET</span>
+        <span class="endpoint-path">/api/deliveries/</span>
+        <span class="role">Any role</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          Lists deliveries, filtered automatically by the caller's role: a client
+          sees their own, a driver sees deliveries assigned to them, an admin
+          sees everything. Newest first, paginated.
+        </p>
+
+        <h4>Query parameters</h4>
+        <table>
+          <tbody>
+            <tr><td><code>status</code></td><td class="type">enum</td><td>Filter by lifecycle status, e.g. <code>?status=delivered</code>.</td></tr>
+            <tr><td><code>page</code></td><td class="type">integer</td><td>Page number.</td></tr>
+          </tbody>
+        </table>
+
+        <h4>Response <span class="sc sc-2">200</span></h4>
+<pre><code>{
+  "count": 12,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 41,
+      "client":  { "id": 3, "username": "ada_c", "role": "client", … },
+      "driver":  { "id": 7, "username": "james_d", "role": "driver", … },
+      "pickup_location": "12 Adeola Odeku St, Victoria Island",
+      "dropoff_location": "3 Admiralty Way, Lekki Phase 1",
+      "pickup_lat": 6.4281,
+      "pickup_lng": 3.4219,
+      "dropoff_lat": 6.4698,
+      "dropoff_lng": 3.5852,
+      "status": "in_transit",
+      "created_at": "2026-08-01T09:14:22.481Z",
+      "updated_at": "2026-08-01T09:31:07.902Z"
+    }
+  ]
+}</code></pre>
+
+        <p>
+          <code>client</code> and <code>driver</code> are expanded user objects,
+          not IDs. <code>driver</code> is <code>null</code> while the delivery is
+          still <code>pending</code>.
+        </p>
+      </div>
+    </div>
+
+    <div class="endpoint" id="create-delivery">
+      <div class="endpoint-head">
+        <span class="m post">POST</span>
+        <span class="endpoint-path">/api/deliveries/</span>
+        <span class="role">Admin</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          Creates a job request in <code>pending</code> status. Note this is
+          admin-only — clients do not self-serve bookings through this endpoint.
+        </p>
+
+        <h4>Body</h4>
+        <table>
+          <thead><tr><th>Field</th><th>Type</th><th></th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><code>client</code></td><td class="type">integer</td><td><span class="req">required</span></td><td>User ID; must be a <code>client</code> account.</td></tr>
+            <tr><td><code>pickup_location</code></td><td class="type">string</td><td><span class="req">required</span></td><td>Free-text address.</td></tr>
+            <tr><td><code>dropoff_location</code></td><td class="type">string</td><td><span class="req">required</span></td><td>Free-text address.</td></tr>
+            <tr><td><code>pickup_lat</code></td><td class="type">float</td><td><span class="opt">optional</span></td><td>−90 to 90.</td></tr>
+            <tr><td><code>pickup_lng</code></td><td class="type">float</td><td><span class="opt">optional</span></td><td>−180 to 180.</td></tr>
+            <tr><td><code>dropoff_lat</code></td><td class="type">float</td><td><span class="opt">optional</span></td><td>−90 to 90.</td></tr>
+            <tr><td><code>dropoff_lng</code></td><td class="type">float</td><td><span class="opt">optional</span></td><td>−180 to 180.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note warn">
+          <strong>Coordinates come in pairs</strong>
+          <p>
+            Supplying a latitude without its matching longitude (or vice versa)
+            returns <span class="sc sc-4">400</span>. Send both, or neither.
+            Address text is <em>not</em> geocoded server-side — when coordinates
+            are absent the map has nothing to plot.
+          </p>
+        </div>
+
+        <p>Returns <span class="sc sc-2">201</span> with the full delivery object.</p>
+      </div>
+    </div>
+
+    <div class="endpoint" id="accept-delivery">
+      <div class="endpoint-head">
+        <span class="m post">POST</span>
+        <span class="endpoint-path">/api/deliveries/{id}/accept/</span>
+        <span class="role">Driver</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          Records this driver's attempt to accept a pending delivery. Takes no
+          request body.
+        </p>
+
+        <h4>Response <span class="sc sc-2">202</span></h4>
+<pre><code>{
+  "detail": "Your request is being processed."
+}</code></pre>
+
+        <div class="note danger">
+          <strong>Wait for the WebSocket event</strong>
+          <p>
+            This response only confirms the attempt was recorded. Listen on the
+            driver channel for <code>job_accepted</code> (you got it) or
+            <code>job_taken</code> (someone else did). See
+            <a href="#accept-conflicts">how job acceptance resolves</a>.
+          </p>
+        </div>
+
+        <h4>Errors</h4>
+        <table>
+          <tbody>
+            <tr><td><span class="sc sc-4">403</span></td><td>Caller is not a driver.</td></tr>
+            <tr><td><span class="sc sc-4">404</span></td><td>No such delivery.</td></tr>
+            <tr><td><span class="sc sc-4">409</span></td><td>Already assigned or no longer pending.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="endpoint" id="confirm-delivery">
+      <div class="endpoint-head">
+        <span class="m post">POST</span>
+        <span class="endpoint-path">/api/deliveries/{id}/confirm/</span>
+        <span class="role">Client</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          Confirms receipt. Flips the delivery to <code>delivered</code>,
+          generates its <a href="#trip-object">trip summary</a>, and broadcasts
+          <code>delivery_confirmed</code> to both the tracking group and the
+          assigned driver. Takes no request body.
+        </p>
+
+        <p>
+          Only the client who owns the delivery may call this, and only while it
+          is <code>in_transit</code>. Returns <span class="sc sc-2">200</span>
+          with the updated delivery.
+        </p>
+
+        <div class="note warn">
+          <strong>This is the driver app's cue to stop GPS</strong>
+          <p>
+            There is no server-side kill switch for location pings. The driver
+            app must stop its background GPS loop when it receives
+            <code>delivery_confirmed</code>, or it will keep pinging a completed
+            delivery and draining battery.
+          </p>
+        </div>
+
+        <h4>Errors</h4>
+        <table>
+          <tbody>
+            <tr><td><span class="sc sc-4">400</span></td><td>Delivery is not <code>in_transit</code> — including when already confirmed.</td></tr>
+            <tr><td><span class="sc sc-4">403</span></td><td>Caller is not a client.</td></tr>
+            <tr><td><span class="sc sc-4">404</span></td><td>Delivery does not exist, or belongs to another client.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════════════════ TRACKING ════════════════ -->
+    <h2 id="tracking-section">Tracking</h2>
+
+    <div class="endpoint" id="location-update">
+      <div class="endpoint-head">
+        <span class="m post">POST</span>
+        <span class="endpoint-path">/api/location/update/</span>
+        <span class="role">Driver</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          Pushes one GPS reading for an assigned, active delivery. This is the
+          driver app's background location loop.
+        </p>
+
+        <h4>Body</h4>
+        <table>
+          <thead><tr><th>Field</th><th>Type</th><th></th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><code>delivery_id</code></td><td class="type">integer</td><td><span class="req">required</span></td><td>Must be assigned to the calling driver.</td></tr>
+            <tr><td><code>latitude</code></td><td class="type">float</td><td><span class="req">required</span></td><td>−90 to 90.</td></tr>
+            <tr><td><code>longitude</code></td><td class="type">float</td><td><span class="req">required</span></td><td>−180 to 180.</td></tr>
+          </tbody>
+        </table>
+
+        <h4>Response <span class="sc sc-2">200</span></h4>
+<pre><code>{
+  "detail": "ok",
+  "status": "in_transit"
+}</code></pre>
+
+        <p>
+          The returned <code>status</code> reflects the delivery's state
+          <em>after</em> the ping. The first successful ping on an
+          <code>accepted</code> delivery flips it to <code>in_transit</code>
+          automatically — watch for that transition rather than calling a
+          separate "start trip" endpoint, because none exists.
+        </p>
+
+        <div class="note">
+          <strong>Recommended cadence: every 5–10 seconds</strong>
+          <p>
+            Every ping updates the live cache and broadcasts
+            <code>location_update</code> to watchers immediately. Only about one
+            ping per minute is persisted to the database for trip history, so a
+            faster cadence costs little storage — but it does cost battery and
+            mobile data. Pause pinging when the app is backgrounded if your
+            product allows it.
+          </p>
+        </div>
+
+        <h4>Errors</h4>
+        <table>
+          <tbody>
+            <tr><td><span class="sc sc-4">400</span></td><td>Delivery is not <code>accepted</code> or <code>in_transit</code>.</td></tr>
+            <tr><td><span class="sc sc-4">403</span></td><td>This driver is not assigned to that delivery.</td></tr>
+            <tr><td><span class="sc sc-4">404</span></td><td>No such delivery.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="endpoint" id="latest-location">
+      <div class="endpoint-head">
+        <span class="m get">GET</span>
+        <span class="endpoint-path">/api/location/{delivery_id}/latest/</span>
+        <span class="role">Any role</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          Returns the most recent known position for a delivery. Use this to
+          paint the map on first render, then switch to the
+          <a href="#ws-tracking">tracking WebSocket</a> for live movement.
+        </p>
+
+        <h4>Response <span class="sc sc-2">200</span></h4>
+<pre><code>{
+  "latitude": 6.4512,
+  "longitude": 3.4011,
+  "timestamp": "2026-08-01T09:31:07.902Z"
+}</code></pre>
+
+        <div class="note warn">
+          <strong>The response shape varies</strong>
+          <p>
+            Served from cache, the body contains exactly the three fields above.
+            Served from the database fallback, it <em>also</em> includes
+            <code>id</code> and <code>delivery</code>. Read the three guaranteed
+            fields and ignore the rest — do not assume a fixed key set.
+          </p>
+        </div>
+
+        <p>Access is ownership-checked: a client or driver may only read their own delivery. Admin may read any.</p>
+
+        <h4>Errors</h4>
+        <table>
+          <tbody>
+            <tr><td><span class="sc sc-4">403</span></td><td>Not your delivery.</td></tr>
+            <tr><td><span class="sc sc-4">404</span></td><td>No such delivery, or no location recorded yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════════════════ TRIPS ════════════════ -->
+    <h2 id="trips-section">Trips</h2>
+
+    <p>
+      Trip summaries are generated automatically when a client confirms
+      delivery. They do not exist before that point — requesting one for an
+      in-flight delivery returns <span class="sc sc-4">404</span>.
+    </p>
+
+    <div class="endpoint" id="trip-summary">
+      <div class="endpoint-head">
+        <span class="m get">GET</span>
+        <span class="endpoint-path">/api/trips/{delivery_id}/summary/</span>
+        <span class="role">Client</span>
+      </div>
+      <div class="endpoint-body">
+        <p>Returns the trip summary for the calling client's own delivery.</p>
+
+        <h4>Response <span class="sc sc-2">200</span></h4>
+<pre><code>{
+  "id": 18,
+  "delivery": 41,
+  "total_duration": "00:42:19.331000",
+  "start_time": "2026-08-01T09:14:55.104Z",
+  "end_time": "2026-08-01T09:57:14.435Z",
+  "route_snapshot": [
+    { "latitude": 6.4281, "longitude": 3.4219, "timestamp": "2026-08-01T09:14:55.104Z" },
+    { "latitude": 6.4512, "longitude": 3.4011, "timestamp": "2026-08-01T09:15:58.220Z" }
+  ],
+  "created_at": "2026-08-01T09:57:14.502Z"
+}</code></pre>
+
+        <div class="note">
+          <strong>Parsing <code>total_duration</code></strong>
+          <p>
+            Duration is a string in <code>HH:MM:SS.ffffff</code> form, and
+            exceeds 24 hours as <code>"1 02:03:04"</code> (days, space, clock).
+            <code>Date</code> will not parse it — split on <code>:</code>
+            yourself, or prefer computing the difference between
+            <code>start_time</code> and <code>end_time</code>, which are plain
+            ISO-8601 timestamps.
+          </p>
+        </div>
+
+        <p>
+          <code>route_snapshot</code> is the persisted path — roughly one point
+          per minute, not every ping the driver sent. It is well suited to
+          drawing a polyline of the completed route.
+        </p>
+      </div>
+    </div>
+
+    <div class="endpoint" id="driver-trip-summary">
+      <div class="endpoint-head">
+        <span class="m get">GET</span>
+        <span class="endpoint-path">/api/trips/{delivery_id}/driver-summary/</span>
+        <span class="role">Driver</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          Same object as above, scoped to the driver who drove the delivery.
+          Returns <span class="sc sc-4">404</span> if the calling driver was not
+          assigned to it.
+        </p>
+      </div>
+    </div>
+
+    <!-- ════════════════ ADMIN ════════════════ -->
+    <h2 id="admin-section">Admin</h2>
+
+    <p>
+      Every endpoint in this section requires an <code>admin</code> token.
+      A client or driver token returns <span class="sc sc-4">403</span>.
+    </p>
+
+    <div class="endpoint" id="admin-deliveries">
+      <div class="endpoint-head">
+        <span class="m get">GET</span>
+        <span class="endpoint-path">/api/admin/deliveries/</span>
+        <span class="role">Admin</span>
+      </div>
+      <div class="endpoint-body">
+        <p>All deliveries system-wide, newest first, paginated.</p>
+        <h4>Query parameters</h4>
+        <table>
+          <tbody>
+            <tr><td><code>status</code></td><td class="type">enum</td><td>Lifecycle status.</td></tr>
+            <tr><td><code>client</code></td><td class="type">integer</td><td>Client user ID.</td></tr>
+            <tr><td><code>driver</code></td><td class="type">integer</td><td>Driver user ID.</td></tr>
+          </tbody>
+        </table>
+        <p>Filters combine, e.g. <code>?status=delivered&amp;driver=7</code>.</p>
+      </div>
+    </div>
+
+    <div class="endpoint" id="admin-users">
+      <div class="endpoint-head">
+        <span class="m get">GET</span>
+        <span class="endpoint-path">/api/admin/users/</span>
+        <span class="role">Admin</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          All users, paginated. Filter with
+          <code>?role=client</code>, <code>?role=driver</code>, or
+          <code>?role=admin</code>.
+        </p>
+      </div>
+    </div>
+
+    <div class="endpoint" id="deactivate-user">
+      <div class="endpoint-head">
+        <span class="m patch">PATCH</span>
+        <span class="endpoint-path">/api/admin/users/{id}/deactivate/</span>
+        <span class="role">Admin</span>
+      </div>
+      <div class="endpoint-body">
+        <p>Sets <code>is_active: false</code>, blocking future logins. No request body.</p>
+
+<pre><code>{
+  "detail": "User deactivated.",
+  "user": { "id": 7, "username": "james_d", "is_active": false, … }
+}</code></pre>
+
+        <div class="note warn">
+          <strong>Existing sessions survive</strong>
+          <p>
+            Deactivation blocks new logins but does <em>not</em> revoke tokens
+            already issued. A deactivated user keeps working until their access
+            token expires — up to 8 hours.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint" id="activate-user">
+      <div class="endpoint-head">
+        <span class="m patch">PATCH</span>
+        <span class="endpoint-path">/api/admin/users/{id}/activate/</span>
+        <span class="role">Admin</span>
+      </div>
+      <div class="endpoint-body">
+        <p>Reverses deactivation. No request body. Returns the same envelope with <code>is_active: true</code>.</p>
+      </div>
+    </div>
+
+    <div class="endpoint" id="priority-list">
+      <div class="endpoint-head">
+        <span class="m get">GET</span>
+        <span class="endpoint-path">/api/admin/priority/</span>
+        <span class="role">Admin</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          Lists priority drivers — a shortlist who can be notified as a group
+          ahead of the wider driver pool. Paginated.
+        </p>
+<pre><code>{
+  "count": 2,
+  "results": [
+    {
+      "id": 4,
+      "driver":   { "id": 7, "username": "james_d", … },
+      "added_by": { "id": 1, "username": "dispatch_admin", … },
+      "created_at": "2026-07-28T11:02:41.220Z"
+    }
+  ]
+}</code></pre>
+      </div>
+    </div>
+
+    <div class="endpoint" id="priority-add">
+      <div class="endpoint-head">
+        <span class="m post">POST</span>
+        <span class="endpoint-path">/api/admin/priority/</span>
+        <span class="role">Admin</span>
+      </div>
+      <div class="endpoint-body">
+        <p>Adds a driver to the priority list. Re-adding an existing driver is safe — it updates the entry rather than erroring.</p>
+<pre><code>POST /api/admin/priority/
+
+{ "driver": 7 }</code></pre>
+        <p>Returns <span class="sc sc-2">201</span> with the created entry.</p>
+      </div>
+    </div>
+
+    <div class="endpoint" id="priority-remove">
+      <div class="endpoint-head">
+        <span class="m del">DEL</span>
+        <span class="endpoint-path">/api/admin/priority/{driver_id}/</span>
+        <span class="role">Admin</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          Removes a driver from the priority list. Note the path takes the
+          <strong>driver's user ID</strong>, not the priority entry's own
+          <code>id</code>.
+        </p>
+        <p>
+          Returns <span class="sc sc-2">204</span> with an empty body on success,
+          or <span class="sc sc-4">404</span> if that driver was not on the list.
+        </p>
+      </div>
+    </div>
+
+    <div class="endpoint" id="notify-priority">
+      <div class="endpoint-head">
+        <span class="m post">POST</span>
+        <span class="endpoint-path">/api/admin/deliveries/{id}/notify/all/</span>
+        <span class="role">Admin</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          Broadcasts a <code>job_request</code> event for a pending delivery to
+          every <em>priority</em> driver. No request body.
+        </p>
+<pre><code>{ "detail": "Broadcast sent to 4 priority drivers." }</code></pre>
+        <p>
+          The delivery must still be <code>pending</code>, otherwise
+          <span class="sc sc-4">404</span>.
+        </p>
+      </div>
+    </div>
+
+    <div class="endpoint" id="notify-everyone">
+      <div class="endpoint-head">
+        <span class="m post">POST</span>
+        <span class="endpoint-path">/api/admin/deliveries/{id}/notify/everyone/</span>
+        <span class="role">Admin</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          Same as above but reaches <em>every</em> registered driver, priority or
+          not. Despite the name, <code>notify/all/</code> is the narrower of the
+          two — this one is the wider broadcast.
+        </p>
+      </div>
+    </div>
+
+    <div class="endpoint" id="notify-one">
+      <div class="endpoint-head">
+        <span class="m post">POST</span>
+        <span class="endpoint-path">/api/admin/deliveries/{id}/notify/{driver_id}/</span>
+        <span class="role">Admin</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          Pushes <code>job_request</code> to a single named driver. No request
+          body. Returns <span class="sc sc-4">404</span> if the delivery is not
+          pending or the target is not a driver.
+        </p>
+      </div>
+    </div>
+
+    <div class="endpoint" id="resolve-conflict">
+      <div class="endpoint-head">
+        <span class="m post">POST</span>
+        <span class="endpoint-path">/api/admin/deliveries/{id}/resolve/</span>
+        <span class="role">Admin</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          Manually assigns a driver after a
+          <a href="#accept-conflicts">simultaneous-accept conflict</a>. This is
+          how a delivery stuck in conflict gets unblocked.
+        </p>
+
+<pre><code>POST /api/admin/deliveries/41/resolve/
+
+{ "driver_id": 7 }</code></pre>
+
+        <p>
+          Returns <span class="sc sc-2">200</span> with the updated delivery. The
+          chosen driver receives <code>job_accepted</code> with
+          <code>resolved_by_admin: true</code>; the others receive
+          <code>job_taken</code>.
+        </p>
+
+        <h4>Errors</h4>
+        <table>
+          <tbody>
+            <tr><td><span class="sc sc-4">400</span></td><td><code>driver_id</code> missing from the body.</td></tr>
+            <tr><td><span class="sc sc-4">404</span></td><td>No such delivery, or that user is not a driver.</td></tr>
+            <tr><td><span class="sc sc-4">409</span></td><td>Already resolved — someone else was assigned first.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="endpoint" id="cancel-delivery">
+      <div class="endpoint-head">
+        <span class="m post">POST</span>
+        <span class="endpoint-path">/api/admin/deliveries/{id}/cancel/</span>
+        <span class="role">Admin</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          Cancels a delivery and notifies the assigned driver (if any) plus
+          anyone watching its tracking channel, both via
+          <code>job_cancelled</code>. No request body.
+        </p>
+        <p>
+          Only valid from <code>pending</code> or <code>accepted</code>. A
+          delivery already <code>in_transit</code> or <code>delivered</code>
+          cannot be cancelled and returns <span class="sc sc-4">400</span>.
+        </p>
+      </div>
+    </div>
+
+    <div class="endpoint" id="admin-trip-summary">
+      <div class="endpoint-head">
+        <span class="m get">GET</span>
+        <span class="endpoint-path">/api/admin/trips/{delivery_id}/summary/</span>
+        <span class="role">Admin</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          Returns the <a href="#trip-object">trip summary</a> for any delivery,
+          without the ownership restriction that applies to the client and driver
+          variants.
+        </p>
+      </div>
+    </div>
+
+    <!-- ════════════════ WEBSOCKETS ════════════════ -->
+    <h2 id="ws-overview">WebSockets</h2>
+
+    <p>
+      Live behaviour depends on WebSockets. An app that only calls the REST
+      endpoints will appear broken: drivers will not receive job offers, and
+      clients will not see the vehicle move.
+    </p>
+
+    <h3 id="ws-connecting">Connecting</h3>
+
+    <p>
+      WebSocket handshakes cannot carry an <code>Authorization</code> header from
+      a mobile or browser client, so the access token goes in the query string:
+    </p>
+
+<pre><code>wss://&lt;host&gt;/ws/tracking/41/?token=&lt;access_token&gt;</code></pre>
+
+    <p>
+      Use <code>wss://</code> against a deployed host and <code>ws://</code>
+      against a local server. Every message arrives as JSON in a consistent
+      envelope:
+    </p>
+
+<pre><code>{
+  "event": "location_update",
+  "payload": { "delivery_id": 41, "latitude": 6.4512, "longitude": 3.4011 }
+}</code></pre>
+
+    <p>
+      Switch on <code>event</code>; the shape of <code>payload</code> depends on
+      it. All three channels are receive-only — sending messages to the server
+      over the socket does nothing.
+    </p>
+
+    <div class="note warn">
+      <strong>Close code 4403 means auth failed</strong>
+      <p>
+        The socket closes with <code>4403</code> if the token is missing,
+        expired, or belongs to a user without access to that channel. Treat it as
+        a signal to refresh the token and reconnect — not as a transient network
+        error to retry blindly.
+      </p>
+    </div>
+
+    <div class="endpoint" id="ws-driver">
+      <div class="endpoint-head">
+        <span class="m get">WS</span>
+        <span class="endpoint-path">/ws/driver/?token=&lt;access&gt;</span>
+        <span class="role">Driver</span>
+      </div>
+      <div class="endpoint-body">
+        <p>The driver's personal channel. Connect once at sign-in and keep it open.</p>
+        <table>
+          <thead><tr><th>Event</th><th>Payload</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><code>job_request</code></td><td><code>delivery</code></td><td>A job is being offered. Full delivery object included.</td></tr>
+            <tr><td><code>job_accepted</code></td><td><code>delivery_id</code>, <code>driver_id</code>, <code>resolved_by_admin</code></td><td>You won the job.</td></tr>
+            <tr><td><code>job_taken</code></td><td><code>delivery_id</code>, <code>driver_id</code>, <code>resolved_by_admin</code></td><td>Another driver won it.</td></tr>
+            <tr><td><code>job_cancelled</code></td><td><code>delivery_id</code></td><td>Admin cancelled the delivery.</td></tr>
+            <tr><td><code>delivery_confirmed</code></td><td><code>delivery_id</code></td><td>Client confirmed. <strong>Stop the GPS loop.</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="endpoint" id="ws-tracking">
+      <div class="endpoint-head">
+        <span class="m get">WS</span>
+        <span class="endpoint-path">/ws/tracking/{delivery_id}/?token=&lt;access&gt;</span>
+        <span class="role">Any role</span>
+      </div>
+      <div class="endpoint-body">
+        <p>
+          Live tracking for one delivery. Ownership-checked on connect: a client
+          or driver may only subscribe to their own delivery, admin to any.
+          Open it when the map screen mounts, close it on unmount.
+        </p>
+        <table>
+          <thead><tr><th>Event</th><th>Payload</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><code>location_update</code></td><td><code>delivery_id</code>, <code>latitude</code>, <code>longitude</code>, <code>timestamp</code></td><td>Driver moved. Emitted on every ping.</td></tr>
+            <tr><td><code>delivery_confirmed</code></td><td><code>delivery_id</code></td><td>Delivery completed.</td></tr>
+            <tr><td><code>job_cancelled</code></td><td><code>delivery_id</code></td><td>Delivery cancelled by admin.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="endpoint" id="ws-admin">
+      <div class="endpoint-head">
+        <span class="m get">WS</span>
+        <span class="endpoint-path">/ws/admin/?token=&lt;access&gt;</span>
+        <span class="role">Admin</span>
+      </div>
+      <div class="endpoint-body">
+        <p>Dispatch dashboard channel.</p>
+        <table>
+          <thead><tr><th>Event</th><th>Payload</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><code>conflict_alert</code></td><td><code>delivery_id</code>, <code>driver_ids</code>, <code>attempted_at</code></td><td>Two or more drivers accepted simultaneously. Needs manual resolution.</td></tr>
+            <tr><td><code>job_taken</code></td><td><code>delivery_id</code>, <code>driver_id</code>, <code>resolved_by_admin</code></td><td>A delivery was assigned.</td></tr>
+          </tbody>
+        </table>
+        <p>
+          <code>conflict_alert</code> is the trigger for the admin UI to prompt a
+          choice, then call
+          <a href="#resolve-conflict">resolve conflict</a> with the chosen
+          <code>driver_id</code>.
+        </p>
+      </div>
+    </div>
+
+    <!-- ════════════════ REFERENCE ════════════════ -->
+    <h2 id="models">Object reference</h2>
+
+    <h3 id="user-object">User</h3>
+    <table>
+      <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><code>id</code></td><td class="type">integer</td><td></td></tr>
+        <tr><td><code>username</code></td><td class="type">string</td><td>Unique.</td></tr>
+        <tr><td><code>email</code></td><td class="type">string</td><td>May be empty.</td></tr>
+        <tr><td><code>role</code></td><td class="type">enum</td><td><code>client</code>, <code>driver</code>, or <code>admin</code>.</td></tr>
+        <tr><td><code>phone_number</code></td><td class="type">string</td><td>May be empty.</td></tr>
+        <tr><td><code>is_active</code></td><td class="type">boolean</td><td>False blocks new logins.</td></tr>
+        <tr><td><code>is_available</code></td><td class="type">boolean</td><td>Driver on-duty flag; meaningless for other roles.</td></tr>
+      </tbody>
+    </table>
+    <p>All fields are read-only. Update availability via <a href="#availability">its own endpoint</a>.</p>
+
+    <h3 id="delivery-object">Delivery</h3>
+    <table>
+      <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><code>id</code></td><td class="type">integer</td><td></td></tr>
+        <tr><td><code>client</code></td><td class="type">User</td><td>Expanded object, not an ID.</td></tr>
+        <tr><td><code>driver</code></td><td class="type">User | null</td><td><code>null</code> until assigned.</td></tr>
+        <tr><td><code>pickup_location</code></td><td class="type">string</td><td>Free text.</td></tr>
+        <tr><td><code>dropoff_location</code></td><td class="type">string</td><td>Free text.</td></tr>
+        <tr><td><code>pickup_lat</code></td><td class="type">float | null</td><td rowspan="4">Null when not supplied at creation. Address text is not geocoded.</td></tr>
+        <tr><td><code>pickup_lng</code></td><td class="type">float | null</td></tr>
+        <tr><td><code>dropoff_lat</code></td><td class="type">float | null</td></tr>
+        <tr><td><code>dropoff_lng</code></td><td class="type">float | null</td></tr>
+        <tr><td><code>status</code></td><td class="type">enum</td><td>See <a href="#lifecycle">lifecycle</a>.</td></tr>
+        <tr><td><code>created_at</code></td><td class="type">datetime</td><td>ISO-8601.</td></tr>
+        <tr><td><code>updated_at</code></td><td class="type">datetime</td><td>ISO-8601.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="trip-object">TripSummary</h3>
+    <table>
+      <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><code>id</code></td><td class="type">integer</td><td></td></tr>
+        <tr><td><code>delivery</code></td><td class="type">integer</td><td>Delivery ID, not an expanded object.</td></tr>
+        <tr><td><code>total_duration</code></td><td class="type">string</td><td><code>HH:MM:SS.ffffff</code>; see the parsing note.</td></tr>
+        <tr><td><code>start_time</code></td><td class="type">datetime</td><td>First recorded GPS point.</td></tr>
+        <tr><td><code>end_time</code></td><td class="type">datetime</td><td>Moment of confirmation.</td></tr>
+        <tr><td><code>route_snapshot</code></td><td class="type">array</td><td>Points of <code>{latitude, longitude, timestamp}</code>, ~1/min.</td></tr>
+        <tr><td><code>created_at</code></td><td class="type">datetime</td><td></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="react-native">React Native setup</h2>
+
+    <h3 id="rn-host">Reaching a local server</h3>
+    <p>
+      <code>localhost</code> inside an emulator refers to the emulator itself,
+      not your development machine.
+    </p>
+    <table>
+      <thead><tr><th>Target</th><th>Base URL</th></tr></thead>
+      <tbody>
+        <tr><td>Android emulator</td><td><code>http://10.0.2.2:8000</code></td></tr>
+        <tr><td>iOS simulator</td><td><code>http://localhost:8000</code></td></tr>
+        <tr><td>Physical device</td><td><code>http://&lt;your-LAN-IP&gt;:8000</code></td></tr>
+      </tbody>
+    </table>
+    <p>
+      For a physical device the server must bind to all interfaces
+      (<code>runserver 0.0.0.0:8000</code>) and your machine's IP must be in the
+      server's allowed hosts.
+    </p>
+
+    <h3 id="rn-client">A minimal client</h3>
+
+<pre><code>const BASE = "https://&lt;your-host&gt;";
+
+async function api(path, { method = "GET", body, token } = {}) {
+  const res = await fetch(BASE + path, {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
+    },
+    ...(body && { body: JSON.stringify(body) }),
+  });
+
+  // 204 has no body to parse
+  if (res.status === 204) return null;
+
+  const data = await res.json();
+  if (!res.ok) {
+    // detail for endpoint errors, field arrays for validation errors
+    throw new Error(data.detail ?? Object.values(data).flat().join(" "));
+  }
+  return data;
+}</code></pre>
+
+    <h3 id="rn-socket">Subscribing to live tracking</h3>
+
+<pre><code>function watchDelivery(deliveryId, token, onMove) {
+  const ws = new WebSocket(
+    `wss://&lt;your-host&gt;/ws/tracking/${deliveryId}/?token=${token}`
+  );
+
+  ws.onmessage = (e) => {
+    const { event, payload } = JSON.parse(e.data);
+    if (event === "location_update") onMove(payload);
+  };
+
+  ws.onclose = (e) => {
+    if (e.code === 4403) return refreshTokenAndReconnect();
+    scheduleReconnect();   // back off, then retry
+  };
+
+  return () => ws.close();   // call on unmount
+}</code></pre>
+
+    <div class="note">
+      <strong>Reconnect with backoff</strong>
+      <p>
+        Mobile connections drop constantly — on backgrounding, on network
+        handover, on tunnel timeouts. Reconnect with exponential backoff, and on
+        reconnect call <a href="#latest-location">latest location</a> once to
+        resync, since events emitted while disconnected are not replayed.
+      </p>
+    </div>
+
+    <h3 id="rn-checklist">Integration checklist</h3>
+    <ul>
+      <li>Store <code>access</code> and <code>refresh</code> in secure storage, not <code>AsyncStorage</code> in plaintext.</li>
+      <li>Send <code>role</code> on login and route sign-in screens accordingly.</li>
+      <li>After accepting a job, show a pending state — wait for <code>job_accepted</code>, and time out rather than hanging.</li>
+      <li>Stop the GPS loop on <code>delivery_confirmed</code> and on <code>job_cancelled</code>.</li>
+      <li>Handle both error body shapes in one place.</li>
+      <li>Paginate via <code>next</code>, not by incrementing <code>page</code>.</li>
+      <li>Treat WebSocket close <code>4403</code> as re-authenticate, everything else as retry.</li>
+    </ul>
+  </main>
+
+  <!-- ─── on-this-page ────────────────────────────────────────── -->
+  <aside class="toc" aria-label="On this page">
+    <p class="toc-title">On this page</p>
+    <div id="tocList"></div>
+  </aside>
+
+</div>
+<script src="script.js"></script>
+</body>
+</html>
