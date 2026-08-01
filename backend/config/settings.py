@@ -45,6 +45,18 @@ if ON_RENDER:
         ALLOWED_HOSTS += [RENDER_HOSTNAME]
         CSRF_TRUSTED_ORIGINS += [f"https://{RENDER_HOSTNAME}"]
 
+if not DEBUG:
+    # Render (and Vercel) terminate TLS at their edge and forward over plain
+    # HTTP, so Django only sees the request as secure via this header. Without
+    # it, request.is_secure() is False and the secure cookies below would never
+    # be sent.
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    # Deliberately left off: SECURE_SSL_REDIRECT and SECURE_HSTS_SECONDS.
+    # The platform already serves HTTPS only, and HSTS is hard to walk back
+    # once browsers have cached it — worth enabling explicitly, not by default.
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",

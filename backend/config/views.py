@@ -1,5 +1,11 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.template import TemplateDoesNotExist
+
+
+def health(request):
+    """Liveness probe for the host's health check (Render, etc.). No auth, no DB hit."""
+    return JsonResponse({"status": "ok"})
 
 
 def page(request, page="index"):
