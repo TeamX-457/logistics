@@ -1,9 +1,11 @@
 from django.db import IntegrityError
-from rest_framework import generics, permissions, status
+from drf_spectacular.utils import extend_schema, inline_serializer
+from rest_framework import generics, permissions, serializers, status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from logistica_tracking.api_schema import auth_response
 from .permissions import IsDriverRole
 from .serializers import (
     AdminLoginSerializer,
@@ -16,6 +18,10 @@ from .throttling import LoginThrottle, RegisterThrottle
 from .tokens import tokens_for_user
 
 
+@extend_schema(
+    request=DriverRegisterSerializer,
+    responses={201: auth_response("DriverRegisterResponse")},
+)
 class RegisterDriverView(generics.CreateAPIView):
     """Public. Creates a `role=driver` user and returns a JWT token pair immediately (register = auto-login)."""
 
@@ -34,6 +40,10 @@ class RegisterDriverView(generics.CreateAPIView):
         return Response(data, status=status.HTTP_201_CREATED)
 
 
+@extend_schema(
+    request=ClientRegisterSerializer,
+    responses={201: auth_response("ClientRegisterResponse")},
+)
 class RegisterClientView(generics.CreateAPIView):
     """Public. Creates a `role=client` user and returns a JWT token pair immediately (register = auto-login)."""
 
@@ -52,6 +62,10 @@ class RegisterClientView(generics.CreateAPIView):
         return Response(data, status=status.HTTP_201_CREATED)
 
 
+@extend_schema(
+    request=LoginSerializer,
+    responses={200: auth_response("LoginResponse")},
+)
 class LoginView(APIView):
     """
     Public. Logs in a client or driver; the request body must include
@@ -70,6 +84,10 @@ class LoginView(APIView):
         return Response(data, status=status.HTTP_200_OK)
 
 
+@extend_schema(
+    request=AdminLoginSerializer,
+    responses={200: auth_response("AdminLoginResponse")},
+)
 class AdminLoginView(APIView):
     """Public. Logs in an admin account only (rejects any non-admin user). Returns the user and a JWT token pair."""
 
@@ -84,6 +102,13 @@ class AdminLoginView(APIView):
         return Response(data, status=status.HTTP_200_OK)
 
 
+@extend_schema(
+    request=inline_serializer(
+        name="DriverAvailabilityRequest",
+        fields={"is_available": serializers.BooleanField()},
+    ),
+    responses={200: UserSerializer},
+)
 class DriverAvailabilityView(APIView):
     """
     Driver-only. Sets whether the caller is on duty. Body: `{"is_available": true|false}`.

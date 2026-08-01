@@ -3,10 +3,12 @@ import logging
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
-from rest_framework import permissions, status
+from drf_spectacular.utils import extend_schema, inline_serializer
+from rest_framework import permissions, serializers, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from logistica_tracking.api_schema import detail_response
 from accounts.models import User
 from accounts.permissions import IsDriverRole
 from deliveries.models import Delivery
@@ -19,6 +21,20 @@ from .serializers import LocationSerializer, LocationUpdateSerializer
 logger = logging.getLogger(__name__)
 
 
+@extend_schema(
+    request=LocationUpdateSerializer,
+    responses={
+        200: inline_serializer(
+            name="LocationUpdateResponse",
+            fields={
+                "detail": serializers.CharField(),
+                "status": serializers.CharField(),
+            },
+        ),
+        400: detail_response("LocationUpdateInactiveResponse"),
+        403: detail_response("LocationUpdateForbiddenResponse"),
+    },
+)
 class LocationUpdateView(APIView):
     """
     Driver-only. Background GPS ping for an assigned, active delivery.
@@ -77,6 +93,24 @@ class LocationUpdateView(APIView):
         return Response({"detail": "ok", "status": delivery.status}, status=status.HTTP_200_OK)
 
 
+@extend_schema(
+    responses={
+        200: inline_serializer(
+            name="LatestLocationResponse",
+            fields={
+                "latitude": serializers.FloatField(),
+                "longitude": serializers.FloatField(),
+                "timestamp": serializers.DateTimeField(),
+                # Present only when the answer came from the DB row rather
+                # than the cache, which carries just the three fields above.
+                "id": serializers.IntegerField(required=False),
+                "delivery": serializers.IntegerField(required=False),
+            },
+        ),
+        403: detail_response("LatestLocationForbiddenResponse"),
+        404: detail_response("LatestLocationMissingResponse"),
+    },
+)
 class LatestLocationView(APIView):
     """
     Any authenticated role (ownership-checked for client/driver, admin

@@ -1,10 +1,12 @@
 import logging
 
 from django.shortcuts import get_object_or_404
-from rest_framework import generics, permissions, status
+from drf_spectacular.utils import extend_schema, inline_serializer
+from rest_framework import generics, permissions, serializers, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from logistica_tracking.api_schema import detail_response
 from accounts.models import User
 from accounts.permissions import IsAdminRole
 from accounts.serializers import UserSerializer
@@ -67,6 +69,12 @@ class PriorityListView(generics.ListCreateAPIView):
         return Response(PriorityListSerializer(entry).data, status=status.HTTP_201_CREATED)
 
 
+@extend_schema(
+    responses={
+        204: None,
+        404: detail_response("PriorityListDeleteMissingResponse"),
+    },
+)
 class PriorityListDeleteView(APIView):
     """Admin-only. Removes a driver from the priority list by driver id."""
 
@@ -79,6 +87,10 @@ class PriorityListDeleteView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+@extend_schema(
+    request=None,
+    responses={200: detail_response("NotifyAllPriorityDriversResponse")},
+)
 class NotifyAllPriorityDriversView(APIView):
     """Admin-only. Broadcasts a `job_request` WebSocket event for a pending delivery to every priority driver."""
 
@@ -93,6 +105,10 @@ class NotifyAllPriorityDriversView(APIView):
         return Response({"detail": f"Broadcast sent to {len(driver_ids)} priority drivers."})
 
 
+@extend_schema(
+    request=None,
+    responses={200: detail_response("NotifySpecificDriverResponse")},
+)
 class NotifySpecificDriverView(APIView):
     """
     Admin-only. Pushes a `job_request` WebSocket event for a pending
@@ -110,6 +126,10 @@ class NotifySpecificDriverView(APIView):
         return Response({"detail": "Notification sent."})
 
 
+@extend_schema(
+    request=None,
+    responses={200: detail_response("NotifyEveryoneDriversResponse")},
+)
 class NotifyEveryoneDriversView(APIView):
     """Admin-only. Broadcasts a `job_request` WebSocket event for a pending delivery to every registered driver."""
 
@@ -124,6 +144,17 @@ class NotifyEveryoneDriversView(APIView):
         return Response({"detail": f"Broadcast sent to {len(driver_ids)} drivers."})
 
 
+@extend_schema(
+    request=inline_serializer(
+        name="ResolveConflictRequest",
+        fields={"driver_id": serializers.IntegerField()},
+    ),
+    responses={
+        200: DeliverySerializer,
+        400: detail_response("ResolveConflictMissingDriverResponse"),
+        409: detail_response("ResolveConflictAlreadyResolvedResponse"),
+    },
+)
 class ResolveConflictView(APIView):
     """Admin-only. Manually assigns a driver to a delivery after a simultaneous-accept conflict was flagged."""
 
@@ -144,6 +175,13 @@ class ResolveConflictView(APIView):
         return Response(DeliverySerializer(delivery).data)
 
 
+@extend_schema(
+    request=None,
+    responses={
+        200: DeliverySerializer,
+        400: detail_response("CancelDeliveryNotCancellableResponse"),
+    },
+)
 class CancelDeliveryView(APIView):
     """
     Admin-only. Cancels a delivery that is still `pending` or `accepted`
@@ -194,6 +232,10 @@ class AdminUserListView(generics.ListAPIView):
         return qs
 
 
+@extend_schema(
+    request=None,
+    responses={200: detail_response("DeactivateUserResponse", user=UserSerializer())},
+)
 class DeactivateUserView(APIView):
     """
     Admin-only. Sets `is_active=False` on the user, which blocks future
@@ -211,6 +253,10 @@ class DeactivateUserView(APIView):
         return Response({"detail": "User deactivated.", "user": UserSerializer(user).data})
 
 
+@extend_schema(
+    request=None,
+    responses={200: detail_response("ActivateUserResponse", user=UserSerializer())},
+)
 class ActivateUserView(APIView):
     """Admin-only. Reverses deactivation by setting `is_active=True` on the user."""
 

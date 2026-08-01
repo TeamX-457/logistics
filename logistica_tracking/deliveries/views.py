@@ -2,10 +2,12 @@ import logging
 
 from django.conf import settings
 from django.shortcuts import get_object_or_404
+from drf_spectacular.utils import extend_schema
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from logistica_tracking.api_schema import detail_response
 from accounts.models import User
 from accounts.permissions import IsClientRole, IsDriverRole, IsAdminRole
 
@@ -53,6 +55,13 @@ class DeliveryListCreateView(generics.ListCreateAPIView):
         return Response(DeliverySerializer(delivery).data, status=status.HTTP_201_CREATED)
 
 
+@extend_schema(
+    request=None,
+    responses={
+        202: detail_response("AcceptDeliveryAcceptedResponse"),
+        409: detail_response("AcceptDeliveryConflictResponse"),
+    },
+)
 class AcceptDeliveryView(APIView):
     """
     Driver-only. Records this driver's accept attempt for a pending
@@ -90,6 +99,13 @@ class AcceptDeliveryView(APIView):
         )
 
 
+@extend_schema(
+    request=None,
+    responses={
+        200: DeliverySerializer,
+        400: detail_response("ConfirmDeliveryNotInTransitResponse"),
+    },
+)
 class ConfirmDeliveryView(APIView):
     """
     Client-only, own delivery only. Confirms a delivery that is currently
