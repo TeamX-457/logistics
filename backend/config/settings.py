@@ -16,6 +16,10 @@ environ.Env.read_env(BASE_DIR / ".env")
 
 # Vercel sets VERCEL=1 in both the build and runtime environments.
 ON_VERCEL = env.bool("VERCEL", default=False)
+# Render sets RENDER=true, and RENDER_EXTERNAL_HOSTNAME to the service's
+# public hostname (e.g. logistics-p88d.onrender.com).
+ON_RENDER = env.bool("RENDER", default=False)
+RENDER_HOSTNAME = env("RENDER_EXTERNAL_HOSTNAME", default="")
 
 SECRET_KEY = env("SECRET_KEY", default="django-insecure-change-me-in-production")
 
@@ -25,13 +29,21 @@ GOOGLE_CLIENT_ID = env("GOOGLE_CLIENT_ID", default="")
 # Unused by the ID-token flow above; kept only in case a server-side OAuth
 # code exchange is added later. Never expose this one to the frontend.
 GOOGLE_CLIENT_SECRET = env("GOOGLE_CLIENT_SECRET", default="")
-DEBUG = env.bool("DEBUG", default=not ON_VERCEL)
+DEBUG = env.bool("DEBUG", default=not (ON_VERCEL or ON_RENDER))
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 if ON_VERCEL:
     # Accept the project's *.vercel.app deployment URLs without extra config.
     ALLOWED_HOSTS += [".vercel.app"]
     CSRF_TRUSTED_ORIGINS += ["https://*.vercel.app"]
+if ON_RENDER:
+    # Same idea for Render: accept the service's own *.onrender.com URL so a
+    # fresh deploy answers without needing ALLOWED_HOSTS set by hand.
+    ALLOWED_HOSTS += [".onrender.com"]
+    CSRF_TRUSTED_ORIGINS += ["https://*.onrender.com"]
+    if RENDER_HOSTNAME:
+        ALLOWED_HOSTS += [RENDER_HOSTNAME]
+        CSRF_TRUSTED_ORIGINS += [f"https://{RENDER_HOSTNAME}"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
